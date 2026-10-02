@@ -2,6 +2,8 @@
 __pycache__/
 .pytest_cache/
 output/
+# /brag-slim launch-video output (and its timestamped brag-output-YYYY-MM-DD-HHmmss/ siblings): local only
+brag-output*/
 
 # Secrets and anything that can hold them. .env.example (blank template) is the only env file that belongs in git.
 .env
