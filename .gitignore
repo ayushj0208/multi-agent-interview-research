@@ -9,5 +9,7 @@ output/
 !.env.example
 .streamlit/secrets.toml
 .deepeval/
+# Claude Code's local permissions file: can hold full command lines you approved
+.claude/settings.local.json
 # Saved run state (checkpoints) from local runs
 checkpoints.db*

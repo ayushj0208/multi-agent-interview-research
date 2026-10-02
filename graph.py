@@ -29,6 +29,7 @@ MAX_RETRIES = 2 if LOW_COST_MODE else 3  # caps automatic Researcher passes, inc
 QUALITY_THRESHOLD = 7  # editor score out of 10
 # ponytail: bounds CoVe search cost; raise if key claims go unchecked
 MAX_VERIFICATION_QUESTIONS = 5 if LOW_COST_MODE else 8
+MAX_FINDINGS_PER_PASS = 12  # claims kept from one Researcher extraction
 MIN_CLAIMS_PER_CATEGORY = 3  # a category with fewer cumulative claims than this is "thin" and gets researched again
 # Each send-back costs another Researcher pass + Editor review in Claude spend; in low-cost mode one already eats
 # most of the savings.
@@ -217,14 +218,17 @@ Editor feedback on the previous research (address it if present): {state['editor
 Claims already found: {[f['claim'] for f in state['raw_findings']]}
 
 Write one targeted web search query per category that needs work. Don't repeat ground already covered.""")
+    # Enforced, not just asked for: the posting is part of that prompt, so a hostile posting could otherwise talk the
+    # planner into hundreds of paid searches in one pass.
+    queries = plan.queries[:len(CATEGORIES)]
 
     found, snippets, extract_by = [], {}, None  # a pass that plans no queries has nothing new to extract
-    if plan.queries:
-        progress("researcher", "searching", iteration, f"Searching the web ({len(plan.queries)} queries)",
-                 queries=[q.model_dump() for q in plan.queries])
+    if queries:
+        progress("researcher", "searching", iteration, f"Searching the web ({len(queries)} queries)",
+                 queries=[q.model_dump() for q in queries])
         with ThreadPoolExecutor(max_workers=len(CATEGORIES)) as pool:
-            hits = list(pool.map(search, [q.query for q in plan.queries]))
-        results = [{"category": q.category, "query": q.query, "results": h} for q, h in zip(plan.queries, hits)]
+            hits = list(pool.map(search, [q.query for q in queries]))
+        results = [{"category": q.category, "query": q.query, "results": h} for q, h in zip(queries, hits)]
         snippets = {r["url"]: r["content"] for h in hits for r in h}
         progress("researcher", "extracting", iteration, "Extracting claims from search results")
         extracted, extract_by = ask(ResearchPass, f"""Extract specific, factual claims about {state['company_name']} from these search results,
@@ -234,9 +238,9 @@ relevant to a candidate applying for this role:
 Search results:
 {results}
 
-Extract at most 12 claims, the most useful for interview prep, one sentence each.
+Extract at most {MAX_FINDINGS_PER_PASS} claims, the most useful for interview prep, one sentence each.
 Tag every claim with its category and the exact source URL it came from. Only extract what the results actually say.""")
-        found = extracted.findings
+        found = extracted.findings[:MAX_FINDINGS_PER_PASS]  # the prompt asks; this guarantees it
 
     # The extractor sees earlier claims (to judge gaps) and sometimes echoes them back; keep only new ones.
     # ponytail: exact-text match; paraphrased repeats still get through and are merged by the Editor.
@@ -251,7 +255,7 @@ Tag every claim with its category and the exact source URL it came from. Only ex
 
     raw = state["raw_findings"] + added
     thin = thin_categories(raw)  # cumulative across all passes, decided in code rather than by the model
-    status = (f"Researcher pass {iteration}: {len(plan.queries)} searches, {len(added)} new findings "
+    status = (f"Researcher pass {iteration}: {len(queries)} searches, {len(added)} new findings "
               f"({len(raw)} total), thin: {thin or 'none'}")
     return {
         "raw_findings": raw,
@@ -259,7 +263,7 @@ Tag every claim with its category and the exact source URL it came from. Only ex
         "editor_feedback": None,
         "status": status,
         "trace": state["trace"] + [{"node": "researcher", "iteration": iteration,
-                                    "queries": [q.model_dump() for q in plan.queries], "new_findings": len(added),
+                                    "queries": [q.model_dump() for q in queries], "new_findings": len(added),
                                     "total_findings": len(raw), "thin_categories": thin, "status": status,
                                     # "extract" produced this pass's new findings (the last new_findings of raw)
                                     "providers": {"plan": plan_by, "extract": extract_by}}],

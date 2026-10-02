@@ -232,6 +232,36 @@ def test_low_cost_visitor_gets_one_send_back():
     assert any(b.label == "Send back to Researcher (1 left)" for b in at.button)
 
 
+def test_ui_sends_the_api_token_and_a_mismatch_fails_cleanly():
+    test_api.setup_fakes()
+    saved, api.API_TOKEN = api.API_TOKEN, "shared-secret"
+    try:
+        os.environ["API_TOKEN"] = "shared-secret"  # the UI service's copy
+        assert "Yes, with evidence" in texts(quick_checked()), "the UI must send the token on its calls"
+
+        os.environ["API_TOKEN"] = "stale-secret"  # misconfigured deploy: no crash, no results
+        at = quick_checked()
+        assert not at.exception and "Yes, with evidence" not in texts(at) and at.error
+    finally:
+        api.API_TOKEN = saved
+        os.environ.pop("API_TOKEN", None)
+
+
+def test_demo_mode_line_shows_only_in_low_cost_mode():
+    def typewriter(at):
+        return [str(m.value) for m in at.markdown if 'class="typewriter"' in str(m.value)]
+    test_api.setup_fakes()
+    assert typewriter(open_app()) == [], "full-depth dev shows no demo line"
+    with low_cost_server():
+        lines = typewriter(open_app())
+    first = "Running on a limited free API budget, so this demo uses fewer research passes to stay free."
+    second = "More budget means more depth."
+    assert len(lines) == 1 and first in lines[0] and second in lines[0]
+    # Typed one after the other: the second line starts once the first line's characters are done.
+    assert f"--n: {len(first)}; --prev: 0; --i: 0" in lines[0]
+    assert f"--n: {len(second)}; --prev: {len(first)}; --i: 1" in lines[0]
+
+
 def test_used_up_budget_shows_the_demo_message_not_a_raw_error():
     test_api.setup_fakes()
     with test_api.budget_used_up():
@@ -317,6 +347,8 @@ if __name__ == "__main__":
     test_progress_line_gives_this_modes_time_to_review()
     test_low_cost_visitor_gets_one_send_back()
     test_used_up_budget_shows_the_demo_message_not_a_raw_error()
+    test_demo_mode_line_shows_only_in_low_cost_mode()
+    test_ui_sends_the_api_token_and_a_mismatch_fails_cleanly()
     test_send_back_is_hidden_once_the_cap_is_used()
     test_low_score_explains_why_it_reached_review()
     print("ok")

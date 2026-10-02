@@ -1,5 +1,7 @@
 import contextlib
+import datetime
 import json
+import logging
 import queue
 import threading
 
@@ -11,6 +13,7 @@ from langgraph.types import Command
 import test_routing  # sets dummy API keys before graph is imported; reuses its canned fake LLM
 import api
 import graph as g
+import quick_check
 
 COMPANY = "Sony Interactive Entertainment"
 
@@ -27,6 +30,7 @@ def setup_fakes(gate=None, quality_score=8):
     g.tavily = type("FakeTavily", (), {"search": staticmethod(  # the quick check's searches
         lambda query, **options: {"results": test_routing.QUICK_CHECK_RESULTS})})()
     api.graph = g.builder.compile(checkpointer=InMemorySaver())
+    api.usage.update(day=None, briefings=0, quick_checks=0)  # fresh daily caps for every test
     return prompts
 
 
@@ -166,10 +170,132 @@ def test_quick_check_endpoint():
     assert client.post("/quick-check", json={"company_name": ""}).status_code == 422
 
     def unavailable(model, prompt, attempts=1):
-        raise RuntimeError("Claude unavailable")
+        raise RuntimeError("Claude unavailable at db.internal.example:5432")
     g.ask = unavailable
-    response = client.post("/quick-check", json={"company_name": COMPANY})
-    assert response.status_code == 502 and "Claude unavailable" in response.json()["detail"]
+    with captured_log() as logged:
+        response = client.post("/quick-check", json={"company_name": COMPANY})
+    detail = response.json()["detail"]
+    assert response.status_code == 502 and "couldn't finish" in detail
+    assert "db.internal" not in detail, "internal error text must not reach the visitor"
+    assert any("db.internal" in str(r.exc_info[1]) for r in logged if r.exc_info), "but it is in the server log"
+
+
+@contextlib.contextmanager
+def captured_log():
+    records = []
+    handler = logging.Handler()
+    handler.emit = records.append
+    api.log.addHandler(handler)
+    try:
+        yield records
+    finally:
+        api.log.removeHandler(handler)
+
+
+def test_pipeline_errors_reach_the_visitor_as_a_generic_message():
+    setup_fakes()
+    fake = g.ask
+
+    def fails(model, prompt, attempts=1):
+        if model is g.EditorReview:
+            raise RuntimeError("connection to server at db.internal.example failed for user app_rw")
+        return fake(model, prompt, attempts)
+    g.ask = fails
+    with captured_log() as logged:
+        _, events = start(TestClient(api.app))
+    name, data = events[-1]
+    assert name == "error" and data["message"] == api.GENERIC_ERROR and not data["budget_exhausted"]
+    assert "db.internal" not in json.dumps(events), "no internal detail anywhere in the stream"
+    assert any("db.internal" in str(r.exc_info[1]) for r in logged if r.exc_info)
+
+
+def test_api_token_is_required_once_set():
+    setup_fakes()
+    client = TestClient(api.app)
+    saved, api.API_TOKEN = api.API_TOKEN, "s3cret-token"
+    try:
+        assert client.get("/pipeline").status_code == 401
+        assert client.get("/pipeline", headers={"X-API-Token": "wrong"}).status_code == 401
+        assert client.post("/quick-check", json={"company_name": COMPANY}).status_code == 401
+        assert client.post("/briefings", json={"company_name": COMPANY, "job_posting": "p"}).status_code == 401
+        assert api.usage["quick_checks"] == api.usage["briefings"] == 0, "refused before any paid work"
+        assert client.get("/pipeline", headers={"X-API-Token": "s3cret-token"}).status_code == 200
+    finally:
+        api.API_TOKEN = saved
+
+
+def test_daily_caps_refuse_with_429_until_the_next_day():
+    setup_fakes()
+    client = TestClient(api.app)
+    saved, api.DAILY_LIMITS = api.DAILY_LIMITS, {"briefings": 1, "quick_checks": 1}
+    try:
+        assert client.post("/quick-check", json={"company_name": COMPANY}).status_code == 200
+        response = client.post("/quick-check", json={"company_name": COMPANY})
+        assert response.status_code == 429 and response.json()["detail"] == api.DAILY_MESSAGE
+        start(client)
+        response = client.post("/briefings", json={"company_name": COMPANY, "job_posting": test_routing.POSTING})
+        assert response.status_code == 429 and response.json()["detail"] == api.DAILY_MESSAGE
+
+        api.usage["day"] -= datetime.timedelta(days=1)  # midnight UTC passes
+        assert client.post("/quick-check", json={"company_name": COMPANY}).status_code == 200
+    finally:
+        api.DAILY_LIMITS = saved
+
+
+def test_concurrent_runs_are_capped_and_a_busy_refusal_isnt_counted():
+    gate = threading.Event()
+    setup_fakes(gate)
+    client = TestClient(api.app)
+    saved, api.MAX_CONCURRENT_RUNS = api.MAX_CONCURRENT_RUNS, 1
+    run_id, _ = start(client)
+    _, thread = api.start_run(run_id, Command(resume={"action": "approve", "feedback": ""}))  # Writer held: 1 in flight
+    try:
+        response = client.post("/briefings", json={"company_name": COMPANY, "job_posting": test_routing.POSTING})
+        assert response.status_code == 429 and response.json()["detail"] == api.BUSY_MESSAGE
+        assert api.usage["briefings"] == 1, "only the briefing that ran counts toward today's cap"
+    finally:
+        gate.set()
+        thread.join(10)
+        api.MAX_CONCURRENT_RUNS = saved
+
+
+def test_concurrent_quick_checks_are_capped():
+    setup_fakes()
+    client = TestClient(api.app)
+    fake, started, hold = g.ask, threading.Event(), threading.Event()
+
+    def held(model, prompt, attempts=1):
+        if model is quick_check.QuickCheck:
+            started.set()
+            hold.wait(10)
+        return fake(model, prompt, attempts)
+    g.ask = held
+    saved, api.MAX_CONCURRENT_QUICK_CHECKS = api.MAX_CONCURRENT_QUICK_CHECKS, 1
+    first = threading.Thread(target=lambda: client.post("/quick-check", json={"company_name": COMPANY}))
+    first.start()
+    try:
+        assert started.wait(10)
+        response = client.post("/quick-check", json={"company_name": COMPANY})
+        assert response.status_code == 429 and response.json()["detail"] == api.BUSY_MESSAGE
+    finally:
+        hold.set()
+        first.join(10)
+        api.MAX_CONCURRENT_QUICK_CHECKS = saved
+    assert client.post("/quick-check", json={"company_name": COMPANY}).status_code == 200, "slot freed afterwards"
+
+
+def test_request_sizes_are_capped():
+    setup_fakes()
+    client = TestClient(api.app)
+    too_long = {"company_name": "x" * (api.MAX_COMPANY_CHARS + 1)}
+    assert client.post("/quick-check", json=too_long).status_code == 422
+    assert client.post("/briefings", json={**too_long, "job_posting": "p"}).status_code == 422
+    assert client.post("/briefings", json={"company_name": COMPANY,
+                                           "job_posting": "x" * (api.MAX_POSTING_CHARS + 1)}).status_code == 422
+    assert resume(client, "any-run", "send_back", "x" * (api.MAX_FEEDBACK_CHARS + 1))[0].status_code == 422
+    assert api.usage["briefings"] == api.usage["quick_checks"] == 0, "rejected before counting"
+    response = client.post("/briefings", json={"company_name": COMPANY, "job_posting": "x" * api.MAX_POSTING_CHARS})
+    assert response.status_code == 200, "exactly at the limit is fine"
 
 
 @contextlib.contextmanager
@@ -219,5 +345,11 @@ if __name__ == "__main__":
     test_client_disconnect_does_not_stop_a_resumed_run()
     test_quick_check_endpoint()
     test_budget_used_up_reaches_the_client_as_the_demo_message()
+    test_pipeline_errors_reach_the_visitor_as_a_generic_message()
+    test_api_token_is_required_once_set()
+    test_daily_caps_refuse_with_429_until_the_next_day()
+    test_concurrent_runs_are_capped_and_a_busy_refusal_isnt_counted()
+    test_concurrent_quick_checks_are_capped()
+    test_request_sizes_are_capped()
     test_heartbeat_fills_silent_stretches()
     print("ok")

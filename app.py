@@ -8,6 +8,10 @@ import requests
 import streamlit as st
 
 API = os.getenv("API_URL", "http://localhost:8000")
+# The API's shared secret (see api.py require_token), sent on every call; unset in local dev.
+AUTH = {"X-API-Token": os.getenv("API_TOKEN", "")}
+# Mirrors api.py's request limits, so visitors see a character counter instead of a rejected request.
+MAX_COMPANY_CHARS, MAX_POSTING_CHARS, MAX_FEEDBACK_CHARS = 200, 20_000, 2_000
 TYPICAL_REVIEW_S = 60  # the Editor's single review call; measured 55-61s on live runs
 STATUS_BADGES = {"verified": ("green", "Verified"), "from_posting": ("blue", "From posting"),
                  "unverified": ("orange", "Unverified"), "contradicted": ("red", "Contradicted"),
@@ -15,6 +19,9 @@ STATUS_BADGES = {"verified": ("green", "Verified"), "from_posting": ("blue", "Fr
 CATEGORY_TITLES = {"news": "Recent news", "funding": "Funding & business", "tech_stack": "Tech stack",
                    "culture": "Culture", "role_context": "Role context"}
 BOX_LABELS = {"researcher": "Researcher", "editor": "Editor", "review": "Your review", "writer": "Writer"}
+# One typed line per sentence: the full text (121 characters) is wider than the page column on one line.
+DEMO_MODE_LINES = ("Running on a limited free API budget, so this demo uses fewer research passes to stay free.",
+                   "More budget means more depth.")
 CHECK_VERDICTS = {"yes_with_evidence": ("green", "Yes, with evidence"), "no_history_found": ("gray", "No history found"),
                   "couldnt_determine": ("orange", "Couldn't determine")}
 
@@ -68,15 +75,25 @@ def start_over():  # used as a button callback, where Streamlit reruns on its ow
         st.query_params["theme"] = theme
 
 
+def pipeline_settings():
+    """The server's pipeline mode (GET /pipeline), fetched once per session; None if the server can't say."""
+    if "pipeline" not in st.session_state:
+        try:
+            response = requests.get(f"{API}/pipeline", headers=AUTH, timeout=10)
+        except requests.RequestException:
+            return None  # not cached: the next screen asks again
+        if response.status_code != 200:
+            return None
+        st.session_state.pipeline = response.json()
+    return st.session_state.pipeline
+
+
 def expected_minutes(stage):
     """ "about N minutes" for the mode this server's pipeline runs in (low-cost runs are shorter), or None when the
     server can't say, so the screens fall back to a numberless phrase rather than a number that may be wrong."""
-    if "pipeline" not in st.session_state:
-        try:
-            st.session_state.pipeline = requests.get(f"{API}/pipeline", timeout=10).json()
-        except requests.RequestException:
-            return None  # not cached: the next screen asks again
-    n = st.session_state.pipeline["expected_minutes"][stage]
+    if (settings := pipeline_settings()) is None:
+        return None
+    n = settings["expected_minutes"][stage]
     return f"about {n} minute{'' if n == 1 else 's'}"
 
 
@@ -98,11 +115,15 @@ def server_unreachable():
 
 def fetch_run(run_id):
     try:
-        response = requests.get(f"{API}/briefings/{run_id}", timeout=10)
+        response = requests.get(f"{API}/briefings/{run_id}", headers=AUTH, timeout=10)
     except requests.RequestException:
         # Every refresh and poll lands here; without a way out, the run ID in the URL would reproduce the crash.
         server_unreachable()
-    return None if response.status_code == 404 else response.json()
+    if response.status_code == 404:
+        return None
+    if response.status_code != 200:  # e.g. a token mismatch: same way out as an unreachable server
+        server_unreachable()
+    return response.json()
 
 
 def restore(run_id):
@@ -130,9 +151,17 @@ def check_screen():
         st.caption("Enter a company to see whether it has sponsored H-1B work visas before, and whether it says it "
                    "uses E-Verify, based on public records. It takes about 15 seconds; the full interview briefing "
                    "comes after, only if you want it.")
+        if (pipeline_settings() or {}).get("low_cost_mode"):  # the public demo only; local full-depth dev skips it
+            # Typed once by CSS (style.css .typewriter), one line after another. No JS: st.markdown strips scripts.
+            # Each line gets its length (--n), the characters typed before it (--prev) and its position (--i).
+            lines, typed = [], 0
+            for i, text in enumerate(DEMO_MODE_LINES):
+                lines.append(f'<span style="--n: {len(text)}; --prev: {typed}; --i: {i}"><span>{text}</span></span>')
+                typed += len(text)
+            st.markdown(f'<p class="typewriter">{"".join(lines)}</p>', unsafe_allow_html=True)
     with st.form("quick_check"):
         # Keyed so start_over's session_state.clear() also empties it; unkeyed, the typed name would survive.
-        company = st.text_input("Company name", key="check_company")
+        company = st.text_input("Company name", key="check_company", max_chars=MAX_COMPANY_CHARS)
         submitted = st.form_submit_button("Quick Check", type="primary")
     if submitted:
         if not company.strip():
@@ -140,7 +169,8 @@ def check_screen():
             return
         try:
             with st.spinner("Checking visa sponsorship and E-Verify records..."):
-                response = requests.post(f"{API}/quick-check", json={"company_name": company.strip()}, timeout=120)
+                response = requests.post(f"{API}/quick-check", json={"company_name": company.strip()}, headers=AUTH,
+                                         timeout=120)
         except requests.RequestException:
             server_unreachable()
         if response.status_code != 200:
@@ -186,8 +216,9 @@ def input_screen():
                    "fact-check what they find, and pause for you to review before anything is written. It takes "
                    f"{expected_minutes('total') or 'a few minutes'}.")
     with st.form("new_briefing"):
-        company = st.text_input("Company name", value=st.session_state.get("company", ""))
-        posting = st.text_area("Job posting", height=320, placeholder="Paste the full job posting text")
+        company = st.text_input("Company name", value=st.session_state.get("company", ""), max_chars=MAX_COMPANY_CHARS)
+        posting = st.text_area("Job posting", height=320, placeholder="Paste the full job posting text",
+                               max_chars=MAX_POSTING_CHARS)
         submitted = st.form_submit_button("Generate Briefing", type="primary")
     if submitted:
         if not company.strip() or not posting.strip():
@@ -230,7 +261,7 @@ def progress_screen():
         return boxes[node]
 
     try:
-        with requests.post(f"{API}{path}", json=body, stream=True, timeout=(10, 30)) as response:
+        with requests.post(f"{API}{path}", json=body, headers=AUTH, stream=True, timeout=(10, 30)) as response:
             if response.status_code != 200:
                 st.error(md(response.json().get("detail", response.text)))
                 st.button("Start over", on_click=start_over)
@@ -357,7 +388,7 @@ def approval_screen():
         go("progress", request=(resume_path, {"action": "approve", "feedback": ""}))
     left = a["send_backs_left"]
     if left > 0:
-        note = st.text_area("Or send it back: what should the Researcher dig into?")
+        note = st.text_area("Or send it back: what should the Researcher dig into?", max_chars=MAX_FEEDBACK_CHARS)
         if st.button(f"Send back to Researcher ({left} left)"):
             if not note.strip():
                 st.error("Say what to fix so the Researcher knows where to look.")

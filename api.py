@@ -1,4 +1,7 @@
+import datetime
+import hmac
 import json
+import logging
 import os
 import queue
 import sqlite3
@@ -7,7 +10,7 @@ import time
 import uuid
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import StreamingResponse
 from langgraph.types import Command
 from pydantic import BaseModel, Field, model_validator
@@ -31,11 +34,53 @@ def make_checkpointer():
     return SqliteSaver(sqlite3.connect("checkpoints.db", check_same_thread=False))
 
 
-app = FastAPI(title="Company & Role Research Assistant")
+log = logging.getLogger("uvicorn.error")  # shows up in uvicorn's (and Render's) logs
+
+# Shared secret between the Streamlit UI and this API, so only the UI can start paid work. Set the same random
+# value on both deployed services; unset (local dev) means no check.
+API_TOKEN = os.getenv("API_TOKEN")
+if g.LOW_COST_MODE and not API_TOKEN:
+    log.warning("LOW_COST_MODE is on (public demo) but API_TOKEN is unset: anyone can call the paid endpoints")
+
+
+def require_token(x_api_token: str = Header(default="")):
+    if API_TOKEN and not hmac.compare_digest(x_api_token.encode(), API_TOKEN.encode()):
+        raise HTTPException(401, "unauthorized")
+
+
+# ponytail: in-memory caps, right for one server instance; move to Redis if the API ever runs on several.
+MAX_CONCURRENT_RUNS = 2  # pipeline runs in flight at once, resumes included
+MAX_CONCURRENT_QUICK_CHECKS = 3
+DAILY_LIMITS = {"briefings": int(os.getenv("DAILY_BRIEFING_LIMIT", "20")),
+                "quick_checks": int(os.getenv("DAILY_QUICK_CHECK_LIMIT", "100"))}
+BUSY_MESSAGE = "The demo is busy right now. Please try again in a few minutes."
+DAILY_MESSAGE = "The demo has reached its limit for today. Please try again tomorrow."
+GENERIC_ERROR = "Something went wrong on our side. Please start over and try again."
+
+app = FastAPI(title="Company & Role Research Assistant", dependencies=[Depends(require_token)])
 graph = builder.compile(checkpointer=make_checkpointer())
 runs: dict[str, threading.Thread] = {}  # in-flight runs, so GET can tell "running" from "stopped"
 runs_lock = threading.Lock()
+usage = {"day": None, "briefings": 0, "quick_checks": 0}  # today's counts (UTC) toward DAILY_LIMITS
+quick_checks_running = 0
+usage_lock = threading.Lock()
 HEARTBEAT_S = 5
+
+
+def take_daily(kind):
+    """Count one use toward today's cap, or refuse with 429 once it's reached."""
+    with usage_lock:
+        today = datetime.datetime.now(datetime.timezone.utc).date()
+        if usage["day"] != today:
+            usage.update(day=today, briefings=0, quick_checks=0)
+        if usage[kind] >= DAILY_LIMITS[kind]:
+            raise HTTPException(429, DAILY_MESSAGE)
+        usage[kind] += 1
+
+
+def give_back_daily(kind):  # the request was refused for another reason after counting: don't charge it
+    with usage_lock:
+        usage[kind] -= 1
 
 SUMMARY_FIELDS = {"researcher": ("new_findings", "total_findings", "thin_categories"),
                   "editor": ("quality_score", "counts", "decision", "feedback"),
@@ -43,18 +88,23 @@ SUMMARY_FIELDS = {"researcher": ("new_findings", "total_findings", "thin_categor
                   "writer": ("sections",)}
 
 
+# Every one of these lands in several paid prompts: cap them so one request can't cost dollars instead of cents.
+# The longest real posting in the evals is about 6,400 characters.
+MAX_COMPANY_CHARS, MAX_POSTING_CHARS, MAX_FEEDBACK_CHARS = 200, 20_000, 2_000
+
+
 class BriefingRequest(BaseModel):
-    company_name: str = Field(min_length=1)
-    job_posting: str = Field(min_length=1)
+    company_name: str = Field(min_length=1, max_length=MAX_COMPANY_CHARS)
+    job_posting: str = Field(min_length=1, max_length=MAX_POSTING_CHARS)
 
 
 class QuickCheckRequest(BaseModel):
-    company_name: str = Field(min_length=1)
+    company_name: str = Field(min_length=1, max_length=MAX_COMPANY_CHARS)
 
 
 class ResumeRequest(BaseModel):
     action: Literal["approve", "send_back"]
-    feedback: str = ""
+    feedback: str = Field(default="", max_length=MAX_FEEDBACK_CHARS)
 
     @model_validator(mode="after")
     def send_back_needs_feedback(self):
@@ -97,7 +147,10 @@ def run_graph(run_id, graph_input, events):
         else:
             emit("completed", final_report=snapshot.values["final_report"])
     except Exception as e:  # the checkpoint keeps everything up to the failing node
-        emit("error", node=node, message=str(e), budget_exhausted=isinstance(e, g.BudgetExhausted))
+        budget = isinstance(e, g.BudgetExhausted)
+        if not budget:  # the real error stays in the server log: it can name the database host or quote API responses
+            log.exception("run %s failed in %s", run_id, node or "pipeline")
+        emit("error", node=node, message=str(e) if budget else GENERIC_ERROR, budget_exhausted=budget)
     finally:
         with runs_lock:
             runs.pop(run_id, None)
@@ -112,6 +165,8 @@ def start_run(run_id, graph_input):
     with runs_lock:
         if run_id in runs:
             raise HTTPException(409, "this run is already in progress")
+        if len(runs) >= MAX_CONCURRENT_RUNS:
+            raise HTTPException(429, BUSY_MESSAGE)
         runs[run_id] = thread
     thread.start()
     return events, thread
@@ -153,18 +208,35 @@ def pipeline_settings():
 @app.post("/quick-check")
 def run_quick_check(req: QuickCheckRequest):
     """The cheap first step (about $0.02): visa sponsorship history and E-Verify, from the company name alone."""
+    global quick_checks_running
+    with usage_lock:
+        if quick_checks_running >= MAX_CONCURRENT_QUICK_CHECKS:
+            raise HTTPException(429, BUSY_MESSAGE)
+        quick_checks_running += 1
     try:
+        take_daily("quick_checks")
         return quick_check(req.company_name.strip())
     except g.BudgetExhausted:
         raise HTTPException(503, g.BUDGET_MESSAGE)
-    except Exception as e:  # e.g. Claude unavailable with no NIM fallback: say so instead of a bare 500
-        raise HTTPException(502, f"The quick check failed: {e}")
+    except HTTPException:
+        raise
+    except Exception:  # e.g. Claude unavailable with no NIM fallback; the details stay in the server log
+        log.exception("quick check failed for %r", req.company_name)
+        raise HTTPException(502, "The quick check couldn't finish. Please try again in a moment.")
+    finally:
+        with usage_lock:
+            quick_checks_running -= 1
 
 
 @app.post("/briefings")
 def create_briefing(req: BriefingRequest):
     run_id = uuid.uuid4().hex
-    events, _ = start_run(run_id, initial_state(req.company_name, req.job_posting))
+    take_daily("briefings")
+    try:
+        events, _ = start_run(run_id, initial_state(req.company_name, req.job_posting))
+    except HTTPException:  # busy: refused before any work, so it doesn't count toward today's cap
+        give_back_daily("briefings")
+        raise
     return stream_response(run_id, events)
 
 

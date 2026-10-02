@@ -318,9 +318,45 @@ html, body { background: #f5f5f7; }
   transition: opacity 0.6s ease-in 1s;
 }
 
+/* Demo-mode note on the home screen: each line is typed out once, one character per step (monospace, so 1ch = 1
+   character), the next line starting when the previous one ends; then the caret fades and the text stays. Set
+   inline per line: --n (its length), --prev (characters typed before it), --i (its position). Each line's box is
+   centered at its final width so the typing grows left-to-right from a fixed first letter. */
+.typewriter { display: flex; flex-direction: column; align-items: center; margin: 4px 0 0; }
+.typewriter > span {
+  --delay: calc(0.9s + var(--prev) * 55ms + var(--i) * 0.25s);  /* a short pause between lines */
+  --linger: 0.6s;  /* the last line's caret stays a moment before fading */
+  width: calc(var(--n) * 1ch);
+  text-align: left;  /* the hero centers its text; inside this fixed box the typing must start at the left */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #6e6e73;
+}
+.typewriter > span:not(:last-child) { --linger: 0s; }  /* hands the caret straight to the next line */
+.typewriter > span > span {
+  display: inline-block;
+  vertical-align: bottom;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  border-right: 2px solid transparent;  /* no caret until this line starts typing */
+  animation: type calc(var(--n) * 55ms) steps(var(--n), end) var(--delay) forwards,
+             caret-on 1ms linear var(--delay) forwards,
+             caret-off 0.4s ease calc(var(--delay) + var(--n) * 55ms + var(--linger)) forwards;
+}
+@keyframes type { to { width: calc(var(--n) * 1ch); } }
+@keyframes caret-on { to { border-right-color: currentColor; } }
+@keyframes caret-off { to { border-right-color: transparent; } }
+@media (max-width: 760px) {  /* the longer line no longer fits the column: show the lines wrapped, untyped */
+  .typewriter > span { width: auto; text-align: center; }
+  .typewriter > span > span { display: inline; white-space: normal; width: auto; border: 0; animation: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
+  .typewriter > span > span { width: auto; border: 0; }  /* would otherwise stay at zero width, invisible */
 }

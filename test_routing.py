@@ -278,6 +278,19 @@ def test_researcher_does_not_re_add_claims():
     assert "1 new findings (2 total)" in out["status"]
 
 
+def test_researcher_caps_searches_and_claims_in_code_not_just_the_prompt():
+    # What a hostile posting could talk the planner and extractor into: 40 searches and 30 claims in one pass.
+    plan = g.QueryPlan(queries=[g.Query(category="news", query=f"query {i}") for i in range(40)])
+    extracted = g.ResearchPass(findings=[g.Finding(claim=f"Scout AI fact {i}", category="news",
+                                                   source_url="https://ex.com/f") for i in range(30)])
+    searched = []
+    g.search = lambda q: searched.append(q) or []
+    g.ask = claude_only(lambda model, prompt, attempts=1: {g.QueryPlan: plan, g.ResearchPass: extracted}[model])
+    out = g.researcher(researcher_state([]))
+    assert len(searched) == len(g.CATEGORIES) == len(out["trace"][-1]["queries"])
+    assert out["trace"][-1]["new_findings"] == g.MAX_FINDINGS_PER_PASS == 12
+
+
 def claims(category, n, tag=""):
     return [{"claim": f"{category} fact {tag}{i}", "category": category, "source_url": "https://ex.com"} for i in range(n)]
 
