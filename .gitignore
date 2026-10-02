@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+output/
+
+# Secrets and anything that can hold them. .env.example (blank template) is the only env file that belongs in git.
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+.deepeval/
+# Saved run state (checkpoints) from local runs
+checkpoints.db*

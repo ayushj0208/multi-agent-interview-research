@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+"""Pre-commit guard: refuses a commit that stages a secrets file or adds a line that looks like an API key.
+
+Enable once per clone:    git config core.hooksPath .githooks
+A false positive (check it first!) can be committed with:    git commit --no-verify
+"""
+import re
+import subprocess
+import sys
+
+KEY_PATTERNS = {
+    "Anthropic key": r"sk-ant-[A-Za-z0-9_-]{20,}",
+    "OpenAI-style key": r"\bsk-(?:proj-)?[A-Za-z0-9_-]{20,}",
+    "Groq key": r"gsk_[A-Za-z0-9]{20,}",
+    "NVIDIA key": r"nvapi-[A-Za-z0-9_-]{20,}",
+    "Tavily key": r"tvly-[A-Za-z0-9_-]{16,}",
+    "Google key": r"AIza[0-9A-Za-z_-]{30,}",
+    "GitHub token": r"(?:ghp_|gho_|github_pat_)[A-Za-z0-9_]{20,}",
+    "AWS key": r"AKIA[0-9A-Z]{16}",
+    "private key": r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+    "database URL with a password": r"postgres(?:ql)?://[^:\s/'\"]+:[^@\s'\"]+@",
+    "hardcoded secret": r"(?i)(?:api[_-]?key|secret|token|password)\s*[:=]\s*['\"][A-Za-z0-9_\-]{16,}['\"]",
+}
+# Files that hold secrets or local run data. .env.example is the blank template and is allowed.
+SECRET_FILE = re.compile(r"(?:^|/)(?:\.env(?:\..+)?|checkpoints\.db.*|secrets\.toml)$")
+
+
+def git(*args):
+    return subprocess.run(["git", *args], capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
+
+
+problems = [f"{path}: secrets/run-data file; it must stay out of git"
+            for path in git("diff", "--cached", "--name-only", "--diff-filter=ACMR").splitlines()
+            if SECRET_FILE.search(path) and not path.endswith(".env.example")]
+
+path = None
+for line in git("diff", "--cached", "-U0", "--no-color").splitlines():
+    if line.startswith("+++ "):
+        path = line[6:] if line.startswith("+++ b/") else None
+    elif line.startswith("+") and path:
+        for kind, pattern in KEY_PATTERNS.items():
+            if match := re.search(pattern, line):
+                problems.append(f"{path}: possible {kind} ({match.group()[:10]}...)")
+                break  # one report per line, even if several patterns match it
+
+if problems:
+    print("Commit blocked, possible secrets staged:", *problems, sep="\n  ")
+    print("Unstage or remove them. If it's a false positive, check carefully, then: git commit --no-verify")
+    sys.exit(1)

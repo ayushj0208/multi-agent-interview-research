@@ -1,0 +1,134 @@
+{
+ "l1": {
+  "source_run": "335ba89dd8fd4be4bedd776a2090f5cb",
+  "twins": [
+   4,
+   24
+  ],
+  "pre_fix_baseline": "#4 verified via #24's check",
+  "replays": [
+   {
+    "both_twins_shown": true,
+    "twin_a_status": "unverified",
+    "twin_b_status": "unverified",
+    "twin_a_checked": false,
+    "twin_b_checked": true,
+    "verified_without_own_check": 0,
+    "providers": {
+     "questions": "claude",
+     "review": "claude",
+     "checks": [
+      "claude"
+     ]
+    }
+   }
+  ]
+ },
+ "l3": {
+  "n": 10,
+  "true_to_source": 10,
+  "true_as_fact": 8,
+  "not_true_as_fact": 1,
+  "unestablished": 1,
+  "judge_supported_but_false": [
+   "b4f105cc#10"
+  ],
+  "judge_supported_but_unestablished": [],
+  "rows": [
+   {
+    "id": "85c70543#None",
+    "claim": "Sony Interactive Entertainment partnered with Bad Robot Games to produce and publish the studio's first internally devel",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "The official SIE press release dated December 4, 2025 states Sony Interactive Entertainment partnered with Bad Robot Games to produce and publish the studio's first internally developed game, corroborated by GamesIndustry.biz and TechRadar coverage.",
+    "flagged": false
+   },
+   {
+    "id": "b4f105cc#0",
+    "claim": "Sony Interactive Entertainment released Ghost of Yōtei on PlayStation 5 on October 2, 2025.",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "Wikipedia and Sony Interactive Entertainment's own press release both confirm that Ghost of Yōtei, published by Sony Interactive Entertainment, launched worldwide on PlayStation 5 on October 2, 2025.",
+    "flagged": false
+   },
+   {
+    "id": "335ba89d#7",
+    "claim": "Operating profit for Sony's Game & Network Services segment climbed 12% to ¥463.3 billion in fiscal year 2025, a new rec",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "Sony's own FY2025 Q4 earnings speech states G&NS operating income increased 12% year-on-year to 463.3 billion yen and reached a record high for the segment, corroborated by the other sources.",
+    "flagged": false
+   },
+   {
+    "id": "335ba89d#6",
+    "claim": "Sony's Game & Network Services segment (which includes PlayStation) generated ¥4.6857 trillion in revenue for fiscal yea",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "Multiple sources, including Sony's own IR Q&A PDF noting sales were \"overall stable compared to the previous fiscal year,\" confirm the G&NS segment recorded ¥4.6857 trillion (¥4,685.7 billion) in FY2025 revenue, a marginal 0.3% (~¥15.6 billion) year-over-year increase.",
+    "flagged": false
+   },
+   {
+    "id": "52156394#7",
+    "claim": "Sony's G&NS segment materials report PlayStation has 124 million total monthly active users (MAU) and $846 in player lif",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "Sony's own G&NS segment business meeting deck explicitly displays \"124M Total MAU\" and \"$846 Player LTD Spend\" (with $846 shown as life-to-date spend per console as of March 31, 2025), matching the claim's figures and attribution.",
+    "flagged": false
+   },
+   {
+    "id": "335ba89d#33",
+    "claim": "PlayStation welcomed Haven Studios, a Montreal-based studio, to the PlayStation Studios family in 2022, with the studio'",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "The PlayStation Blog post dated March 21, 2022 is titled \"Welcoming Haven Studios to the PlayStation Studios family\" and states the Montreal-based studio's first new IP for PlayStation is a AAA multiplayer experience, corroborated by the SIE press release of the same date.",
+    "flagged": false
+   },
+   {
+    "id": "335ba89d#28",
+    "claim": "As of March 31, 2025, Sony Group had approximately 112,300 employees, a decrease of about 700 from the prior year.",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "Macrotrends lists Sony's total employee count for fiscal 2025 (year ending March 31, 2025) as 112,300, a 0.62% decline from 113,000 in 2024 — a decrease of roughly 700, matching the claim's figures; the March 31, 2025 fiscal year-end is consistent with Sony reporting cited in the Game File piece.",
+    "flagged": false
+   },
+   {
+    "id": "335ba89d#24",
+    "claim": "Sony launched the PlayStation Family app in September 2025, a new mobile app giving parents an easy way to manage their ",
+    "true_to_source": true,
+    "true_as_fact": true,
+    "independent_judge": "supported",
+    "judge_reasoning": "Multiple sources confirm Sony Interactive Entertainment announced/launched the PlayStation Family app on September 10, 2025, as a dedicated mobile (iOS/Android) parental control app giving parents an easy way to manage their children's gaming.",
+    "flagged": false
+   },
+   {
+    "id": "b4f105cc#10",
+    "claim": "SIE has approximately 8.3K employees according to LeadIQ's employee metrics.",
+    "true_to_source": true,
+    "true_as_fact": false,
+    "independent_judge": "supported",
+    "judge_reasoning": "Multiple LeadIQ pages state that Sony Interactive Entertainment has approximately 8.3K employees as of August 2026, matching the claim's figure and attribution to LeadIQ.",
+    "flagged": true
+   },
+   {
+    "id": "52156394#8",
+    "claim": "The PS5's user interface is built using React Native, confirming the technology stack referenced in the job description ",
+    "true_to_source": true,
+    "true_as_fact": null,
+    "independent_judge": "unconfirmable",
+    "judge_reasoning": "The listings show React Native is used in PlayStation mobile apps and in a multi-platform application framework for 'rich PlayStation user experiences' (with console listed only as a bonus cross-platform familiarity), but nothing states that the PS5 console's user interface itself is built with React Native.",
+    "flagged": true
+   }
+  ]
+ },
+ "cost": {
+  "pipeline": 0.23,
+  "judge": 0.229
+ }
+}

@@ -1,0 +1,113 @@
+https://stripe.com/careers/listing/software-engineer-new-grad/8130930
+
+[](https://stripe.com/)[](https://stripe.com/careers)
+
+*   [Opportunity](https://stripe.com/careers)
+*   [Compatibility](https://stripe.com/careers/compatibility)
+*   [Emerging talent](https://stripe.com/careers/emerging-talent)
+
+*   [Open roles](https://stripe.com/careers/search)
+
+[Open roles](https://stripe.com/careers/search)
+
+1.   [Roles at Stripe](https://stripe.com/careers/search)
+2.   /
+3.   Role details
+
+# Software Engineer, New Grad
+
+## Who we are
+
+### About Stripe
+
+Stripe is a technology company focused on improving the conditions for economic growth and prosperity. We build programmable financial infrastructure, rethinking from first principles how financial services should work, to make it easier and cheaper for any business to start and scale. More than 10 million [businesses](https://stripe.com/customers) build on Stripe, spanning the economic frontier—from solo founders to established enterprises—united by a practical focus on growth. The most ambitious companies in the world use Stripe as core infrastructure to grow faster. They process trillions of dollars a year on Stripe, equivalent to around 1.6% of global GDP. While economic growth makes everyone better off, open markets also enable greater variety. When any business can easily serve a global customer base, the quality and diversity of products in the world increase, and craft and creativity are unleashed into the smallest niches. Our own growth is wholly contingent on the success of the businesses building on Stripe. We therefore invest back into our technology at an unusual rate. We make [upgrades to our products](https://stripe.com/roadmap) every single day to deliver compounding gains to our customers. We maintain some of the most [reliable APIs](https://status.stripe.com/) on the internet. We build entirely new [pieces](https://tempo.xyz/) of [financial](https://mpp.dev/)[infrastructure](https://joinopenstandard.com/) to enable new ideas. And our significant advances in [risk and fraud](https://stripe.com/radar) infrastructure over many years are making the internet economy safer and more accessible.
+
+Though people at Stripe don’t tend to take themselves seriously, Stripe is a fairly serious place: our customers are depending on us for their livelihoods. We admire ambition, intensity, curiosity, humility, and rigor. The most effective people become knowledgeable about many domains besides their own. Any company is an applied exercise in understanding some aspect of society or the market. In working with so many (especially the new and innovative ones), we think that Stripe is one of the very best places to learn about how the world works.
+
+## Your role
+
+Stripe is large enough that individual products and projects can be rapidly deployed to a meaningful fraction of the world’s businesses, but small enough that individual agency still has outsized impact. Small teams can impact how millions of businesses grow. Right now the global economy is replatforming around AI, creating new opportunities for growth. We’re at the center of this, and we think the best work is still in front of us.
+
+To meet this moment, we’re looking for people who move with urgency, like hard problems, and want their work to matter at a time of great change. If that’s you, there’s no better place to build your career.
+
+## Who you are
+
+*   Ambitious builder: You’re energized by building solutions without clear precedent and solving problems with far-reaching consequences. Successful Stripes are deeply curious, and prefer the joy of discovery to the comfort of certainty.
+*   Rigorous thinker: You appreciate that things worth doing are rarely simple. You enjoy working on problems that have never been tackled before.
+*   Adaptable problem solver: You adapt quickly and treat obstacles as opportunities. At Stripe we embrace kindness while encouraging Stripes to take measured risks and act boldly, even in the absence of consensus.
+
+### Minimum requirements
+
+*   A Bachelor’s or Master’s degree in computer science or a directly related field, obtained by summer 2027, or equivalent work experience; New grad candidates should have no more than 18 months of professional experience (excluding internship experience).
+*   Experience and familiarity with programming, either through side projects or classwork. We work mostly in Java, Ruby, JavaScript, Scala, and Go. We believe new programming languages can be learned if the fundamentals and general knowledge are present.
+*   Experience from either previous internships or working collaboratively on multi-person coding projects (in a university or professional setting).
+*   Ability to learn unfamiliar systems and form an understanding of those systems, through independent research and working with a mentor or subject matter experts.
+*   Clear written communication skills, with the ability to explain your work to stakeholders, team members, and other Stripes.
+*   Ability to leverage AI tools to accelerate development while applying rigorous critical thinking and professional judgement to review, refine, and validate all outputs.
+
+### Preferred qualifications
+
+*   One or more areas of specialized knowledge (frontend, backend, infrastructure or other technologies) balanced with general skills and knowledge.
+*   Experience in code review practices, and an understanding of how to safely update production systems.
+*   Familiarity with navigating and managing work in large code bases.
+*   Experience leading small projects independently, and contributing to larger projects alongside peers.
+*   Ability to operate with high agency in navigating complex technical obstacles independently, knowing precisely when to unblock oneself and when to ask for help.
+
+## In-office expectations
+
+Office-assigned Stripes in most of our locations are currently expected to spend at least 50% of the time in a given month in their local office or with users. This expectation may vary depending on role, team and location. For example, Stripes in Stripe Delivery Center roles in Mexico City, Mexico, Bengaluru, India, and Dublin, Ireland work 100% from the office. Also, some teams have greater in-office attendance requirements, to appropriately support our users and workflows, which the hiring manager will discuss. This approach helps strike a balance between bringing people together for in-person collaboration and learning from each other, while supporting flexibility when possible.
+
+## Pay and benefits
+
+The annual salary range for this role in the primary location is £60,000 - £90,000. This range may change if you are hired in another location. For sales roles, the range provided is the role’s On Target Earnings (“OTE”) range, meaning that the range includes both the sales commissions/sales bonuses target and annual base salary for the role. This salary range may be inclusive of several career levels at Stripe and will be narrowed during the interview process based on a number of factors, including the candidate’s experience, qualifications, and specific location. Applicants interested in this role and who are not located in the primary location may request the annual salary range for their location during the interview process.
+
+Specific benefits and details about what compensation is included in the salary range listed above will vary depending on the applicant’s location and can be discussed in more detail during the interview process. Benefits/additional compensation for this role may include: equity, company bonus or sales commissions/bonuses; retirement plans; health benefits; and wellness stipends.
+
+## We look forward to hearing from you.
+
+At Stripe, we're looking for people with passion, grit, and integrity. You're encouraged to apply even if your experience doesn't precisely match the job description. Your skills and passion will stand out—and set you apart—especially if your career has taken some extraordinary twists and turns. At Stripe, we welcome diverse perspectives and people who think rigorously and aren't afraid to challenge assumptions. Join us.
+
+[Apply now](https://stripe.com/careers/apply/software-engineer-new-grad/8130930)
+
+Please find our EU applicant personal information notice [here](https://stripe.com/eu-applicant-notice).
+
+### Company
+
+Stripe
+
+### Team
+
+University
+
+### Office location
+
+London
+
+### Employment type
+
+Full time
+
+[Apply for this role](https://stripe.com/careers/apply/software-engineer-new-grad/8130930)
+
+[Apply for this role](https://stripe.com/careers/apply/software-engineer-new-grad/8130930)
+
+Products and pricing[Pricing](https://stripe.com/pricing)[Atlas](https://stripe.com/atlas)[Authorization Boost](https://stripe.com/authorization-boost)[Billing](https://stripe.com/billing)[Capital](https://stripe.com/capital)[Capital for platforms](https://stripe.com/capital/platforms)[Checkout](https://stripe.com/payments/checkout)[Climate](https://stripe.com/climate)[Connect](https://stripe.com/connect)[Crypto](https://stripe.com/use-cases/crypto)[Crypto Onramp](https://stripe.com/crypto-onramp)[Data Pipeline](https://stripe.com/data-pipeline)[Elements](https://stripe.com/payments/elements)[Financial Connections](https://stripe.com/financial-connections)[Global Payouts](https://stripe.com/payouts)[Identity](https://stripe.com/identity)[Invoicing](https://stripe.com/invoicing)[Issuing](https://stripe.com/issuing)[Link](https://stripe.com/payments/link)[Managed Payments](https://stripe.com/managed-payments)[Payment links](https://stripe.com/payments/payment-links)[Payment methods](https://stripe.com/payments/payment-methods)[Payments](https://stripe.com/payments)[Radar](https://stripe.com/radar)[Revenue Recognition](https://stripe.com/revenue-recognition)[Stripe Sigma](https://stripe.com/sigma)[Subscriptions](https://stripe.com/billing/subscriptions)[Tax](https://stripe.com/tax)[Terminal](https://stripe.com/terminal)[Treasury](https://stripe.com/treasury)[Treasury for platforms](https://stripe.com/treasury/platforms)[Usage-based billing](https://stripe.com/billing/usage-based-billing)
+
+Solutions[Enterprises](https://stripe.com/enterprise)[Startups](https://stripe.com/startups)[Agentic commerce](https://stripe.com/use-cases/agentic-commerce)[Crypto](https://stripe.com/use-cases/crypto)[Ecommerce](https://stripe.com/use-cases/ecommerce)[Embedded finance](https://stripe.com/use-cases/embedded-finance)[Finance automation](https://stripe.com/use-cases/finance-automation)[Global businesses](https://stripe.com/use-cases/global-businesses)[In-app payments](https://stripe.com/use-cases/in-app-payments)[Marketplaces](https://stripe.com/use-cases/marketplaces)[Money management](https://stripe.com/money-management/availability)[Platforms](https://stripe.com/use-cases/platforms)[SaaS](https://stripe.com/use-cases/saas)[AI companies](https://stripe.com/use-cases/ai)[Creator economy](https://stripe.com/use-cases/creator-economy)[Fintech](https://stripe.com/industries/fintech)[Gaming](https://stripe.com/industries/gaming)[Hospitality, travel, and leisure](https://stripe.com/industries/travel)[Insurance](https://stripe.com/industries/insurance)[Media and entertainment](https://stripe.com/industries/media-entertainment)[Nonprofits](https://stripe.com/industries/nonprofits)[Professional services](https://stripe.com/industries/professional-services)[Public sector](https://stripe.com/industries/public-sector)[Retail](https://stripe.com/industries/retail)
+
+Developers[Documentation](https://docs.stripe.com/)[API reference](https://docs.stripe.com/api)[API status](https://status.stripe.com/)[API changelog](https://docs.stripe.com/changelog)[Libraries and SDKs](https://docs.stripe.com/development)[Stripe Projects](https://docs.stripe.com/projects)[Developer blog](https://stripe.dev/)
+
+Integrations and custom solutions[Stripe App Marketplace](https://marketplace.stripe.com/)[Stripe Partner ecosystem](https://stripe.com/partners)[Professional services](https://stripe.com/professional-services)
+
+Resources[Product roadmap](https://stripe.com/roadmap)[Guides](https://stripe.com/guides)[Customer stories](https://stripe.com/customers)[Blog](https://stripe.com/blog)[Community](https://stripecommunity.com/)[Sessions annual conference](https://stripe.com/sessions)[Privacy and terms](https://stripe.com/privacy)[Prohibited and restricted businesses](https://stripe.com/legal/restricted-businesses)[Licenses](https://stripe.com/spc/licenses)[Sitemap](https://stripe.com/sitemap)[Cookie settings](https://stripe.com/cookie-settings)[Your privacy choices](https://privacy.stripe.com/)[More resources](https://stripe.com/resources/more)
+
+Company[About](https://stripe.com/about)[Careers](https://stripe.com/careers)[Newsroom](https://stripe.com/newsroom)[Stripe Press](https://press.stripe.com/)[Contact sales](https://stripe.com/contact/sales)
+
+Support[Get support](https://support.stripe.com/)[Managed support plans](https://stripe.com/support-plans)
+
+CA residents: +1 888 926 2289
+
+[Sign in](https://dashboard.stripe.com/login)
+
+United States(English)
+© 2026 Stripe, LLC.

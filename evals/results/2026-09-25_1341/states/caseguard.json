@@ -1,0 +1,945 @@
+{
+ "company_name": "CaseGuard",
+ "job_posting": "https://job-boards.greenhouse.io/caseguard/jobs/5387488008\n\n# Software Engineer - Backend\nLocation: Arlington, VA\n\nSoftware Engineer - Backend\n\nJob Description:\n\nWe are seeking a highly independent and proactive Software Engineer to join our backend team and play a critical role in building REST API microservices from scratch using ASP.NET Core (C#) and building cloud infrastructure using Infrastructure as Code (IaC) in AWS. In this role, you will contribute to collaborative file redacting tool with exciting features like live editing, image processing and more\n\nWhat you will do:\n\n- Model business domains into relational/NoSQL data structures\n\n- Design and build scalable REST APIs for our microservices using ASP.NET Core (C#).\n\n- Build heavy file-processing workers optimized for CPU/memory/throughput\n\n- Design AWS infrastructure with IaC\n\n- Participate in architectural discussions and contribute to decisions for system design and service structure.\n\nQualifications (Required):\n\n- Bachelor’s degree in Computer Science, Software Engineering, or equivalent experiences\n\n- 2+ years backend experience with REST APIs\n\n- Strong OOP fundamentals and critical thinking under ambiguity\n\n- Experience with relational databases and SQL, including schema design, indexes, and transactions. \n\n- Experience with Redis or distributed caching. \n\n- A track record of modeling business logic into databases\n\n- Comfort working independently on complex, underspecified problems\n\nQualifications (It’s a plus):\n\n- Strong understanding of distributed systems, scalability, and fault-tolerance patterns.\n\n- Familiarity with API design patterns such as Clean Architecture.\n\n- Experience processing PDFs, images, videos, or other large binary files. \n\n- Hands-on experience with AWS services (e.g., EC2, EKS, S3, Lambda, RDS, DynamoDB).\n\n- Practical knowledge of IaC tools (e.g., AWS CDK, Terraform, CloudFormation).\n\n- Experience with containerization tools (e.g., Docker) and orchestration platforms (e.g., Kubernetes).\n\n- Familiarity with event-driven architectures and message queues (e.g., SNS, SQS, EventBridge).\n\n- Knowledge of asynchronous programming and multi-threading in C#.\n\n- Relevant AWS certifications (e.g., AWS Certified Solutions Architect, AWS Certified Developer)\n\nBenefits:\n\n- Competitive Salary\n\n- Stock Option\n\n- Medical, Dental, and Vision Insurance\n\n- 401K\n\n- Paid Vacation\n\n- Ten paid holidays per year\n\n- Friendly and Learning environment\n\nAbout CaseGuard\n\nCaseGuard is a software company that helps law enforcement agencies, federal agencies, hospitals, schools, airports, and others manage all their media redaction needs in one easy-to-use redaction software. CaseGuard Studio is one of a kind. Our team is driven by a passion for great software design, creating great products, and creative processes; CaseGuard implements innovative ideas across multiple services and agencies. We invest in people. We nurture skills consistent with our values and our future strategy. Our passionate pursuit of excellence, the application of our creativity to solve our clients’ challenges, our technical expertise, and our collaborative spirit are measures of our success.\n",
+ "raw_findings": [
+  {
+   "claim": "CaseGuard Studio runs fully on-premise, including in air-gapped systems completely isolated from external networks, ensuring organizations retain full control of their data.",
+   "category": "news",
+   "source_url": "https://www.artificialintelligence-news.com/news/ai-redaction-that-puts-privacy-first-caseguard-studio-leading-the-way"
+  },
+  {
+   "claim": "CaseGuard offers both a Redaction Studio Subscription (on-premise all-in-one solution) and On-Demand Expert Redaction Services where CaseGuard experts redact files with client review and approval.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/video-library"
+  },
+  {
+   "claim": "CaseGuard Studio is an on-premise AI redaction software that redacts sensitive information across video, audio, documents, and images, and can automatically detect and redact 33 categories of PII, PCI, and PHI.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/how-it-works"
+  },
+  {
+   "claim": "CaseGuard Studio helps organizations meet FOIA, FERPA, GDPR, and HIPAA requirements while keeping sensitive files off the cloud.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/how-it-works"
+  },
+  {
+   "claim": "CaseGuard's AI redaction software supports over 750 file types and formats, including video, audio, images, documents, and emails.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/bulk-redaction-software"
+  },
+  {
+   "claim": "CaseGuard's bulk redaction tools let users upload and process multiple video, audio, and image files simultaneously, choosing from 12 categories of PII to redact.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/bulk-redaction-software"
+  },
+  {
+   "claim": "CaseGuard's image redaction feature can redact faces, vehicles, screens, and more 98% faster from thousands of images automatically using AI.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/help-center/videos/caseguard-studio-training-course"
+  },
+  {
+   "claim": "CaseGuard's bulk AI redaction can clear backlogs 85% faster across videos, audio, documents, and images.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/help-center/videos/caseguard-studio-training-course"
+  },
+  {
+   "claim": "CaseGuard's transcription and translation features can automatically transcribe, translate, and burn closed captions on audio or video files in 50+ languages, 95% faster with AI.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/help-center/videos/pdf-redaction-basics"
+  },
+  {
+   "claim": "Software Engineers at CaseGuard should be familiar with technologies including C#, ASP.NET Core, AWS, WebAssembly, WebGL, and modern frontend frameworks for building high-performance media processing applications.",
+   "category": "tech_stack",
+   "source_url": "https://www.interviewquery.com/interview-guides/caseguard-software-engineer"
+  },
+  {
+   "claim": "In 2025, CaseGuard's estimated revenue reached $4.1M as of September 2025, with no publicly reported funding rounds.",
+   "category": "funding",
+   "source_url": "https://getlatka.com/companies/caseguard.com"
+  },
+  {
+   "claim": "CaseGuard's Software Engineer role has a reported median total compensation of $89,550 per year according to Levels.fyi salary data.",
+   "category": "culture",
+   "source_url": "https://www.levels.fyi/companies/caseguard/salaries"
+  },
+  {
+   "claim": "CaseGuard Studio is an on-premise AI redaction software that helps organizations redact sensitive information across video, audio, documents, and images from one secure, easy-to-use platform.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/how-it-works"
+  },
+  {
+   "claim": "CaseGuard's AI can automatically detect and redact 33 categories of PII, PCI, and PHI from documents and audio.",
+   "category": "tech_stack",
+   "source_url": "https://caseguard.com/how-it-works"
+  },
+  {
+   "claim": "CaseGuard Studio offers bulk processing and transcribes and translates audio in over 100 languages.",
+   "category": "tech_stack",
+   "source_url": "https://caseguard.com/faqs"
+  },
+  {
+   "claim": "CaseGuard Studio can work both online and fully offline, catering to complex redaction needs arising from data privacy laws for legal teams and law enforcement.",
+   "category": "role_context",
+   "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+  },
+  {
+   "claim": "CaseGuard offers unlimited automated redaction of faces, license plates, screens, and notes in videos and images, plus muting/bleeping/replacing PII in audio through auto-transcription.",
+   "category": "tech_stack",
+   "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+  },
+  {
+   "claim": "CaseGuard is a data security software company based in Arlington, Virginia, with 11 to 50 employees, located at 1700 North Moore Street, Arlington, VA 22209.",
+   "category": "culture",
+   "source_url": "https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory"
+  },
+  {
+   "claim": "CaseGuard's product is used by law enforcement, government agencies, legal departments, and educational institutions worldwide.",
+   "category": "role_context",
+   "source_url": "https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory"
+  },
+  {
+   "claim": "CaseGuard has approximately 57 employees (48 per RocketReach data) and reported revenue of about $6 million.",
+   "category": "funding",
+   "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63"
+  },
+  {
+   "claim": "RocketReach lists CaseGuard's technology stack as including JavaScript, HTML, PHP, and over 23 other technologies.",
+   "category": "tech_stack",
+   "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63"
+  },
+  {
+   "claim": "CaseGuard is categorized under Data Security Software Products, with keywords including Data Redaction, Privacy Protection, Data Privacy, and Data Security.",
+   "category": "role_context",
+   "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63"
+  },
+  {
+   "claim": "CaseGuard has employees including a Talent Acquisition Specialist, indicating an active hiring function within the company.",
+   "category": "culture",
+   "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63"
+  },
+  {
+   "claim": "CaseGuard is trusted daily by teams across healthcare facilities, ensuring patient privacy through its redaction services.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/faqs"
+  },
+  {
+   "claim": "CaseGuard Studio is an on-premise application designed to meet complex redaction needs arising from data privacy laws for legal teams, law enforcement, and more.",
+   "category": "role_context",
+   "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+  },
+  {
+   "claim": "CaseGuard, Inc. was founded in 2014.",
+   "category": "role_context",
+   "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+  },
+  {
+   "claim": "CaseGuard's AI-powered redaction offers unlimited automated redaction of faces, license plates, screens, and notes in videos and images.",
+   "category": "tech_stack",
+   "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+  },
+  {
+   "claim": "CaseGuard Studio can mute, bleep, or replace PII in audio through auto-transcription.",
+   "category": "tech_stack",
+   "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+  },
+  {
+   "claim": "CaseGuard has released iterative product updates, including CaseGuard 9.7, 9.8, and 9.9 version releases with new feature drops.",
+   "category": "news",
+   "source_url": "https://caseguard.com/video-library"
+  },
+  {
+   "claim": "CaseGuard's Redaction Studio supports bulk redaction of over 100 videos at once using AI.",
+   "category": "tech_stack",
+   "source_url": "https://caseguard.com/video-library"
+  },
+  {
+   "claim": "CaseGuard allows analysis of up to 16 videos side-by-side for faster investigations.",
+   "category": "tech_stack",
+   "source_url": "https://caseguard.com/video-library"
+  },
+  {
+   "claim": "CaseGuard's bulk redaction feature can automatically redact thousands of videos, documents, audio, and image files simultaneously in just a few clicks.",
+   "category": "tech_stack",
+   "source_url": "https://caseguard.com/use-cases/media-and-entertainment"
+  },
+  {
+   "claim": "CaseGuard claims its bulk redaction feature can bring down review time from days to hours, reducing backlogs by up to 85% faster processing.",
+   "category": "tech_stack",
+   "source_url": "https://caseguard.com/video-library"
+  },
+  {
+   "claim": "CaseGuard's use cases extend to media and entertainment organizations needing compliance-driven redaction at scale.",
+   "category": "role_context",
+   "source_url": "https://caseguard.com/use-cases/media-and-entertainment"
+  }
+ ],
+ "verified_findings": {
+  "news": [
+   {
+    "claim_index": 0,
+    "claim": "CaseGuard Studio runs fully on-premise, including in air-gapped systems completely isolated from external networks, ensuring organizations retain full control of their data.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "air-gapped isolation specifics"
+    ],
+    "note": "No independent check was run against this specific claim; source is a dedicated news article about CaseGuard Studio's privacy positioning, so citation is plausible but unconfirmed.",
+    "source_url": "https://www.artificialintelligence-news.com/news/ai-redaction-that-puts-privacy-first-caseguard-studio-leading-the-way"
+   },
+   {
+    "claim_index": 28,
+    "claim": "CaseGuard has released iterative product updates, including CaseGuard 9.7, 9.8, and 9.9 version releases with new feature drops.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "specific version numbers 9.7, 9.8, 9.9"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/video-library"
+   }
+  ],
+  "role_context": [
+   {
+    "claim_index": 1,
+    "claim": "CaseGuard offers both a Redaction Studio Subscription (on-premise all-in-one solution) and On-Demand Expert Redaction Services where CaseGuard experts redact files with client review and approval.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "exact service names and approval workflow"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/video-library"
+   },
+   {
+    "claim_index": 2,
+    "claim": "CaseGuard Studio is an on-premise AI redaction software that redacts sensitive information across video, audio, documents, and images, and can automatically detect and redact 33 categories of PII, PCI, and PHI (also described elsewhere as covering documents and audio specifically).",
+    "status": "contradicted",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "the figure '33 categories'"
+    ],
+    "note": "Merged with claim 13. Independent check found CaseGuard's own pages cite '30+ categories of PII/PCI/PHI combined' and separately '50+ types of PHI', not matching the specific '33' figure in the claim.",
+    "source_url": "https://caseguard.com/how-it-works"
+   },
+   {
+    "claim_index": 3,
+    "claim": "CaseGuard Studio helps organizations meet FOIA, FERPA, GDPR, and HIPAA requirements while keeping sensitive files off the cloud.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "which specific regulations are named on the page"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/how-it-works"
+   },
+   {
+    "claim_index": 4,
+    "claim": "CaseGuard's AI redaction software supports over 750 file types and formats, including video, audio, images, documents, and emails.",
+    "status": "verified",
+    "confidence": "high",
+    "unconfirmed_specifics": [],
+    "note": "Independent check confirmed this figure exactly, though noted a breakdown by suite (300+/600+/900+) that the claim doesn't mention.",
+    "source_url": "https://caseguard.com/bulk-redaction-software"
+   },
+   {
+    "claim_index": 5,
+    "claim": "CaseGuard's bulk redaction tools let users upload and process multiple video, audio, and image files simultaneously, choosing from 12 categories of PII to redact.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "the figure '12 categories'"
+    ],
+    "note": "No independent check targeted the '12 categories' figure specifically.",
+    "source_url": "https://caseguard.com/bulk-redaction-software"
+   },
+   {
+    "claim_index": 6,
+    "claim": "CaseGuard's image redaction feature can redact faces, vehicles, screens, and more 98% faster from thousands of images automatically using AI.",
+    "status": "unverified",
+    "confidence": "low",
+    "unconfirmed_specifics": [
+     "98% figure"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/help-center/videos/caseguard-studio-training-course"
+   },
+   {
+    "claim_index": 7,
+    "claim": "CaseGuard's bulk AI redaction can clear backlogs up to 85% faster across videos, audio, documents, and images, bringing review time from days to hours.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "85% figure"
+    ],
+    "note": "Merged with claim 32 (duplicate of the same statistic from different pages). Not independently checked.",
+    "source_url": "https://caseguard.com/help-center/videos/caseguard-studio-training-course"
+   },
+   {
+    "claim_index": 8,
+    "claim": "CaseGuard's transcription and translation features can automatically transcribe, translate, and burn closed captions on audio or video files in 50+ languages, 95% faster with AI.",
+    "status": "unverified",
+    "confidence": "low",
+    "unconfirmed_specifics": [
+     "50+ languages",
+     "95% faster"
+    ],
+    "note": "Source URL is a 'PDF redaction basics' help page, which is unlikely to cover transcription/translation features — citation appears mismatched. Original citation (https://caseguard.com/help-center/videos/pdf-redaction-basics) doesn't support this claim.",
+    "source_url": null
+   },
+   {
+    "claim_index": 12,
+    "claim": "CaseGuard Studio is an on-premise AI redaction software that helps organizations redact sensitive information across video, audio, documents, and images from one secure, easy-to-use platform.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "'one secure, easy-to-use platform' phrasing"
+    ],
+    "note": "Similar to claim 2 but not independently checked on its own.",
+    "source_url": "https://caseguard.com/how-it-works"
+   },
+   {
+    "claim_index": 15,
+    "claim": "CaseGuard Studio can work both online and fully offline, catering to complex redaction needs arising from data privacy laws for legal teams and law enforcement.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "online/offline capability specifics"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+   },
+   {
+    "claim_index": 18,
+    "claim": "CaseGuard's product is used by law enforcement, government agencies, legal departments, and educational institutions worldwide.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "worldwide usage scope"
+    ],
+    "note": "Source is an employee-directory page, unlikely to substantiate customer-base claims. Original citation (https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory) doesn't support this claim.",
+    "source_url": null
+   },
+   {
+    "claim_index": 21,
+    "claim": "CaseGuard is categorized under Data Security Software Products, with keywords including Data Redaction, Privacy Protection, Data Privacy, and Data Security.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "exact keyword list"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63"
+   },
+   {
+    "claim_index": 23,
+    "claim": "CaseGuard is trusted daily by teams across healthcare facilities, ensuring patient privacy through its redaction services.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "healthcare-specific usage claim"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/faqs"
+   },
+   {
+    "claim_index": 24,
+    "claim": "CaseGuard Studio is an on-premise application designed to meet complex redaction needs arising from data privacy laws for legal teams, law enforcement, and more.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [],
+    "note": "Not independently checked; overlaps with claim 15 from the same source.",
+    "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+   },
+   {
+    "claim_index": 25,
+    "claim": "CaseGuard, Inc. was founded in 2014.",
+    "status": "verified",
+    "confidence": "high",
+    "unconfirmed_specifics": [],
+    "note": "Independent check confirmed the 2014 founding date, but via caseguard.com/why-us rather than the cited lawnext directory page, suggesting the citation itself may not state this fact. Citation corrected to a source that states this (was https://directory.lawnext.com/products/caseguard-studio).",
+    "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+   },
+   {
+    "claim_index": 33,
+    "claim": "CaseGuard's use cases extend to media and entertainment organizations needing compliance-driven redaction at scale.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/use-cases/media-and-entertainment"
+   }
+  ],
+  "tech_stack": [
+   {
+    "claim_index": 9,
+    "claim": "Software Engineers at CaseGuard should be familiar with technologies including C#, ASP.NET Core, AWS, WebAssembly, WebGL, and modern frontend frameworks for building high-performance media processing applications.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "WebAssembly",
+     "WebGL",
+     "specific frontend frameworks"
+    ],
+    "note": "Overlaps with posting (C#, ASP.NET Core, AWS) but adds specifics (WebAssembly, WebGL) not in the posting or independently confirmed.",
+    "source_url": "https://www.interviewquery.com/interview-guides/caseguard-software-engineer"
+   },
+   {
+    "claim_index": 14,
+    "claim": "CaseGuard Studio offers bulk processing and transcribes and translates audio in over 100 languages.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "100+ languages figure"
+    ],
+    "note": "Not independently checked; conflicts numerically with claim 8's '50+ languages' from a different page, suggesting inconsistent marketing figures.",
+    "source_url": "https://caseguard.com/faqs"
+   },
+   {
+    "claim_index": 16,
+    "claim": "CaseGuard offers unlimited automated redaction of faces, license plates, screens, and notes in videos and images, plus muting/bleeping/replacing PII in audio through auto-transcription.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "'unlimited' claim"
+    ],
+    "note": "Merged with claims 26 and 27, which restate the same feature set from the same source.",
+    "source_url": "https://directory.lawnext.com/products/caseguard-studio"
+   },
+   {
+    "claim_index": 20,
+    "claim": "RocketReach lists CaseGuard's technology stack as including JavaScript, HTML, PHP, and over 23 other technologies.",
+    "status": "unverified",
+    "confidence": "low",
+    "unconfirmed_specifics": [
+     "JavaScript, HTML, PHP",
+     "23+ other technologies"
+    ],
+    "note": "Independent check returned no matching RocketReach data for CaseGuard at all (results were about unrelated companies), so this could not be corroborated. Original citation (https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63) doesn't support this claim.",
+    "source_url": null
+   },
+   {
+    "claim_index": 29,
+    "claim": "CaseGuard's Redaction Studio supports bulk redaction of over 100 videos at once using AI.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "100+ videos figure"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/video-library"
+   },
+   {
+    "claim_index": 30,
+    "claim": "CaseGuard allows analysis of up to 16 videos side-by-side for faster investigations.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "16 videos figure"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/video-library"
+   },
+   {
+    "claim_index": 31,
+    "claim": "CaseGuard's bulk redaction feature can automatically redact thousands of videos, documents, audio, and image files simultaneously in just a few clicks.",
+    "status": "unverified",
+    "confidence": "medium",
+    "unconfirmed_specifics": [
+     "'thousands of files' figure"
+    ],
+    "note": "Not independently checked.",
+    "source_url": "https://caseguard.com/use-cases/media-and-entertainment"
+   }
+  ],
+  "funding": [
+   {
+    "claim_index": 10,
+    "claim": "In 2025, CaseGuard's estimated revenue reached $4.1M as of September 2025, with no publicly reported funding rounds.",
+    "status": "verified",
+    "confidence": "high",
+    "unconfirmed_specifics": [],
+    "note": "Independent check confirmed both the $4.1M Latka estimate and the absence of funding rounds across multiple sources (Growjo, Tracxn).",
+    "source_url": "https://getlatka.com/companies/caseguard.com"
+   },
+   {
+    "claim_index": 19,
+    "claim": "CaseGuard has approximately 57 employees (48 per RocketReach data) and reported revenue of about $6 million.",
+    "status": "verified",
+    "confidence": "high",
+    "unconfirmed_specifics": [],
+    "note": "Independent check confirmed RocketReach's reported 48/57 employee figures and ~$6M revenue, though other sources give lower figures (Latka $4.1M/37 employees, Growjo $2.8M/28 employees).",
+    "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63"
+   }
+  ],
+  "culture": [
+   {
+    "claim_index": 11,
+    "claim": "CaseGuard's Software Engineer role has a reported median total compensation of $89,550 per year according to Levels.fyi salary data.",
+    "status": "unverified",
+    "confidence": "low",
+    "unconfirmed_specifics": [
+     "$89,550 figure"
+    ],
+    "note": "Independent check found no Levels.fyi data on CaseGuard at all, so this specific figure could not be corroborated. Original citation (https://www.levels.fyi/companies/caseguard/salaries) doesn't support this claim.",
+    "source_url": null
+   },
+   {
+    "claim_index": 17,
+    "claim": "CaseGuard is a data security software company based in Arlington, Virginia, with 11 to 50 employees, located at 1700 North Moore Street, Arlington, VA 22209.",
+    "status": "verified",
+    "confidence": "high",
+    "unconfirmed_specifics": [],
+    "note": "Independent check confirmed exact HQ address and the 11–50 employee range (LeadIQ), though other sources (Latka) estimate ~37 employees.",
+    "source_url": "https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory"
+   },
+   {
+    "claim_index": 22,
+    "claim": "CaseGuard has employees including a Talent Acquisition Specialist, indicating an active hiring function within the company.",
+    "status": "unverified",
+    "confidence": "low",
+    "unconfirmed_specifics": [
+     "specific role title"
+    ],
+    "note": "Not independently checked, but plausible given company hiring for this role.",
+    "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63"
+   }
+  ]
+ },
+ "final_report": "# CaseGuard: Interview Briefing\n\nCaseGuard is a small, Arlington, VA-based data security company (founded in 2014) that builds CaseGuard Studio, an on-premise AI redaction platform used by law enforcement, government agencies, and other regulated organizations to redact sensitive information from video, audio, documents, and images. This backend role sits at the center of that mission: building REST API microservices in ASP.NET Core, standing up AWS infrastructure via IaC, and building heavy file-processing workers for the product's redaction and media-processing features. Below is a briefing pulling together what's known and reported about the company to help you prepare.\n\n## Role Context\n- CaseGuard Studio is marketed as an on-premise AI redaction platform covering video, audio, documents, and images from a single interface, though a specific figure of 33 categories of PII/PCI/PHI cited in one source appears inconsistent with the company's own materials elsewhere, so that exact number shouldn't be taken as confirmed. ([source](https://caseguard.com/how-it-works))\n- CaseGuard reportedly positions the Studio as helping organizations meet FOIA, FERPA, GDPR, and HIPAA requirements while keeping sensitive files off the cloud, according to the company's own site, though this hasn't been independently verified. ([source](https://caseguard.com/how-it-works))\n- CaseGuard's AI redaction software supports over 750 file types and formats, including video, audio, images, documents, and emails. ([source](https://caseguard.com/bulk-redaction-software))\n- According to CaseGuard's own materials, its bulk redaction tools let users upload and process multiple video, audio, and image files simultaneously across 12 categories of PII, though that specific category count hasn't been independently confirmed. ([source](https://caseguard.com/bulk-redaction-software))\n- The company claims its bulk AI redaction can clear case backlogs up to 85% faster, cutting review time from days to hours — a statistic repeated across several CaseGuard pages but not independently verified. ([source](https://caseguard.com/help-center/videos/caseguard-studio-training-course))\n- Per a legal-tech directory listing, CaseGuard Studio can reportedly operate both online and fully offline, which the company positions as useful for legal teams and law enforcement facing strict data-privacy requirements, though this hasn't been independently confirmed. ([source](https://directory.lawnext.com/products/caseguard-studio))\n- CaseGuard, Inc. was founded in 2014. ([source](https://directory.lawnext.com/products/caseguard-studio))\n\n## Recent News\n- One dedicated news article on CaseGuard Studio's privacy positioning reports that the platform runs fully on-premise, including in air-gapped systems completely isolated from external networks, so organizations retain full control of their data — though the specifics of this air-gapped isolation haven't been independently confirmed. ([source](https://www.artificialintelligence-news.com/news/ai-redaction-that-puts-privacy-first-caseguard-studio-leading-the-way))\n- CaseGuard reportedly has shipped iterative product updates, including version releases 9.7, 9.8, and 9.9 with new feature drops, according to its video library, though these specific version numbers haven't been independently verified. ([source](https://caseguard.com/video-library))\n\n## Funding & Business\n- CaseGuard's estimated revenue reached about $4.1M as of September 2025, with no publicly reported funding rounds. ([source](https://getlatka.com/companies/caseguard.com))\n- CaseGuard has approximately 57 employees (48 per RocketReach data) and reported revenue of about $6 million, though other sources give somewhat lower figures. ([source](https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63))\n\n## Tech Stack\n- According to one interview-prep guide, Software Engineers at CaseGuard should be familiar with technologies including C#, ASP.NET Core, AWS, WebAssembly, WebGL, and modern frontend frameworks for building high-performance media processing applications — though the WebAssembly/WebGL specifics go beyond what's in the job posting and haven't been independently confirmed. ([source](https://www.interviewquery.com/interview-guides/caseguard-software-engineer))\n- CaseGuard reportedly offers unlimited automated redaction of faces, license plates, screens, and notes in videos and images, plus muting, bleeping, or replacing PII in audio via auto-transcription, per a legal-tech directory listing that hasn't been independently verified. ([source](https://directory.lawnext.com/products/caseguard-studio))\n- CaseGuard's Redaction Studio is said to support bulk redaction of over 100 videos at once using AI, according to the company's video library, though this figure hasn't been independently confirmed. ([source](https://caseguard.com/video-library))\n- CaseGuard reportedly allows analysis of up to 16 videos side-by-side for faster investigations, per its video library page, though this hasn't been independently verified. ([source](https://caseguard.com/video-library))\n- CaseGuard's bulk redaction feature is described as able to automatically redact thousands of videos, documents, audio, and image files simultaneously in just a few clicks, according to a company use-case page, though this hasn't been independently confirmed. ([source](https://caseguard.com/use-cases/media-and-entertainment))\n\n## Culture\n- CaseGuard is a data security software company based in Arlington, Virginia, with 11 to 50 employees, headquartered at 1700 North Moore Street, Arlington, VA 22209. ([source](https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory))\n- CaseGuard reportedly has a Talent Acquisition Specialist on staff, suggesting an active hiring function, though this specific role detail hasn't been independently verified. ([source](https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63))\n\n## Talking Points\n1. CaseGuard's emphasis on heavy file-processing performance (e.g., claims of clearing backlogs up to 85% faster) lines up well with the role's focus on building CPU/memory/throughput-optimized file-processing workers — worth highlighting any prior experience optimizing large binary file pipelines.\n2. CaseGuard Studio's on-premise, reportedly air-gapped deployment model and compliance focus (FOIA, FERPA, GDPR, HIPAA) suggest the backend team needs engineers comfortable designing secure, self-hosted AWS infrastructure with IaC — a good moment to speak to any experience with regulated or isolated environments.\n3. As a lean team (roughly 11-50 employees, single-digit-million revenue) building microservices from scratch, CaseGuard likely needs someone who thrives on ambiguity and ownership — a strong match if you can point to independent work modeling business logic into databases and designing APIs end-to-end.\n4. Given the product's scale claims around bulk processing (thousands of files, 100+ videos at once), the candidate's experience with relational/NoSQL data modeling and Redis or distributed caching directly supports the kind of throughput CaseGuard's redaction pipeline seems to require.\n5. With reported iterative releases (9.7-9.9) and an active hiring function, CaseGuard appears to be scaling its engineering output — a chance to express interest in joining a growing team that ships frequent feature updates to its redaction platform.\n\n## Questions to Ask Them\n- Given CaseGuard Studio's on-premise and reportedly air-gapped deployment model, how does the backend team approach AWS infrastructure and IaC design when many customer environments may be isolated from the cloud?\n- What does the current microservice architecture look like today, and how much of the AWS/backend build-out for this role would be greenfield versus extending existing services?\n- For the heavy file-processing workers handling video, image, and document redaction, what are the current bottlenecks in CPU, memory, or throughput, and what patterns (e.g., queues, distributed caching, async processing) is the team exploring?\n- How does the team balance frequent feature releases with maintaining fault tolerance and scalability as the customer base and file volumes grow?\n- What does day-to-day collaboration look like between the backend team and other functions, given the company's relatively small engineering team?\n\n## Sources\n- https://caseguard.com/how-it-works\n- https://caseguard.com/bulk-redaction-software\n- https://caseguard.com/help-center/videos/caseguard-studio-training-course\n- https://directory.lawnext.com/products/caseguard-studio\n- https://www.artificialintelligence-news.com/news/ai-redaction-that-puts-privacy-first-caseguard-studio-leading-the-way\n- https://caseguard.com/video-library\n- https://getlatka.com/companies/caseguard.com\n- https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63\n- https://www.interviewquery.com/interview-guides/caseguard-software-engineer\n- https://caseguard.com/use-cases/media-and-entertainment\n- https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory",
+ "iteration_count": 3,
+ "editor_feedback": null,
+ "status": "Writer finished: 5 sections, 5 talking points",
+ "trace": [
+  {
+   "node": "researcher",
+   "iteration": 1,
+   "queries": [
+    {
+     "category": "news",
+     "query": "CaseGuard Studio redaction software news 2024 2025"
+    },
+    {
+     "category": "funding",
+     "query": "CaseGuard Solutions funding investment"
+    },
+    {
+     "category": "tech_stack",
+     "query": "CaseGuard Studio ASP.NET Core AWS engineering blog tech stack"
+    },
+    {
+     "category": "culture",
+     "query": "CaseGuard Solutions employee reviews Glassdoor culture"
+    },
+    {
+     "category": "role_context",
+     "query": "CaseGuard Studio redaction software file processing image PDF video features"
+    }
+   ],
+   "new_findings": 12,
+   "total_findings": 12,
+   "thin_categories": [
+    "news",
+    "funding",
+    "tech_stack",
+    "culture"
+   ],
+   "status": "Researcher pass 1: 5 searches, 12 new findings (12 total), thin: ['news', 'funding', 'tech_stack', 'culture']",
+   "providers": {
+    "plan": "claude",
+    "extract": "claude"
+   }
+  },
+  {
+   "node": "researcher",
+   "iteration": 2,
+   "queries": [
+    {
+     "category": "news",
+     "query": "CaseGuard Studio 2024 2025 product launch announcement press release"
+    },
+    {
+     "category": "funding",
+     "query": "CaseGuard Studio Inc investors funding round Crunchbase"
+    },
+    {
+     "category": "tech_stack",
+     "query": "CaseGuard Studio engineering blog GitHub AWS microservices architecture"
+    },
+    {
+     "category": "culture",
+     "query": "CaseGuard Studio Glassdoor employee reviews work culture Arlington VA"
+    }
+   ],
+   "new_findings": 12,
+   "total_findings": 24,
+   "thin_categories": [
+    "news",
+    "funding"
+   ],
+   "status": "Researcher pass 2: 4 searches, 12 new findings (24 total), thin: ['news', 'funding']",
+   "providers": {
+    "plan": "claude",
+    "extract": "claude"
+   }
+  },
+  {
+   "node": "researcher",
+   "iteration": 3,
+   "queries": [
+    {
+     "category": "news",
+     "query": "CaseGuard Studio 2025 press release new feature announcement"
+    },
+    {
+     "category": "funding",
+     "query": "CaseGuard Solutions Inc funding round investors Crunchbase"
+    }
+   ],
+   "new_findings": 10,
+   "total_findings": 34,
+   "thin_categories": [
+    "news",
+    "funding"
+   ],
+   "status": "Researcher pass 3: 2 searches, 10 new findings (34 total), thin: ['news', 'funding']",
+   "providers": {
+    "plan": "claude",
+    "extract": "claude"
+   }
+  },
+  {
+   "node": "editor",
+   "iteration": 3,
+   "checks": [
+    {
+     "claim_index": 2,
+     "question": "What categories and number of PII, PCI, and PHI types can CaseGuard Studio automatically detect and redact?",
+     "answer": "Based on the search results, CaseGuard Studio can automatically detect and redact 30+ categories of PII, PCI, and PHI combined (as stated across its document redaction, call center, and general use cases). Additionally, for PHI specifically, CaseGuard's AI-powered redaction can identify and redact over 50 types of PHI, including patient names, diagnoses, addresses, and Social Security numbers.",
+     "source_url": "https://caseguard.com/use-cases/call-centers",
+     "results": [
+      {
+       "url": "https://caseguard.com/articles/sensitive-information-protected-patient-privacy-hipaa-and-you",
+       "content": "Permanent PHI Removal: CaseGuard goes beyond surface masking by deleting underlying text, metadata, and embedded data so PHI cannot be recovered, meeting HIPAA’s redaction standards.\n\nAI-Powered Redaction: Process thousands of medical records, PDFs, or scanned files in minutes. Automated detection identifies and redacts over 50 types of PHI, including patient names, diagnoses, addresses, and Social Security numbers. [...] Bulk Redaction\n\nAutomatically redact unlimited number of videos, audio, documents, & images 85% faster and clear your backlog with AI bulk redaction software.\n\nImage Redactio"
+      },
+      {
+       "url": "https://caseguard.com/use-cases/call-centers",
+       "content": "Absolutely! While CaseGuard automatically detects and redacts 30+ categories of personally identifiable information (PII), you can create lists specific to your business needs, from PCI terms to industry-specific identifiers. With CaseGuard’s automated redaction software, you can easily set these custom rules so that every instance of those words or phrases is consistently identified and removed across all your audio files. [...] Auto Redact thousands of call recordings in minutes with CaseGuard AI\n\n## Auto-Redact\n\nSelect from 30+ PII, PHI, & PCI categories you want redacted, and let CaseGuard"
+      },
+      {
+       "url": "https://caseguard.com/document-redaction-software",
+       "content": "CaseGuard’s automated document redaction tools automatically identify and remove PII, PHI, financial data, & other confidential information across thousands of documents while maintaining a complete audit log of every action.\n\n## Document Redaction Tools for Every Use Case\n\n### AI Search\n\nAutomatically redact 30+ categories of PII from your documents.\n\nAutomatically redact 30+ categories of PII from your documents.\n\n### Search Text [...] as attorney-client privileged content and sealed case details; and law enforcement data such as witness identities, confidential informant names, and investig"
+      }
+     ],
+     "provider": "claude"
+    },
+    {
+     "claim_index": 4,
+     "question": "How many file types and formats does CaseGuard's AI redaction software support?",
+     "answer": "CaseGuard's AI redaction software supports over 750 file types and formats, including video, audio, images, documents, and emails. (Note: one source breaks this down further by suite—300+ for Doc Suite, 600+ for Media Suite, and 900+ for the Ultimate Suite.)",
+     "source_url": "https://caseguard.com/bulk-redaction-software",
+     "results": [
+      {
+       "url": "https://caseguard.com/bulk-redaction-software",
+       "content": "Our AI redaction software supports over 750 file types and formats, including video, audio, images, documents, and emails. Whether it’s body-camera footage, surveillance videos, 911 calls, interviews, phone calls, mobile recordings, affidavits, PST files, or police records, CaseGuard makes redaction seamless. This flexibility allows organizations across law enforcement, legal, healthcare, education, call centers, and government sectors to centralize all their redaction needs in one secure [...] How does the bulk redaction feature work?\n\nCaseGuard uses advanced AI-powered algorithms to detect a"
+      },
+      {
+       "url": "https://www.redactifyai.com/blog/redactifyai-vs-caseguard",
+       "content": "CaseGuard Studio supports 300+ file types on its Doc Suite, 600+ on Media Suite, and 900+ on Ultimate Suite. This breadth is useful when documents arrive in many formats across government agencies, insurance claims, and e-discovery productions. It includes PDFs, Word documents, Excel spreadsheets, email formats (PST, EML, MSG), videos, audio files, and images. [...] | Feature | RedactifyAI | CaseGuard Studio |\n --- \n| Product category | Document redaction platform | Multimedia redaction platform |\n| Deployment | Cloud (browser-based) | Desktop |\n| Media types | Documents (PDF, Word, images) | "
+      },
+      {
+       "url": "https://directory.lawnext.com/products/caseguard-studio",
+       "content": "### How do you position yourself against competitors?\n\nCaseGuard stands out with unlimited AI redaction across video, audio, images, and documents in one on-premise platform—no internet required. Unlike competitors, it offers full offline use, supports 750+ file types, and delivers unmatched speed and accuracy. With tools for transcription, translation, object detection, and PII/PHI scrubbing, CaseGuard empowers users to redact faster, securely, and without hidden costs or usage limits."
+      }
+     ],
+     "provider": "claude"
+    },
+    {
+     "claim_index": 10,
+     "question": "What was CaseGuard's estimated revenue in 2025 and has the company received any funding rounds?",
+     "answer": "Estimates vary by source: Latka reports CaseGuard's 2025 revenue reached about $4.1M (as of September 2025), while Growjo estimates its annual revenue at roughly $2.8M. Regarding funding, no funding rounds have been reported for CaseGuard — Growjo lists total funding as 'N/A,' Latka states no funding information is on record, and Tracxn confirms CaseGuard has not raised any funding rounds to date.",
+     "source_url": "https://getlatka.com/companies/caseguard.com",
+     "results": [
+      {
+       "url": "https://getlatka.com/companies/caseguard.com",
+       "content": "In 2025, CaseGuard's revenue reached $4.1M.\n\n| Year | Milestone | Source |\n --- \n| 2025 | CaseGuard Hit $4.1m revenue in September 2025 | Estimated |\n\n## CaseGuard Valuation, Funding Rounds\n\nWe do not have funding information about CaseGuardyet.\n\nNo funding has been reported for CaseGuardyet.\n\n## Founder / CEO\n\nWe don't have CaseGuard's Founder / CEO on record yet.\n\n## Customers\n\nWe do not have customer count information for CaseGuardyet.\n\n## CaseGuard Employees & Team Size [...] Latka logo\n\nCaseGuard logo\n\n## CaseGuard\n\nArlington, Virginia, United States\n\nOther IT Security Software\n\n2025 Reve"
+      },
+      {
+       "url": "https://growjo.com/company/CaseGuard",
+       "content": "Add Company\n\nSign In Join Now\n\n Overview\n Revenue & Valuation\n Competitors\n What Is CaseGuard?\n Employee Data\n\n# CaseGuardRevenue and Competitors\n\nLicense our Company Data API\n\n#### Washington DC, VA USA\n\nLocation\n\n#### N/A\n\nTotal Funding\n\n#### Tech Services\n\nIndustry\n\n## Estimated Revenue & Valuation\n\n CaseGuard's estimated annual revenue is currently $2.8Mper year.(i)\n CaseGuard's estimated revenue per employee is $101,500\n\n## Employee Data [...] | Company Name | Revenue | Number of Employees | Employee Growth | Total Funding |\n ---  --- \n| #1  Women In Defens... | $6M | 28 | -10% | N/A |\n| "
+      },
+      {
+       "url": "https://tracxn.com/d/companies/caseguard/__mC1t7T3FhJiwbgP9wGjsXQdJifDU5YQ8RwN2XjaoCtE/founders-and-board-of-directors",
+       "content": "JavaScript is disabled in your browser. enable it to enjoy the full features of Tracxn.\n\nTracxn.com\nAndroid\nApple\nChrome Web Store\nFirefox Extension\ntracxn ai suite\n\nAI-powered market intelligence across companies, investors, and sectors.\n\nLogo for CaseGuard\n\n# CaseGuard - Company Profile\n\nlock\nlock\nlock\nlock\nlock\n\n## CaseGuard - About the company\n\n### Company Details\n\nX\nFacebook\nPDF Illustration Image\n\n## CaseGuard's funding and investors\n\nCaseGuard has not raised any funding rounds yet. [...] | Rank | Company Details | Short Description | Total Funding | Investors | Tracxn Score |\n ---  --- "
+      }
+     ],
+     "provider": "claude"
+    },
+    {
+     "claim_index": 11,
+     "question": "What is the median total compensation for a Software Engineer at CaseGuard according to Levels.fyi?",
+     "answer": "The search results don't provide any information about CaseGuard specifically or its Software Engineer compensation on Levels.fyi.",
+     "source_url": null,
+     "results": [
+      {
+       "url": "https://www.businessinsider.com/how-much-microsoft-pays-entry-senior-level-engineers-2021-11?op=1",
+       "content": "Total compensation packages ranged from $160,000 to $1,858,300 among the 111 entries self-submitted by Microsoft employees in the spreadsheet for Level 63 — typically called a \"senior software development engineer,\" according to Levels.fyi — with a median of $217,000. Note the top of this range is so high relative to the rest of the packages that it may indicate the person made a typo when entering the data.\n\nThose packages consist of several factors, including: [...] Total compensation packages ranged from $110,000 to $502,500 among the 34 entries self-submitted by Microsoft employees for Lev"
+      },
+      {
+       "url": "https://www.businessinsider.com/how-much-microsoft-pays-entry-senior-level-engineers-2021-11",
+       "content": "Total compensation packages ranged from $160,000 to $1,858,300 among the 111 entries self-submitted by Microsoft employees in the spreadsheet for Level 63 — typically called a \"senior software development engineer,\" according to Levels.fyi — with a median of $217,000. Note the top of this range is so high relative to the rest of the packages that it may indicate the person made a typo when entering the data.\n\nThose packages consist of several factors, including: [...] Total compensation packages ranged from $110,000 to $502,500 among the 34 entries self-submitted by Microsoft employees for Lev"
+      },
+      {
+       "url": "https://www.articuler.ai/resources/learn/software-engineer-salary",
+       "content": "Ask \"what does a software engineer make?\" and you'll get two very different right answers. The U.S. Bureau of Labor Statistics puts the median software developer wage at $133,080 a year as of its latest (May 2024) data. Levels.fyi, which tracks crowdsourced pay at large tech employers, reports a median total compensation of $192,000. Both are correct — they just measure different things. BLS counts base wages across every employer in the country, including banks, hospitals, and government. [...] ## FAQ\n\n### What is the average software engineer salary in 2026?\n\nIt depends on what you count. Th"
+      }
+     ],
+     "provider": "claude"
+    },
+    {
+     "claim_index": 17,
+     "question": "Where is CaseGuard headquartered and how many employees does the company have?",
+     "answer": "CaseGuard is headquartered in Arlington, Virginia (1700 North Moore Street, Arlington, VA 22209, United States). Employee count estimates vary by source: LeadIQ lists the company as having 11–50 employees, while Latka reports approximately 37 employees as of 2025.",
+     "source_url": "https://getlatka.com/companies/caseguard.com",
+     "results": [
+      {
+       "url": "https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory",
+       "content": "CaseGuard is a data security software company based in Arlington, Virginia. It develops an AI-powered redaction and investigation software solution that can operate locally and on-premises, supporting video, audio, images, and documents. The product is used by law enforcement, government agencies, legal departments, and educational institutions worldwide. The company has 11 to 50 employees and is located at 1700 North Moore Street, Arlington, VA 22209, United States. More information is [...] LeadIQ logo\n\nLearn more at LeadIQ.com\n\nCaseGuard logo\n\n# CaseGuard Employee Directory\n\nData Security S"
+      },
+      {
+       "url": "https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory?page=4",
+       "content": "CaseGuard is a data security software company based in Arlington, Virginia. It develops an AI-powered redaction and investigation software solution that can operate locally and on-premises, supporting video, audio, images, and documents. The product is used by law enforcement, government agencies, legal departments, and educational institutions worldwide. The company has 11 to 50 employees and is located at 1700 North Moore Street, Arlington, VA 22209, United States. More information is [...] LeadIQ logo\n\nLearn more at LeadIQ.com\n\nCaseGuard logo\n\n# CaseGuard Employee Directory\n\nData Security S"
+      },
+      {
+       "url": "https://getlatka.com/companies/caseguard.com",
+       "content": "CaseGuard employs approximately 37 people as of 2026.\n\n| Year | Milestone | Source |\n --- \n| 2025 | Reached 37 employees (September 2025) |\n\n## Frequently Asked Questions about CaseGuard\n\n### What is CaseGuard's revenue?\n\nCaseGuard generates an estimated $4.1M in annual revenue.\n\n### How many employees does CaseGuard have?\n\nCaseGuard has 37 employees.\n\n### Where is CaseGuard headquarters?\n\nCaseGuard is headquartered in Arlington, Virginia, United States.\n\n## Compare CaseGuard to the industry"
+      }
+     ],
+     "provider": "claude"
+    },
+    {
+     "claim_index": 19,
+     "question": "How many employees does CaseGuard have and what is its reported annual revenue?",
+     "answer": "Reports vary by source: Getlatka reports CaseGuard has about 37 employees and an estimated annual revenue of $4.1M (as of 2025). RocketReach reports 48 employees (57 total listed) with annual revenue of about $6 million. Growjo reports 28 employees and an estimated annual revenue of $2.8M. There is no single consistent figure across sources.",
+     "source_url": "https://getlatka.com/companies/caseguard.com",
+     "results": [
+      {
+       "url": "https://getlatka.com/companies/caseguard.com",
+       "content": "CaseGuard employs approximately 37 people as of 2026.\n\n| Year | Milestone | Source |\n --- \n| 2025 | Reached 37 employees (September 2025) |\n\n## Frequently Asked Questions about CaseGuard\n\n### What is CaseGuard's revenue?\n\nCaseGuard generates an estimated $4.1M in annual revenue.\n\n### How many employees does CaseGuard have?\n\nCaseGuard has 37 employees.\n\n### Where is CaseGuard headquarters?\n\nCaseGuard is headquartered in Arlington, Virginia, United States.\n\n## Compare CaseGuard to the industry [...] In 2025, CaseGuard's revenue reached $4.1M.\n\n| Year | Milestone | Source |\n --- \n| 2025 | CaseGua"
+      },
+      {
+       "url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63",
+       "content": "Looking for a particular CaseGuard employee's phone or email?\n\n Find Info \n\n## CaseGuard Questions\n\n- [x] \n### What is the annual revenue of CaseGuard?\n\n \nThe CaseGuard annual revenue was $6 million in 2026.\n\n- [x] \n### Who is the CEO | Co-Founder of CaseGuard?\n\n \nSean Abas is the CEO | Co-Founder of CaseGuard.\n\n- [x] \n### How many people are employed at CaseGuard?\n\n \n48 people are employed at CaseGuard.\n\n- [x] \n### Where is CaseGuard based?\n\n \nCaseGuard is based in Arlington, Virginia. [...] Website\nRevenue$6 million\nEmployees57  (48 on RocketReach)\nAddress1700 N Moore St Suite 1701, Arlingto"
+      },
+      {
+       "url": "https://growjo.com/company/CaseGuard",
+       "content": "Add Company\n\nSign In Join Now\n\n Overview\n Revenue & Valuation\n Competitors\n What Is CaseGuard?\n Employee Data\n\n# CaseGuardRevenue and Competitors\n\nLicense our Company Data API\n\n#### Washington DC, VA USA\n\nLocation\n\n#### N/A\n\nTotal Funding\n\n#### Tech Services\n\nIndustry\n\n## Estimated Revenue & Valuation\n\n CaseGuard's estimated annual revenue is currently $2.8Mper year.(i)\n CaseGuard's estimated revenue per employee is $101,500\n\n## Employee Data [...] ## Employee Data\n\n CaseGuardhas 28Employees.(i)\n CaseGuardgrew their employee count by 47%last year.\n\n## CaseGuard's People [...] keywords:N/A\n\nN/A"
+      }
+     ],
+     "provider": "claude"
+    },
+    {
+     "claim_index": 25,
+     "question": "In what year was CaseGuard, Inc. founded?",
+     "answer": "CaseGuard, Inc. was founded in 2014.",
+     "source_url": "https://caseguard.com/why-us",
+     "results": [
+      {
+       "url": "https://directory.lawnext.com/products/caseguard-studio",
+       "content": "#### Product Snapshot\n\n##### Parent Company\n\nCaseGuard, Inc.\n\n##### Year Founded\n\n2014\n\n##### Social Media\n\nYouTube\n\nLinkedIn\n\nFacebook\n\nInstagram\n\nTwitter\n\n#### Write a Review\n\nJoin our community to share your insights with the community and earn rewards for your expertise!\n\n#### Also Appears In:\n\nDocument Review and Analysis\n\nInformation Governance\n\nTranscription and Dictation [...] #### Product Snapshot\n\n##### Parent Company\n\nCaseGuard, Inc.\n\n##### Year Founded\n\n2014\n\n##### Social Media\n\nYouTube\n\nLinkedIn\n\nFacebook\n\nInstagram\n\nTwitter\n\n## Features\n\n###### Deployment\n\nCloud\n\nMobile\n\nDesktop\n"
+      },
+      {
+       "url": "https://wfh.team/companies/caseguard",
+       "content": "From its official launch into the market in 2014, CaseGuard has been on a remarkable journey of innovation and growth. The company's founders, including CEO Sean Abas and CTO Shorouk Mansour, channeled their expertise and passion into creating a solution that would not only meet but exceed the expectations of their clients. They envisioned a world where redaction was no longer a bottleneck but an accessible and efficient process for all. This vision has become a reality through CaseGuard [...] MarketsCaseGuard operates in the following markets: Privacy and Data Protection, AI, Legal Tech, Digi"
+      },
+      {
+       "url": "https://caseguard.com/why-us",
+       "content": "# We’re CaseGuard, The #1 AI Redaction Software.\n\n# We’re CaseGuard, The #1 AI Redaction Software.\n\nSince 2014, we’ve focused on reducing the busywork of redaction. Founder Sean Abas has led in AI and privacy for 20 years, shaping both product development and customer experience. Today, CaseGuard serves clients worldwide, automating up to 95% of redaction across video, audio, documents, and images.\n\nWe’re CaseGuard, the #1 AI Redaction Software\n\n## Our Mission"
+      }
+     ],
+     "provider": "claude"
+    },
+    {
+     "claim_index": 20,
+     "question": "What technologies make up CaseGuard's technology stack according to RocketReach?",
+     "answer": "The search results do not contain information about CaseGuard's technology stack from RocketReach. The provided results only cover eMedia Technologies, Inc., ANTHEMIS TECHNOLOGIES, and LyteLoop Technologies, none of which are CaseGuard.",
+     "source_url": null,
+     "results": [
+      {
+       "url": "https://rocketreach.co/emedia-technologies-inc-technology-stack_b5c546abf42e0e01",
+       "content": "Image 1: RocketReach logoToggle navigation\n   Log In\n   Sign Up\n\nImage 2: stars 1Image 3: stars 2Image 4: stars 3\n\n   ## Company Information\n   ## Email Format\n   ## Technology Stack\n\nImage 5: eMedia Technologies, Inc.\n\n# eMedia Technologies, Inc. Technology Stack\n\nView eMedia Technologies, Inc.'s Technology Stack\n\neMedia Technologies, Inc. uses 30 technologies like Ahrefs, Cloudflare, and CloudFlare CDN. View eMedia Technologies, Inc.'s complete Tech Stack.\n\nCategory \n\nSales [...] $12.7m \n\nImage 54: G2 Leader Summer 2026Image 55: G2 Best Est ROI Mid-Market Summer 2026Image 56: G2 Easiest Admi"
+      },
+      {
+       "url": "https://rocketreach.co/anthemis-technologies-technology-stack_b40fe263ffcf7c1d",
+       "content": "## Company Information. ## Email Format. ## Management. ## Technology Stack. # ANTHEMIS TECHNOLOGIES Technology Stack. ANTHEMIS TECHNOLOGIES uses 17 technologies like Apache, Apache HTTP Server, and Contact Form 7. View ANTHEMIS TECHNOLOGIES's complete Tech Stack. ## ANTHEMIS TECHNOLOGIES Programming Languages And Frameworks Technology. ## ANTHEMIS TECHNOLOGIES Platform And Storage Technology. ## ANTHEMIS TECHNOLOGIES Sales Technology. ## ANTHEMIS TECHNOLOGIES Business Intelligence And Analytics Technology. ## ANTHEMIS TECHNOLOGIES Marketing Technology. ## ANTHEMIS TECHNOLOGIES Devops And Deve"
+      },
+      {
+       "url": "https://rocketreach.co/lyteloop-technologies-technology-stack_b45f445afc694694",
+       "content": "## Company Information. ## Email Format. ## Management. ## Technology Stack. ## Competitors. # LyteLoop Technologies Technology Stack. LyteLoop Technologies uses 18 technologies like Amazon CloudFront, CloudFlare CDN, and Flutter. View LyteLoop Technologies's complete Tech Stack. ## LyteLoop Technologies Devops And Development Technology. ## LyteLoop Technologies Computer Networks Technology. ## LyteLoop Technologies Business Intelligence And Analytics Technology. ## LyteLoop Technologies Marketing Technology. ## LyteLoop Technologies Programming Languages And Frameworks Technology. ## LyteLoo"
+      }
+     ],
+     "provider": "claude"
+    }
+   ],
+   "quality_score": 6,
+   "counts": {
+    "verified": 5,
+    "unverified": 24,
+    "contradicted": 1
+   },
+   "decision": "pass",
+   "feedback": "Coverage across role_context and product-feature claims is broad but shallow — most feature/statistic claims (file counts, percentages, language counts) were pulled from marketing pages and never independently re-verified, so they remain 'unverified' rather than confirmed. Two issues need fixing: (1) the '33 categories of PII/PCI/PHI' claim (index 2/13) is contradicted by the researcher's own independent check, which found CaseGuard's other pages citing '30+' categories and '50+' PHI types — reconcile or drop the specific number. (2) The Levels.fyi salary claim (index 11) and RocketReach tech-stack claim (index 20) both failed independent verification (no matching data found) — either find a working source or drop these. Funding/size data is inconsistent across sources (Latka: $4.1M/37 employees; RocketReach: $6M/48-57 employees; Growjo: $2.8M/28 employees) — the write-up should flag this variance explicitly rather than presenting single figures as settled fact. Tech-stack coverage relevant to the actual engineering role (C#, ASP.NET Core, AWS, IaC, distributed caching, event-driven patterns from the posting) is thin — claim 9 is the only real attempt and it wasn't independently confirmed; consider sourcing engineering blog posts, GitHub repos, or Stack Overflow/LinkedIn engineer profiles for genuine backend tech-stack evidence. Several near-duplicate claims (2/12/13, 7/32, 16/26/27, 15/24) should be consolidated in the final brief. News/culture sections are weak — only one dated news item (version releases, unconfirmed) and no recent hiring, leadership, or growth news; more recent, dated news coverage would strengthen the briefing.",
+   "status": "Editor checked 8 claims independently: {'verified': 5, 'unverified': 24, 'contradicted': 1}, quality 6/10 - passing to Writer",
+   "providers": {
+    "questions": "claude",
+    "review": "claude"
+   }
+  },
+  {
+   "node": "review",
+   "iteration": 3,
+   "action": "approve",
+   "feedback": "",
+   "status": "Human reviewer approved the findings"
+  },
+  {
+   "node": "writer",
+   "iteration": 3,
+   "sections": 5,
+   "briefing": {
+    "intro": "CaseGuard is a small, Arlington, VA-based data security company (founded in 2014) that builds CaseGuard Studio, an on-premise AI redaction platform used by law enforcement, government agencies, and other regulated organizations to redact sensitive information from video, audio, documents, and images. This backend role sits at the center of that mission: building REST API microservices in ASP.NET Core, standing up AWS infrastructure via IaC, and building heavy file-processing workers for the product's redaction and media-processing features. Below is a briefing pulling together what's known and reported about the company to help you prepare.",
+    "sections": [
+     {
+      "title": "Role Context",
+      "points": [
+       {
+        "text": "CaseGuard Studio is marketed as an on-premise AI redaction platform covering video, audio, documents, and images from a single interface, though a specific figure of 33 categories of PII/PCI/PHI cited in one source appears inconsistent with the company's own materials elsewhere, so that exact number shouldn't be taken as confirmed.",
+        "source_url": "https://caseguard.com/how-it-works",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard reportedly positions the Studio as helping organizations meet FOIA, FERPA, GDPR, and HIPAA requirements while keeping sensitive files off the cloud, according to the company's own site, though this hasn't been independently verified.",
+        "source_url": "https://caseguard.com/how-it-works",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard's AI redaction software supports over 750 file types and formats, including video, audio, images, documents, and emails.",
+        "source_url": "https://caseguard.com/bulk-redaction-software",
+        "from_posting": false
+       },
+       {
+        "text": "According to CaseGuard's own materials, its bulk redaction tools let users upload and process multiple video, audio, and image files simultaneously across 12 categories of PII, though that specific category count hasn't been independently confirmed.",
+        "source_url": "https://caseguard.com/bulk-redaction-software",
+        "from_posting": false
+       },
+       {
+        "text": "The company claims its bulk AI redaction can clear case backlogs up to 85% faster, cutting review time from days to hours — a statistic repeated across several CaseGuard pages but not independently verified.",
+        "source_url": "https://caseguard.com/help-center/videos/caseguard-studio-training-course",
+        "from_posting": false
+       },
+       {
+        "text": "Per a legal-tech directory listing, CaseGuard Studio can reportedly operate both online and fully offline, which the company positions as useful for legal teams and law enforcement facing strict data-privacy requirements, though this hasn't been independently confirmed.",
+        "source_url": "https://directory.lawnext.com/products/caseguard-studio",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard, Inc. was founded in 2014.",
+        "source_url": "https://directory.lawnext.com/products/caseguard-studio",
+        "from_posting": false
+       }
+      ]
+     },
+     {
+      "title": "Recent News",
+      "points": [
+       {
+        "text": "One dedicated news article on CaseGuard Studio's privacy positioning reports that the platform runs fully on-premise, including in air-gapped systems completely isolated from external networks, so organizations retain full control of their data — though the specifics of this air-gapped isolation haven't been independently confirmed.",
+        "source_url": "https://www.artificialintelligence-news.com/news/ai-redaction-that-puts-privacy-first-caseguard-studio-leading-the-way",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard reportedly has shipped iterative product updates, including version releases 9.7, 9.8, and 9.9 with new feature drops, according to its video library, though these specific version numbers haven't been independently verified.",
+        "source_url": "https://caseguard.com/video-library",
+        "from_posting": false
+       }
+      ]
+     },
+     {
+      "title": "Funding & Business",
+      "points": [
+       {
+        "text": "CaseGuard's estimated revenue reached about $4.1M as of September 2025, with no publicly reported funding rounds.",
+        "source_url": "https://getlatka.com/companies/caseguard.com",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard has approximately 57 employees (48 per RocketReach data) and reported revenue of about $6 million, though other sources give somewhat lower figures.",
+        "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63",
+        "from_posting": false
+       }
+      ]
+     },
+     {
+      "title": "Tech Stack",
+      "points": [
+       {
+        "text": "According to one interview-prep guide, Software Engineers at CaseGuard should be familiar with technologies including C#, ASP.NET Core, AWS, WebAssembly, WebGL, and modern frontend frameworks for building high-performance media processing applications — though the WebAssembly/WebGL specifics go beyond what's in the job posting and haven't been independently confirmed.",
+        "source_url": "https://www.interviewquery.com/interview-guides/caseguard-software-engineer",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard reportedly offers unlimited automated redaction of faces, license plates, screens, and notes in videos and images, plus muting, bleeping, or replacing PII in audio via auto-transcription, per a legal-tech directory listing that hasn't been independently verified.",
+        "source_url": "https://directory.lawnext.com/products/caseguard-studio",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard's Redaction Studio is said to support bulk redaction of over 100 videos at once using AI, according to the company's video library, though this figure hasn't been independently confirmed.",
+        "source_url": "https://caseguard.com/video-library",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard reportedly allows analysis of up to 16 videos side-by-side for faster investigations, per its video library page, though this hasn't been independently verified.",
+        "source_url": "https://caseguard.com/video-library",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard's bulk redaction feature is described as able to automatically redact thousands of videos, documents, audio, and image files simultaneously in just a few clicks, according to a company use-case page, though this hasn't been independently confirmed.",
+        "source_url": "https://caseguard.com/use-cases/media-and-entertainment",
+        "from_posting": false
+       }
+      ]
+     },
+     {
+      "title": "Culture",
+      "points": [
+       {
+        "text": "CaseGuard is a data security software company based in Arlington, Virginia, with 11 to 50 employees, headquartered at 1700 North Moore Street, Arlington, VA 22209.",
+        "source_url": "https://leadiq.com/c/caseguard/6446f49f7aa418315617eb20/employee-directory",
+        "from_posting": false
+       },
+       {
+        "text": "CaseGuard reportedly has a Talent Acquisition Specialist on staff, suggesting an active hiring function, though this specific role detail hasn't been independently verified.",
+        "source_url": "https://rocketreach.co/caseguard-profile_b452b0abfc8d6e63",
+        "from_posting": false
+       }
+      ]
+     }
+    ],
+    "talking_points": [
+     "CaseGuard's emphasis on heavy file-processing performance (e.g., claims of clearing backlogs up to 85% faster) lines up well with the role's focus on building CPU/memory/throughput-optimized file-processing workers — worth highlighting any prior experience optimizing large binary file pipelines.",
+     "CaseGuard Studio's on-premise, reportedly air-gapped deployment model and compliance focus (FOIA, FERPA, GDPR, HIPAA) suggest the backend team needs engineers comfortable designing secure, self-hosted AWS infrastructure with IaC — a good moment to speak to any experience with regulated or isolated environments.",
+     "As a lean team (roughly 11-50 employees, single-digit-million revenue) building microservices from scratch, CaseGuard likely needs someone who thrives on ambiguity and ownership — a strong match if you can point to independent work modeling business logic into databases and designing APIs end-to-end.",
+     "Given the product's scale claims around bulk processing (thousands of files, 100+ videos at once), the candidate's experience with relational/NoSQL data modeling and Redis or distributed caching directly supports the kind of throughput CaseGuard's redaction pipeline seems to require.",
+     "With reported iterative releases (9.7-9.9) and an active hiring function, CaseGuard appears to be scaling its engineering output — a chance to express interest in joining a growing team that ships frequent feature updates to its redaction platform."
+    ],
+    "questions_to_ask": [
+     "Given CaseGuard Studio's on-premise and reportedly air-gapped deployment model, how does the backend team approach AWS infrastructure and IaC design when many customer environments may be isolated from the cloud?",
+     "What does the current microservice architecture look like today, and how much of the AWS/backend build-out for this role would be greenfield versus extending existing services?",
+     "For the heavy file-processing workers handling video, image, and document redaction, what are the current bottlenecks in CPU, memory, or throughput, and what patterns (e.g., queues, distributed caching, async processing) is the team exploring?",
+     "How does the team balance frequent feature releases with maintaining fault tolerance and scalability as the customer base and file volumes grow?",
+     "What does day-to-day collaboration look like between the backend team and other functions, given the company's relatively small engineering team?"
+    ]
+   },
+   "provider": "claude"
+  }
+ ]
+}

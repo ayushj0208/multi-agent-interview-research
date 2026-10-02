@@ -1,0 +1,102 @@
+/* Dark mode: appended after style.css when the visitor turns on the toggle (?theme=dark). Streamlit's own theme stays
+   light underneath (it has no per-visitor theme API), so this overrides both our styling and Streamlit's
+   light-themed components. Colors follow DESIGN.md's dark tiles and Sky Link Blue for links on dark. */
+
+:root {
+  color-scheme: dark;  /* native controls, scrollbars and form carets go dark too */
+  --ink: #f5f5f7;
+  --text-2: rgba(235, 235, 245, 0.64);
+  --link: #2997ff;
+  --hairline: rgba(255, 255, 255, 0.12);
+  --glass: rgba(30, 30, 34, 0.72);
+  --glass-edge: rgba(255, 255, 255, 0.09);
+  --shadow-1: 0 1px 1px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.3), 0 16px 32px rgba(0, 0, 0, 0.35),
+              0 24px 60px rgba(0, 30, 80, 0.3);
+  --shadow-2: 0 2px 2px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.35), 0 24px 48px rgba(0, 0, 0, 0.4),
+              0 40px 90px rgba(0, 40, 110, 0.4);
+}
+
+/* ---- Canvas and background --------------------------------------------------------------------------------- */
+
+html, body { background: #07080c; }
+.stApp { color: var(--ink); }
+[data-testid="stHeader"] {
+  background: linear-gradient(to bottom, rgba(7, 8, 12, 0.92) 0%, rgba(7, 8, 12, 0.6) 55%, rgba(7, 8, 12, 0) 100%);
+}
+[data-testid="stToolbar"] button, [data-testid="stMainMenu"] button, [data-testid="stStatusWidget"] { color: var(--ink); }
+/* The header's "running" figure is a dark picture, not text, so invert it rather than recolor it. */
+[data-testid="stStatusWidgetRunningIcon"], [data-testid="stStatusWidgetRunningManIcon"] { filter: invert(1); }
+
+.orb { opacity: 0.45; }
+.orb-b, .orb-c { opacity: 0.35; }
+.floor {
+  background-image:
+    linear-gradient(rgba(41, 151, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(41, 151, 255, 0.22) 1px, transparent 1px);
+}
+.ring { border-color: rgba(41, 151, 255, 0.35); box-shadow: inset 0 0 40px rgba(41, 151, 255, 0.18), 0 0 40px rgba(124, 92, 255, 0.15); }
+.ring-b { border-color: rgba(167, 139, 250, 0.35); }
+.ring-c { border-color: rgba(90, 200, 250, 0.4); }
+
+/* ---- Text -------------------------------------------------------------------------------------------------- */
+
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp p, .stApp li, .stApp label, .stApp summary, .stApp th, .stApp td,
+[data-testid="stMarkdownContainer"], [data-testid="stWidgetLabel"], [data-testid="stMetricValue"],
+[data-testid="stMetricLabel"], [data-testid="stSpinner"] { color: var(--ink); }
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p,
+.st-key-hero [data-testid="stCaptionContainer"] p { color: var(--text-2); }
+/* Streamlit also sets the caption container to 60% opacity; on top of the softer color that fell to ~38%. */
+[data-testid="stCaptionContainer"] { opacity: 1; }
+
+/* Badges carry their light-theme colors inline (dark green, navy...), so match each hue and repaint it for dark:
+   bright text on a deeper tint. */
+.stMarkdownBadge[style*="rgba(33, 195, 84"] { color: #30d158 !important; background-color: rgba(48, 209, 88, 0.16) !important; }
+.stMarkdownBadge[style*="rgba(0, 102, 204"] { color: #64b5ff !important; background-color: rgba(41, 151, 255, 0.18) !important; }
+.stMarkdownBadge[style*="rgba(255, 164, 33"] { color: #ffb340 !important; background-color: rgba(255, 159, 10, 0.16) !important; }
+.stMarkdownBadge[style*="rgba(255, 43, 43"] { color: #ff6961 !important; background-color: rgba(255, 69, 58, 0.16) !important; }
+.stMarkdownBadge[style*="rgba(49, 51, 63"] { color: rgba(235, 235, 245, 0.72) !important; background-color: rgba(255, 255, 255, 0.1) !important; }
+
+/* The running-status spinner is drawn with near-black borders; redraw it light with a blue leading edge. */
+[data-testid="stExpanderIconSpinner"] { border-color: rgba(255, 255, 255, 0.2); border-top-color: var(--link); }
+.stApp a, .stApp a:visited { color: var(--link); }
+.st-key-hero h1 span[data-heading-text] {
+  background-image: linear-gradient(100deg, #f5f5f7 20%, var(--link) 45%, #a78bfa 60%, #f5f5f7 85%);
+}
+
+/* ---- Surfaces ---------------------------------------------------------------------------------------------- */
+
+[data-testid="stExpander"] summary { background: transparent; }
+[data-testid="stExpander"] summary:hover { background: rgba(255, 255, 255, 0.04); }
+[data-testid="stExpanderDetails"] { border-color: var(--hairline); }
+[data-testid="stPopoverBody"] { background: #1c1c1f; color: var(--ink); border: 1px solid var(--hairline); }
+[data-testid="stTable"] table, [data-testid="stTable"] th, [data-testid="stTable"] td { border-color: var(--hairline); }
+[data-testid="stTable"] th { background: rgba(255, 255, 255, 0.05); }
+[data-testid="stProgressBarTrack"] { background-color: rgba(255, 255, 255, 0.14); }
+
+/* Inputs: a darker well, light text. Streamlit paints the inner input white by theme, so clear it. */
+[data-testid="stTextInputRootElement"],
+[data-testid="stTextAreaRootElement"] {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+[data-testid="stTextInputRootElement"] *, [data-testid="stTextAreaRootElement"] * { background: transparent; }
+.stApp input, .stApp textarea { color: var(--ink); caret-color: var(--link); }
+.stApp input::placeholder, .stApp textarea::placeholder { color: rgba(235, 235, 245, 0.36); }
+
+/* ---- Buttons: the primary blue carries over; outlined ones switch to Sky Link Blue on dark -------------------- */
+
+[data-testid^="stBaseButton-secondary"],
+[data-testid="stPopoverButton"] {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--link);
+  border-color: rgba(41, 151, 255, 0.55);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+[data-testid^="stBaseButton-secondary"]:hover,
+[data-testid="stPopoverButton"]:hover {
+  background: rgba(41, 151, 255, 0.12);
+  color: var(--link);
+  border-color: var(--link);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}

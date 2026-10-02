@@ -1,0 +1,97 @@
+https://job-boards.greenhouse.io/sonyinteractiveentertainmentglobal/jobs/6104600004
+
+# Software Engineer I
+Location: United States, San Mateo, CA
+
+Why Sony Interactive Entertainment?
+
+Sony Interactive Entertainment isn’t just the Best Place to Play — it’s also the Best Place to Work. Sony Interactive Entertainment (SIE) is the company behind the PlayStation brand. As a subsidiary of Sony Group Corporation, we’re part of a proud legacy of innovation and excellence. SIE is a dynamic technology company, delivering cutting-edge hardware and network services to more than 100 million people and an entertainment leader, home to some of the most beloved and recognizable intellectual properties (IP) in the world. Our role at SIE is to create and nurture the experiences under the PlayStation brand, a name synonymous with entertainment excellence and creativity.
+
+What We Do
+
+Sony Interactive Entertainment is the company behind PlayStation. We build tools, and experiences used by players and development teams across the PlayStation ecosystem.
+Our team develops and maintains a multi-platform application framework that helps internal teams build rich PlayStation user experiences. The framework combines React Native, native platform integration, reusable UI components, SDK tooling, and developer documentation.
+
+Are You Looking For A Challenge?
+
+We are looking for a Software Engineer to help develop, maintain, and improve the application framework powering PlayStation user experiences across multiple platforms. You will work across JavaScript/TypeScript, native platform integration, C++, build systems, and SDK packaging.
+The ideal candidate has strong software engineering fundamentals, real interest in framework and runtime work, and experience building reusable software such as SDKs, libraries, native modules, or cross-platform developer. Experience with React Native or Apple platforms such as iOS or macOS is a strong plus.
+
+What You Will Be Doing
+
+- Implement, debug, and maintain application framework features across JavaScript/TypeScript and native layers.
+
+- Build and improve developer-facing APIs, native modules, framework components, and integration paths used by application teams.
+
+- Contribute to native framework code in C++.
+
+- Improve framework integration with React Native and native platform services.
+
+- Improve SDK packaging, framework templates, sample apps, documentation, and integration guides so partner teams can adopt framework capabilities with less support.
+
+- Debug issues across JavaScript, native code, build tooling, runtimes, and CI.
+
+- Maintain backward compatibility and clear versioning expectations for framework APIs.
+
+- Add tests, validation notes, and sample coverage for framework changes.
+
+- Collaborate with senior engineers, product teams, UI teams, and application teams to clarify requirements and land maintainable solutions.
+
+- Participate in code reviews and technical design discussions, with an emphasis on correctness, maintainability, performance, and developer experience.
+
+What We Are Looking For
+
+- B.S. in Computer Science or equivalent practical experience.
+
+- 2-5+ years of professional software development experience.
+
+- Experience building libraries, SDKs, frameworks, developer tooling, native modules, or other reusable engineering platforms.
+
+- Strong JavaScript or TypeScript experience.
+
+- Solid C++ fundamentals, including memory ownership, API boundaries, build/debug workflows, and performance-aware implementation.
+
+- Ability to debug across layers: JavaScript, native platform code, build systems, runtime logs, and CI output.
+
+- Strong API design judgment, including compatibility, versioning, error handling, documentation, and testability.
+
+- Comfort working in a large codebase with existing patterns and platform constraints.
+
+- Clear written communication for design notes, PR descriptions, validation results, and developer documentation.
+
+Bonus Qualifications
+
+- Familiarity with React Native.
+
+- Experience with cross-platform SDKs or frameworks across iOS, macOS, Android, Linux, game console, or desktop platforms.
+
+- Experience writing high-performance or ABI-conscious C++ code.
+
+- Familiarity with CMake, Conan, CocoaPods, Gradle, Maven, npm, or other package and build distribution systems.
+
+- Experience with CI/CD systems such as Jenkins.
+
+- Experience building native UI components, focus/input systems, accessibility surfaces, performance instrumentation, or test harnesses.
+
+- Experience working with application teams as framework consumers and translating integration pain into reusable framework improvements.
+
+At SIE, we consider several factors when setting each role’s base pay range, including the competitive benchmarking data for the market and geographic location.
+
+Please note that the base pay range may vary in line with our hybrid working policy and individual base pay will be determined based on job-related factors which may include knowledge, skills, experience, and location. 
+
+In addition, this role is eligible for SIE’s top-tier benefits package that includes medical, dental, vision, matching 401(k), paid time off, wellness program and coveted employee discounts for Sony products. This role also may be eligible for a bonus package. Click here to learn more.
+
+The estimated base pay range for this role is listed below.
+$137,300—$205,900 USD
+
+Please note, Sony Interactive Entertainment conducts background checks at the offer stage for all new employees (which may include criminal background checks for some roles) and will need to process personal information to support these checks.
+
+Please refer to our Candidate Privacy Notice for more information about what personal information we collect, how we use it, who we share it with, and your data protection rights.
+
+Equal Opportunity Statement:
+
+Sony is an Equal Opportunity Employer. All persons will receive consideration for employment without regard to gender (including gender identity, gender expression and gender reassignment), race (including colour, nationality, ethnic or national origin), religion or belief, marital or civil partnership status, disability, age, sexual orientation, pregnancy, maternity or parental status, trade union membership or membership in any other legally protected category.
+
+We strive to create an inclusive environment, empower employees and embrace diversity. We encourage everyone to respond. 
+
+Sony Interactive Entertainment is a Fair Chance employer and qualified applicants with arrest and conviction records will be considered for employment.

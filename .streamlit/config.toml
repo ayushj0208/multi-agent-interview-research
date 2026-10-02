@@ -1,0 +1,24 @@
+[client]
+# Hides the ⋮ menu: its Settings > theme picker would switch Streamlit's own theme underneath our light/dark toggle
+# and leave a mismatched page. Also hides developer options (rerun, clear cache) from public visitors.
+toolbarMode = "minimal"
+
+# Apple-inspired theme from DESIGN.md. Inter stands in for SF Pro, as DESIGN.md recommends off-Apple.
+[theme]
+base = "light"
+primaryColor = "#0066cc"             # Action Blue: the single interactive color
+backgroundColor = "#f5f5f7"          # Parchment canvas
+secondaryBackgroundColor = "#ffffff" # white inputs and cards on the parchment
+textColor = "#1d1d1f"                # Near-Black Ink
+linkColor = "#0066cc"
+linkUnderline = false
+borderColor = "#e0e0e0"              # Hairline
+showWidgetBorder = true
+blueColor = "#0066cc"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap, sans-serif"
+headingFont = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap, sans-serif"
+baseFontSize = 17                    # Apple body runs at 17px, not 16px
+headingFontWeights = [600, 600, 600, 600, 600, 600]
+headingFontSizes = ["40px", "28px", "21px"]
+baseRadius = "18px"                  # utility-card radius
+buttonRadius = "full"                # the signature pill

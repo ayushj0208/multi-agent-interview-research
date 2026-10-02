@@ -1,0 +1,326 @@
+/* Styling beyond the Streamlit theme (.streamlit/config.toml). Palette, type and spacing follow DESIGN.md (Apple);
+   the 3D background, shadows, glass and gradient text deliberately go past its no-shadow, no-gradient rules. */
+
+:root {
+  --primary: #0066cc;
+  --primary-focus: #0071e3;
+  --sky: #2997ff;
+  --violet: #7c5cff;
+  --ink: #1d1d1f;
+  --hairline: rgba(0, 0, 0, 0.08);
+  --glass: rgba(255, 255, 255, 0.78);
+  --glass-edge: rgba(255, 255, 255, 0.7);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Layered shadows read as real depth: a tight contact shadow plus progressively softer, bluer ambient ones. */
+  --shadow-1: 0 1px 1px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 20, 60, 0.06),
+              0 24px 48px rgba(0, 40, 100, 0.08);
+  --shadow-2: 0 2px 2px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.05), 0 16px 32px rgba(0, 20, 60, 0.09),
+              0 40px 80px rgba(0, 40, 100, 0.14);
+}
+
+/* ---- 3D animated background ----------------------------------------------------------------------------------- */
+
+/* The background markup is the first element on every screen; lift it out of the page flow to fill the viewport. */
+[data-testid="stElementContainer"]:has(.bg3d) {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  animation: none !important;
+  opacity: 1 !important;  /* never faded as a stale element between reruns */
+}
+/* The canvas color moves to the root element and Streamlit's containers go transparent, so the z-index -1 background
+   paints above the canvas and below everything else. (Isolating the main area instead would trap the pinned theme
+   toggle below Streamlit's header.) */
+html, body { background: #f5f5f7; }
+.stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] { background: transparent; }
+
+.bg3d { position: fixed; inset: 0; overflow: hidden; perspective: 1000px; }
+
+/* Blurred light sources drifting at different depths. */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.orb-a { width: 46vmax; height: 46vmax; left: -12vmax; top: -14vmax; background: radial-gradient(circle, var(--sky), transparent 68%); animation: drift-a 26s ease-in-out infinite alternate; }
+.orb-b { width: 40vmax; height: 40vmax; right: -12vmax; top: 18vh; background: radial-gradient(circle, var(--violet), transparent 68%); opacity: 0.4; animation: drift-b 32s ease-in-out infinite alternate; }
+.orb-c { width: 34vmax; height: 34vmax; left: 28vw; bottom: -16vmax; background: radial-gradient(circle, #5ac8fa, transparent 68%); opacity: 0.4; animation: drift-c 29s ease-in-out infinite alternate; }
+
+/* A perspective grid floor gliding toward the viewer, fading into the horizon. */
+.floor {
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  bottom: -30vh;
+  height: 90vh;
+  background-image:
+    linear-gradient(rgba(0, 102, 204, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 102, 204, 0.16) 1px, transparent 1px);
+  background-size: 64px 64px;
+  transform-origin: 50% 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+  animation: glide 5s linear infinite;
+  will-change: transform;
+}
+
+/* Thin glass rings turning slowly in 3D. */
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 102, 204, 0.22);
+  box-shadow: inset 0 0 40px rgba(41, 151, 255, 0.12), 0 0 30px rgba(124, 92, 255, 0.08);
+  will-change: transform;
+}
+.ring-a { width: 34vmin; height: 34vmin; right: 7vw; top: 14vh; animation: turn-a 22s linear infinite; }
+.ring-b { width: 22vmin; height: 22vmin; left: 6vw; top: 48vh; border-color: rgba(124, 92, 255, 0.24); animation: turn-b 28s linear infinite; }
+.ring-c { width: 14vmin; height: 14vmin; right: 22vw; bottom: 16vh; border-color: rgba(90, 200, 250, 0.3); animation: turn-c 18s linear infinite; }
+
+@keyframes drift-a { to { transform: translate3d(14vw, 10vh, 0) scale(1.15); } }
+@keyframes drift-b { to { transform: translate3d(-16vw, 14vh, 0) scale(0.9); } }
+@keyframes drift-c { to { transform: translate3d(-10vw, -12vh, 0) scale(1.2); } }
+@keyframes glide {
+  from { transform: perspective(600px) rotateX(74deg) translateY(0); }
+  to { transform: perspective(600px) rotateX(74deg) translateY(64px); }
+}
+@keyframes turn-a {
+  from { transform: rotateX(68deg) rotateY(0deg) rotateZ(0deg); }
+  to { transform: rotateX(68deg) rotateY(360deg) rotateZ(360deg); }
+}
+@keyframes turn-b {
+  from { transform: rotateY(60deg) rotateX(0deg); }
+  to { transform: rotateY(60deg) rotateX(360deg); }
+}
+@keyframes turn-c {
+  from { transform: rotateX(20deg) rotateY(0deg) translateZ(0); }
+  50% { transform: rotateX(200deg) rotateY(180deg) translateZ(60px); }
+  to { transform: rotateX(380deg) rotateY(360deg) translateZ(0); }
+}
+
+/* ---- Chrome ------------------------------------------------------------------------------------------------ */
+
+/* The header holds only the menu: a soft parchment fade instead of a frosted bar, whose hard bottom edge cut
+   across the glowing background and ghosted scrolled text. Content melts away under it. */
+[data-testid="stHeader"] {
+  background: linear-gradient(to bottom, rgba(245, 245, 247, 0.92) 0%, rgba(245, 245, 247, 0.6) 55%, rgba(245, 245, 247, 0) 100%);
+}
+[data-testid="stAppDeployButton"] { display: none; }
+
+/* Light/dark switch, pinned top-right beside the menu on every screen (app.py renders it on every run). Its layout
+   wrapper is pinned too, so it leaves no gap in the page and never runs the entrance animation (a moving ancestor
+   would drag the pinned toggle along). */
+[data-testid="stLayoutWrapper"]:has(> .st-key-theme-toggle) {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999991;  /* above Streamlit's header */
+  animation: none !important;
+  opacity: 1 !important;
+}
+.st-key-theme-toggle {
+  position: fixed;
+  top: 10px;
+  right: 16px;  /* the ⋮ menu is hidden (toolbarMode = "minimal"), so it takes the corner */
+  z-index: 999991;  /* above Streamlit's header */
+  width: auto;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: var(--glass);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--shadow-1);
+}
+.st-key-theme-toggle p { font-size: 14px; }
+
+/* ---- Typography: the "Apple tight" cadence (Inter runs wider than SF Pro, so tighten a touch more) --------- */
+
+.stApp h1, .stApp h2, .stApp h3 { letter-spacing: -0.02em; }
+.stApp h1 { line-height: 1.1; }
+.stApp p, .stApp li { letter-spacing: -0.011em; line-height: 1.47; }
+
+/* Hero on the first screen: a centered headline in slowly shifting gradient ink, and a tagline. */
+.st-key-hero { padding: 40px 0 20px; }
+.st-key-hero [data-testid="stHeadingWithActionElements"] { justify-content: center; }  /* the heading row is flex */
+.st-key-hero [data-testid="stHeaderActionElements"] { display: none; }  /* hover link icon would pull it off-center */
+.st-key-hero h1, .st-key-hero p { text-align: center; }
+.st-key-hero h1 { font-size: 64px; line-height: 1.05; letter-spacing: -0.035em; }
+.st-key-hero h1 span[data-heading-text] {
+  background: linear-gradient(100deg, var(--ink) 20%, var(--primary) 45%, var(--violet) 60%, var(--ink) 85%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ink-shift 9s ease-in-out infinite alternate;
+}
+.st-key-hero [data-testid="stCaptionContainer"] p { font-size: 21px; line-height: 1.35; }
+@media (max-width: 640px) {
+  .st-key-hero h1 { font-size: 38px; }
+  .st-key-hero [data-testid="stCaptionContainer"] p { font-size: 17px; }
+}
+@keyframes ink-shift { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+/* ---- Surfaces: frosted glass cards with layered 3D shadows that lift on hover --------------------------------- */
+
+[data-testid="stForm"],
+[data-testid="stExpander"] details,
+[data-testid="stMetric"],
+.st-key-report,
+[class*="st-key-check-"] {
+  background: var(--glass);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid var(--glass-edge);
+  border-radius: 18px;
+  box-shadow: var(--shadow-1);
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+[data-testid="stForm"] { padding: 28px; }
+[data-testid="stMetric"] { padding: 16px 20px; }
+.st-key-report { padding: 28px 32px; }
+[class*="st-key-check-"] { padding: 20px 24px; }
+[data-testid="stMetric"]:hover,
+[data-testid="stExpander"] details:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+}
+/* At 17px in a padded card the label no longer fits one line; wrap it instead of cutting it to "…". */
+[data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * { white-space: normal; overflow: visible; text-overflow: clip; }
+
+/* Inputs sit slightly recessed, and glow blue when focused. */
+[data-testid="stTextInputRootElement"],
+[data-testid="stTextAreaRootElement"] {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+[data-testid="stTextInputRootElement"] { border-radius: 9999px; min-height: 44px; }
+[data-testid="stTextInputRootElement"]:focus-within,
+[data-testid="stTextAreaRootElement"]:focus-within {
+  border-color: var(--primary-focus);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 0 4px rgba(0, 113, 227, 0.18), 0 8px 24px rgba(0, 102, 204, 0.12);
+}
+
+/* ---- Buttons: raised blue pill with a lit top edge; presses down into the page ------------------------------- */
+
+[data-testid^="stBaseButton"] {
+  min-height: 44px;
+  padding: 11px 22px;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.25s ease, background-color 0.2s ease,
+              border-color 0.2s ease, color 0.2s ease;
+}
+[data-testid^="stBaseButton"]:focus-visible {
+  outline: 2px solid var(--primary-focus);
+  outline-offset: 3px;
+}
+[data-testid^="stBaseButton-primary"] {
+  background: linear-gradient(180deg, #1a7ff0 0%, var(--primary) 100%);
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 2px 4px rgba(0, 60, 140, 0.2), 0 8px 20px rgba(0, 102, 204, 0.3);
+}
+[data-testid^="stBaseButton-primary"]:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #2a8bf5 0%, var(--primary-focus) 100%);
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 4px 8px rgba(0, 60, 140, 0.2), 0 14px 32px rgba(0, 102, 204, 0.38);
+}
+[data-testid^="stBaseButton-primary"]:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 60, 140, 0.2);
+}
+/* The approval screen's "Start over" is a popover trigger, a different component: give it the same outlined pill. */
+[data-testid^="stBaseButton-secondary"],
+[data-testid="stPopoverButton"] {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--primary);
+  border: 1px solid rgba(0, 102, 204, 0.55);
+  box-shadow: 0 2px 6px rgba(0, 40, 100, 0.08);
+}
+[data-testid^="stBaseButton-secondary"]:hover,
+[data-testid="stPopoverButton"]:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(0, 40, 100, 0.14);
+}
+[data-testid^="stBaseButton-secondary"]:active,
+[data-testid="stPopoverButton"]:active { transform: translateY(1px) scale(0.97); box-shadow: 0 1px 2px rgba(0, 40, 100, 0.1); }
+
+.stApp a { transition: color 0.2s ease; }
+.stApp a:hover { text-decoration: underline; }
+
+/* ---- Motion ----------------------------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+}
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(24px); filter: blur(10px); }
+}
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.4); }
+}
+@keyframes breathe {
+  50% { border-color: rgba(0, 102, 204, 0.55); box-shadow: var(--shadow-1), 0 0 0 4px rgba(0, 113, 227, 0.1); }
+}
+@keyframes sheen {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* New content eases up into place, staggered down the page. "backwards" (not "both") so the animation never
+   overrides Streamlit's own dimming of stale elements during a rerun. */
+[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] > * {
+  animation: rise 0.7s var(--ease-out) backwards;
+}
+[data-testid="stVerticalBlock"] > :nth-child(2) { animation-delay: 60ms; }
+[data-testid="stVerticalBlock"] > :nth-child(3) { animation-delay: 120ms; }
+[data-testid="stVerticalBlock"] > :nth-child(4) { animation-delay: 180ms; }
+[data-testid="stVerticalBlock"] > :nth-child(5) { animation-delay: 240ms; }
+[data-testid="stVerticalBlock"] > :nth-child(6) { animation-delay: 300ms; }
+[data-testid="stVerticalBlock"] > :nth-child(7) { animation-delay: 360ms; }
+[data-testid="stVerticalBlock"] > :nth-child(8) { animation-delay: 420ms; }
+[data-testid="stVerticalBlock"] > :nth-child(n + 9) { animation-delay: 480ms; }
+
+/* The hero headline resolves out of a soft blur. */
+[data-testid="stMainBlockContainer"] .st-key-hero > * { animation-name: reveal; animation-duration: 1s; }
+
+/* An agent that's working breathes a blue edge; a finished one pops its check mark in. */
+[data-testid="stExpander"]:has([data-testid="stExpanderIconSpinner"]) details {
+  animation: breathe 2s ease-in-out infinite;
+}
+[data-testid="stExpanderIconCheck"] { animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; }
+
+/* The track is white by theme, which vanishes inside a white card; give it the hairline gray. */
+[data-testid="stProgressBarTrack"] { background-color: #e0e0e0; }
+
+/* The Editor's review bar glides forward with a travelling highlight while it waits. */
+[data-testid="stProgressBarTrack"] > div {
+  background-image: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.55) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: sheen 1.8s linear infinite;
+  transition: transform 0.8s var(--ease-out);
+}
+
+/* Leftovers from the previous screen fade out completely instead of lingering dimmed under a long run (e.g. the
+   approval page under the Writer's progress). The 1s delay keeps quick reruns, like the watching screen's
+   3-second refresh, from flickering. A card goes too once everything in it is stale. */
+[data-stale="true"],
+[data-testid="stExpander"]:has([data-stale="true"]):not(:has([data-stale="false"])) {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease-in 1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

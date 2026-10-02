@@ -1,0 +1,52 @@
+{
+ "l2": {
+  "cutoff": 0.65,
+  "stage1_all_runs": {
+   "n": 137,
+   "tp": 39,
+   "fp": 2,
+   "fn": 1,
+   "precision": 0.951,
+   "recall": 0.975
+  },
+  "live_rule_post_fix_runs": {
+   "n": 106,
+   "tp": 24,
+   "fp": 2,
+   "fn": 1,
+   "precision": 0.923,
+   "recall": 0.96
+  },
+  "errors": [
+   {
+    "id": "52156394#22",
+    "overlap": 0.7,
+    "gold": false,
+    "claim": "SIE is also separately hiring a Senior Software Engineer specializing in React Native and high-performance frontend development for mobile p",
+    "why": "About a different SIE job posting (another role, level or location), not the pasted one."
+   },
+   {
+    "id": "335ba89d#11",
+    "overlap": 0.667,
+    "gold": false,
+    "claim": "Sony PlayStation has other open engineering roles emphasizing React Native, including a Staff Software Engineer, React Native position and a",
+    "why": "About a different SIE job posting (another role, level or location), not the pasted one."
+   },
+   {
+    "id": "b4f105cc#22",
+    "overlap": 0.571,
+    "gold": true,
+    "claim": "SIE markets itself with the tagline 'Best Place to Play' and 'Best Place to Work.'",
+    "why": "Stated in the posting: 'Sony Interactive Entertainment isn't just the Best Place to Play - it's also the Best Place to Work.' Word overlap is only 57%, so the attribution rule misses it."
+   }
+  ],
+  "flagged_labels": [
+   "b4f105cc#9",
+   "b4f105cc#30"
+  ]
+ },
+ "cost": {
+  "pipeline": 0.0,
+  "judge": 0.0
+ }
+}

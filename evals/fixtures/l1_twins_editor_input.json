@@ -1,0 +1,657 @@
+{
+ "source_run": "335ba89dd8fd4be4bedd776a2090f5cb",
+ "twin_a": 4,
+ "twin_b": 24,
+ "editor_input": {
+  "company_name": "Sony Play Station",
+  "job_posting": "Why Sony Interactive Entertainment?\n\nSony Interactive Entertainment isn’t just the Best Place to Play — it’s also the Best Place to Work. Sony Interactive Entertainment (SIE) is the company behind the PlayStation brand. As a subsidiary of Sony Group Corporation, we’re part of a proud legacy of innovation and excellence. SIE is a dynamic technology company, delivering cutting-edge hardware and network services to more than 100 million people and an entertainment leader, home to some of the most beloved and recognizable intellectual properties (IP) in the world. Our role at SIE is to create and nurture the experiences under the PlayStation brand, a name synonymous with entertainment excellence and creativity.\n\n \n\nWhat We Do\nSony Interactive Entertainment is the company behind PlayStation. We build tools, and experiences used by players and development teams across the PlayStation ecosystem.\nOur team develops and maintains a multi-platform application framework that helps internal teams build rich PlayStation user experiences. The framework combines React Native, native platform integration, reusable UI components, SDK tooling, and developer documentation.\n\nAre You Looking For A Challenge?\nWe are looking for a Software Engineer to help develop, maintain, and improve the application framework powering PlayStation user experiences across multiple platforms. You will work across JavaScript/TypeScript, native platform integration, C++, build systems, and SDK packaging.\nThe ideal candidate has strong software engineering fundamentals, real interest in framework and runtime work, and experience building reusable software such as SDKs, libraries, native modules, or cross-platform developer. Experience with React Native or Apple platforms such as iOS or macOS is a strong plus.\n\nWhat You Will Be Doing\nImplement, debug, and maintain application framework features across JavaScript/TypeScript and native layers.\nBuild and improve developer-facing APIs, native modules, framework components, and integration paths used by application teams.\nContribute to native framework code in C++.\nImprove framework integration with React Native and native platform services.\nImprove SDK packaging, framework templates, sample apps, documentation, and integration guides so partner teams can adopt framework capabilities with less support.\nDebug issues across JavaScript, native code, build tooling, runtimes, and CI.\nMaintain backward compatibility and clear versioning expectations for framework APIs.\nAdd tests, validation notes, and sample coverage for framework changes.\nCollaborate with senior engineers, product teams, UI teams, and application teams to clarify requirements and land maintainable solutions.\nParticipate in code reviews and technical design discussions, with an emphasis on correctness, maintainability, performance, and developer experience.\nWhat We Are Looking For\nB.S. in Computer Science or equivalent practical experience.\n2-5+ years of professional software development experience.\nExperience building libraries, SDKs, frameworks, developer tooling, native modules, or other reusable engineering platforms.\nStrong JavaScript or TypeScript experience.\nSolid C++ fundamentals, including memory ownership, API boundaries, build/debug workflows, and performance-aware implementation.\nAbility to debug across layers: JavaScript, native platform code, build systems, runtime logs, and CI output.\nStrong API design judgment, including compatibility, versioning, error handling, documentation, and testability.\nComfort working in a large codebase with existing patterns and platform constraints.\nClear written communication for design notes, PR descriptions, validation results, and developer documentation.\nBonus Qualifications\nFamiliarity with React Native.\nExperience with cross-platform SDKs or frameworks across iOS, macOS, Android, Linux, game console, or desktop platforms.\nExperience writing high-performance or ABI-conscious C++ code.\nFamiliarity with CMake, Conan, CocoaPods, Gradle, Maven, npm, or other package and build distribution systems.\nExperience with CI/CD systems such as Jenkins.\nExperience building native UI components, focus/input systems, accessibility surfaces, performance instrumentation, or test harnesses.\nExperience working with application teams as framework consumers and translating integration pain into reusable framework improvements.\n \n\nAt SIE, we consider several factors when setting each role’s base pay range, including the competitive benchmarking data for the market and geographic location.\n\nPlease note that the base pay range may vary in line with our hybrid working policy and individual base pay will be determined based on job-related factors which may include knowledge, skills, experience, and location. \n\nIn addition, this role is eligible for SIE’s top-tier benefits package that includes medical, dental, vision, matching 401(k), paid time off, wellness program and coveted employee discounts for Sony products. This role also may be eligible for a bonus package. Click here to learn more.\n\n \n\nThe estimated base pay range for this role is listed below.\n\n$137,300 - $205,900 USD\n\nPlease note, Sony Interactive Entertainment conducts background checks at the offer stage for all new employees (which may include criminal background checks for some roles) and will need to process personal information to support these checks.\n\nPlease refer to our Candidate Privacy Notice for more information about what personal information we collect, how we use it, who we share it with, and your data protection rights.\n\nEqual Opportunity Statement:\n\nSony is an Equal Opportunity Employer. All persons will receive consideration for employment without regard to gender (including gender identity, gender expression and gender reassignment), race (including colour, nationality, ethnic or national origin), religion or belief, marital or civil partnership status, disability, age, sexual orientation, pregnancy, maternity or parental status, trade union membership or membership in any other legally protected category.\n\nWe strive to create an inclusive environment, empower employees and embrace diversity. We encourage everyone to respond. \n\nSony Interactive Entertainment is a Fair Chance employer and qualified applicants with arrest and conviction records will be considered for employment.",
+  "raw_findings": [
+   {
+    "claim": "Sony Interactive Entertainment released 'Ghost of Yōtei' for PlayStation 5, with the announcement dated October 2, 2025.",
+    "category": "news",
+    "source_url": "https://sonyinteractive.com/en/news/press-releases"
+   },
+   {
+    "claim": "Sony Interactive Entertainment appointed Lynn Azar as Senior Vice President, Finance, Corporate Development and Strategy in February 2025.",
+    "category": "news",
+    "source_url": "https://sonyinteractive.com/en/news/press-releases"
+   },
+   {
+    "claim": "Sony Interactive Entertainment announced the integration of its wholly owned subsidiary SN Systems in February 2025.",
+    "category": "news",
+    "source_url": "https://sonyinteractive.com/en/news/press-releases"
+   },
+   {
+    "claim": "SIE announced a PlayStation 27-inch Gaming Monitor with DualSense Charging Hook, featuring a QHD IPS display up to 2560x1440, HDR, VRR, and refresh rates up to 120Hz on PS5/PS5 Pro and 240Hz on compatible PC/Mac, coming to the U.S. and Japan in 2026.",
+    "category": "news",
+    "source_url": "https://blog.playstation.com/2025/11/11/state-of-play-japan-november-2025-all-announcements"
+   },
+   {
+    "claim": "SIE published a blog post on 'Empowering Families with Easy and Customizable Family Play Experiences' introducing the PlayStation Family App on September 10, 2025.",
+    "category": "news",
+    "source_url": "https://sonyinteractive.com/en/news/blog/category/product"
+   },
+   {
+    "claim": "SIE published a post titled 'Evolving the PlayStation Store Experience' on August 14, 2025.",
+    "category": "news",
+    "source_url": "https://sonyinteractive.com/en/news/blog/category/product"
+   },
+   {
+    "claim": "Sony's Game & Network Services segment (which includes PlayStation) generated ¥4.6857 trillion in revenue for fiscal year 2025, roughly flat year over year with only a ¥15.6 billion increase over FY2024.",
+    "category": "funding",
+    "source_url": "https://rec0ded88.com/statistics/sony-interactive-entertainment"
+   },
+   {
+    "claim": "Operating profit for Sony's Game & Network Services segment climbed 12% to ¥463.3 billion in fiscal year 2025, a new record for the division.",
+    "category": "funding",
+    "source_url": "https://rec0ded88.com/statistics/sony-interactive-entertainment"
+   },
+   {
+    "claim": "A related Sony PlayStation job posting describes a team operating like 'a startup inside Sony PlayStation'—fast-moving, experimental, and highly ambitious, backed by the scale and resources of Sony Interactive Entertainment, building new mobile and web experiences for gamers to connect, discover, and play together.",
+    "category": "culture",
+    "source_url": "https://careers.playstation.com/software-engineer-ii-software-developer-ii-react-native/job/6134526004"
+   },
+   {
+    "claim": "Sony Interactive Entertainment has approximately 8.3 thousand employees as of the data snapshot.",
+    "category": "culture",
+    "source_url": "https://leadiq.com/c/sony-interactive-entertainment/5ee3b4d32fd07506cb863852/employee-directory"
+   },
+   {
+    "claim": "The team behind PlayStation's application framework builds and maintains a multi-platform framework combining React Native, native platform integration, reusable UI components, SDK tooling, and developer documentation to help internal teams build rich PlayStation user experiences.",
+    "category": "tech_stack",
+    "source_url": null,
+    "from_posting": true
+   },
+   {
+    "claim": "Sony PlayStation has other open engineering roles emphasizing React Native, including a Staff Software Engineer, React Native position and a Software Engineer II role based in San Mateo, CA.",
+    "category": "role_context",
+    "source_url": null,
+    "from_posting": true
+   },
+   {
+    "claim": "Sony's PlayStation platform continues to demonstrate strength as the 'Best Place to Play' and 'Best Place to Publish', with monthly active users across all of PS increasing 3% year-on-year to 119 million accounts in September 2025.",
+    "category": "funding",
+    "source_url": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q2_sonyspeech.pdf"
+   },
+   {
+    "claim": "Total play time for PlayStation increased 1% year-on-year in the quarter reported in Sony's Q2 FY2025 earnings speech.",
+    "category": "funding",
+    "source_url": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q2_sonyspeech.pdf"
+   },
+   {
+    "claim": "Sony's strategic investment budget of 1.8 trillion yen and capital expenditure budget of 1.7 trillion yen remain unchanged from the original plan for the fiscal year ended March 31, 2025.",
+    "category": "funding",
+    "source_url": "https://www.sony.com/en/SonyInfo/IR/library/FY2024_20F_PDF.pdf"
+   },
+   {
+    "claim": "SIE remains focused on players and creators with investments in expansive content, advanced hardware, and premium services, including the PlayStation Portal Remote Player which brings PS5 co-play experiences.",
+    "category": "news",
+    "source_url": "https://www.sony.com/en/SonyInfo/IR/library/corporatereport/CorporateReport2025_E.pdf"
+   },
+   {
+    "claim": "Sony Interactive Entertainment has approximately 8,300 employees as of recent data.",
+    "category": "culture",
+    "source_url": "https://leadiq.com/c/sony-interactive-entertainment/5ee3b4d32fd07506cb863852/employee-directory"
+   },
+   {
+    "claim": "A related open role at SIE is a PlayStation Staff Software Engineer in San Mateo focused on defining architectural vision for iOS app experiences and building iOS frameworks/SDKs with Swift and C++ native modules using React Native.",
+    "category": "role_context",
+    "source_url": "https://www.showbizjobs.com/jobs/playstation-staff-software-engineer-in-san-mateo/jid-02y0xm"
+   },
+   {
+    "claim": "A companion listing, 'Software Engineer I SDK' at Sony Interactive Entertainment, is based in San Mateo, CA and focuses on developing, maintaining, and improving the application framework.",
+    "category": "role_context",
+    "source_url": "https://www.linkedin.com/jobs/view/software-engineer-i-sdk-at-sony-interactive-entertainment-4451610670"
+   },
+   {
+    "claim": "SIE builds tools and experiences used by players and development teams across the PlayStation ecosystem, including a multi-platform application framework combining React Native, native platform integration, reusable UI components, SDK tooling, and developer documentation.",
+    "category": "tech_stack",
+    "source_url": null,
+    "from_posting": true
+   },
+   {
+    "claim": "React Native's official blog highlights ongoing evolution such as React Native 0.82 running entirely on the 'New Architecture' with Experimental Hermes V1 and React 19.1.1, reflecting the broader ecosystem SIE's framework builds upon.",
+    "category": "tech_stack",
+    "source_url": "https://reactnative.dev/blog"
+   },
+   {
+    "claim": "Industry engineering blogs (e.g., Callstack) discuss React Native 'Super App' architectures using a Host Shell, federated mini apps, and Shared SDKs with tools like Re.Pack and Module Federation, relevant context for PlayStation's own multi-platform framework approach.",
+    "category": "tech_stack",
+    "source_url": "https://www.callstack.com/blog"
+   },
+   {
+    "claim": "Sony Interactive Entertainment's senior technical recruiters and HR business partners (e.g., Kristen Collins, Adrian McDonald, Lauren Burnett) support hiring for engineering roles at the company.",
+    "category": "culture",
+    "source_url": "https://rocketreach.co/sony-interactive-entertainment-hr-department_b7005391c4fc1d40"
+   },
+   {
+    "claim": "The role's estimated base pay range is $137,300–$205,900 USD, with eligibility for a top-tier benefits package including medical, dental, vision, matching 401(k), and employee discounts on Sony products.",
+    "category": "role_context",
+    "source_url": null,
+    "from_posting": true
+   },
+   {
+    "claim": "Sony launched the PlayStation Family app in September 2025, a new mobile app giving parents an easy way to manage their children's gaming and parental controls, compatible with iOS 14+ and Android 8+.",
+    "category": "news",
+    "source_url": "https://blog.playstation.com/2025/09/10/announcing-playstation-family-app-for-parental-controls-and-family-management"
+   },
+   {
+    "claim": "In Sony's Q2 FY2025 earnings (quarter ended September 30, 2025), monthly active users (MAUs) across all PlayStation platforms increased 3% year-over-year to 119 million accounts in September, with total quarterly play time up 1% year-on-year.",
+    "category": "tech_stack",
+    "source_url": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q2_sonyspeech.pdf"
+   },
+   {
+    "claim": "Sony executives described the PlayStation platform as continuing to demonstrate strength as the 'Best Place to Play' and the 'Best Place to Publish' during the Q2 FY2025 earnings call.",
+    "category": "news",
+    "source_url": "https://www.investing.com/news/transcripts/earnings-call-transcript-sonys-q2-2025-shows-strong-growth-raises-forecast-93CH-4348322"
+   },
+   {
+    "claim": "Game software and network service sales are steadily growing, with Sony expecting the trend to continue in the second half of FY2025 due to a continued shift to higher-tier network service subscriptions and contributions from first-party titles.",
+    "category": "funding",
+    "source_url": "https://www.investing.com/news/transcripts/earnings-call-transcript-sonys-q2-2025-shows-strong-growth-raises-forecast-93CH-4348322"
+   },
+   {
+    "claim": "As of March 31, 2025, Sony Group had approximately 112,300 employees, a decrease of about 700 from the prior year, with headcount declines in the ET&S and G&NS (Game and Network Services) segments outside Japan.",
+    "category": "culture",
+    "source_url": "https://www.sony.com/en/SonyInfo/IR/library/FY2024_20F_PDF.pdf"
+   },
+   {
+    "claim": "Sony Interactive Entertainment has approximately 8,300 employees as of August 2026, located across six continents including North America, Europe, and Asia.",
+    "category": "culture",
+    "source_url": "https://leadiq.com/c/playstation/5ee3b4d32fd07506cb863852/employee-directory"
+   },
+   {
+    "claim": "A related open role at PlayStation is a Software Engineer (SDK) position based in San Mateo, CA, with the same salary range of $137.3K to $205.9K listed for this application framework role.",
+    "category": "role_context",
+    "source_url": "https://www.welcometothejungle.com/en/companies/playstation/jobs/software-engineer-sdk_san-mateo-ca_nhc5fmxd"
+   },
+   {
+    "claim": "PlayStation is separately hiring a Staff Software Engineer specializing in React Native and high-performance frontend development to define architecture, frameworks, and technical best practices for PlayStation's mobile and desktop user experiences.",
+    "category": "role_context",
+    "source_url": "https://talents.vaia.com/companies/playstation-global/san-mateo/senior-software-engineer-react-native-143990590"
+   },
+   {
+    "claim": "That Staff Software Engineer role requires strong expertise in C++ with solid experience integrating JavaScript via React Native, plus expert knowledge of the Mac platform landscape and architectures.",
+    "category": "tech_stack",
+    "source_url": "https://www.showbizjobs.com/jobs/playstation-staff-software-engineer-in-san-mateo/jid-02y0xm"
+   },
+   {
+    "claim": "PlayStation welcomed Haven Studios, a Montreal-based studio, to the PlayStation Studios family in 2022, with the studio's first new IP being a AAA multiplayer experience.",
+    "category": "news",
+    "source_url": "https://blog.playstation.com/2022/03/21/welcoming-haven-studios-to-the-playstation-studios-family"
+   },
+   {
+    "claim": "Sony's PlayStation platform is described in job postings as delivering cutting-edge hardware and network services to more than 100 million people worldwide.",
+    "category": "role_context",
+    "source_url": null,
+    "from_posting": true
+   },
+   {
+    "claim": "By March 31, 2026, Sony's total employee count is projected to drop to approximately 94,900, a decrease of about 17,400 from the prior year, driven partly by structural reforms in the ET&S segment and divestitures in the I&SS segment.",
+    "category": "funding",
+    "source_url": "https://www.sony.com/en/SonyInfo/IR/library/FY2025_20F_PDF.pdf"
+   }
+  ],
+  "verified_findings": {
+   "news": [
+    {
+     "claim_index": 0,
+     "claim": "Sony Interactive Entertainment released 'Ghost of Yōtei' for PlayStation 5, with the announcement dated October 2, 2025.",
+     "status": "contradicted",
+     "confidence": "medium",
+     "note": "Ghost of Yōtei was announced Sept 24, 2024; Oct 2, 2025 was its release date, not the announcement date. Source is a generic press-releases index, not a specific article. Original citation (https://sonyinteractive.com/en/news/press-releases) doesn't support this claim.",
+     "source_url": null
+    },
+    {
+     "claim_index": 1,
+     "claim": "Sony Interactive Entertainment appointed Lynn Azar as Senior Vice President, Finance, Corporate Development and Strategy in February 2025.",
+     "status": "verified",
+     "confidence": "medium",
+     "note": "Appointment confirmed for 2025 via a specific press release, but the claim's cited URL is the generic press-releases index, not that specific article; exact month not independently confirmed. Original citation (https://sonyinteractive.com/en/news/press-releases) doesn't support this claim.",
+     "source_url": null
+    },
+    {
+     "claim_index": 2,
+     "claim": "Sony Interactive Entertainment announced the integration of its wholly owned subsidiary SN Systems in February 2025.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "No independent confirmation found; source is a generic press-releases index page. Original citation (https://sonyinteractive.com/en/news/press-releases) doesn't support this claim.",
+     "source_url": null
+    },
+    {
+     "claim_index": 3,
+     "claim": "SIE announced a PlayStation 27-inch Gaming Monitor with DualSense Charging Hook, featuring a QHD IPS display up to 2560x1440, HDR, VRR, and refresh rates up to 120Hz on PS5/PS5 Pro and 240Hz on compatible PC/Mac, coming to the U.S. and Japan in 2026.",
+     "status": "verified",
+     "confidence": "high",
+     "note": "Specs and 2026 US/Japan launch confirmed by PlayStation Blog; platform-specific refresh rate split not explicitly broken out in verification but plausible given 240Hz max spec.",
+     "source_url": "https://blog.playstation.com/2025/11/11/state-of-play-japan-november-2025-all-announcements"
+    },
+    {
+     "claim_index": 4,
+     "claim": "SIE published a blog post on 'Empowering Families with Easy and Customizable Family Play Experiences' introducing the PlayStation Family App on September 10, 2025.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "Cited URL is a generic blog category page, not the specific post. Original citation (https://sonyinteractive.com/en/news/blog/category/product) doesn't support this claim.",
+     "source_url": null
+    },
+    {
+     "claim_index": 5,
+     "claim": "SIE published a post titled 'Evolving the PlayStation Store Experience' on August 14, 2025.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "Cited URL is a generic blog category page, not the specific post. Original citation (https://sonyinteractive.com/en/news/blog/category/product) doesn't support this claim.",
+     "source_url": null
+    },
+    {
+     "claim_index": 15,
+     "claim": "SIE remains focused on players and creators with investments in expansive content, advanced hardware, and premium services, including the PlayStation Portal Remote Player which brings PS5 co-play experiences.",
+     "status": "unverified",
+     "confidence": "medium",
+     "note": "Not independently checked, but citation is a legitimate Sony corporate report.",
+     "source_url": "https://www.sony.com/en/SonyInfo/IR/library/corporatereport/CorporateReport2025_E.pdf"
+    }
+   ],
+   "funding": [
+    {
+     "claim_index": 6,
+     "claim": "Sony's Game & Network Services segment (which includes PlayStation) generated ¥4.6857 trillion in revenue for fiscal year 2025, roughly flat year over year with only a ¥15.6 billion increase over FY2024.",
+     "status": "verified",
+     "confidence": "medium",
+     "note": "Confirmed via independent source (0.3% YoY increase ≈ ¥14-15.6B), though cited domain is an unusual mirror/aggregator site rather than an official Sony source.",
+     "source_url": "https://rec0ded88.com/statistics/sony-interactive-entertainment"
+    },
+    {
+     "claim_index": 7,
+     "claim": "Operating profit for Sony's Game & Network Services segment climbed 12% to ¥463.3 billion in fiscal year 2025, a new record for the division.",
+     "status": "verified",
+     "confidence": "high",
+     "note": "Matches official Sony earnings presentation figures.",
+     "source_url": "https://rec0ded88.com/statistics/sony-interactive-entertainment"
+    },
+    {
+     "claim_index": 12,
+     "claim": "Sony's PlayStation platform continues to demonstrate strength as the 'Best Place to Play' and 'Best Place to Publish', with monthly active users across all of PS increasing 3% year-on-year to 119 million accounts in September 2025.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "Independent search found different MAU figures (129M Dec 2024, 125M mid-2026) with no September 2025 figure matching 119M; numbers appear inconsistent. Original citation (https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q2_sonyspeech.pdf) doesn't support this claim.",
+     "source_url": null
+    },
+    {
+     "claim_index": 13,
+     "claim": "Total play time for PlayStation increased 1% year-on-year in the quarter reported in Sony's Q2 FY2025 earnings speech.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "Not independently checked, but citation is the correct official earnings speech document.",
+     "source_url": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q2_sonyspeech.pdf"
+    },
+    {
+     "claim_index": 14,
+     "claim": "Sony's strategic investment budget of 1.8 trillion yen and capital expenditure budget of 1.7 trillion yen remain unchanged from the original plan for the fiscal year ended March 31, 2025.",
+     "status": "verified",
+     "confidence": "high",
+     "note": "Confirmed exactly by independent verification of the same 20-F filing.",
+     "source_url": "https://www.sony.com/en/SonyInfo/IR/library/FY2024_20F_PDF.pdf"
+    }
+   ],
+   "culture": [
+    {
+     "claim_index": 8,
+     "claim": "A related Sony PlayStation job posting describes a team operating like 'a startup inside Sony PlayStation'—fast-moving, experimental, and highly ambitious, backed by the scale and resources of Sony Interactive Entertainment, building new mobile and web experiences for gamers to connect, discover, and play together.",
+     "status": "unverified",
+     "confidence": "medium",
+     "note": "Plausible quote from a specific job listing URL; not independently re-verified.",
+     "source_url": "https://careers.playstation.com/software-engineer-ii-software-developer-ii-react-native/job/6134526004"
+    },
+    {
+     "claim_index": 9,
+     "claim": "Sony Interactive Entertainment has approximately 8.3 thousand employees as of the data snapshot.",
+     "status": "contradicted",
+     "confidence": "high",
+     "note": "Wikipedia reports ~12,100 employees as of 2025, well above the 8,300 figure from LeadIQ; duplicate claim at index 16 merged here.",
+     "source_url": "https://leadiq.com/c/sony-interactive-entertainment/5ee3b4d32fd07506cb863852/employee-directory"
+    },
+    {
+     "claim_index": 22,
+     "claim": "Sony Interactive Entertainment's senior technical recruiters and HR business partners (e.g., Kristen Collins, Adrian McDonald, Lauren Burnett) support hiring for engineering roles at the company.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "Names sourced from a plausible HR directory tool, but not independently verified as current/accurate.",
+     "source_url": "https://rocketreach.co/sony-interactive-entertainment-hr-department_b7005391c4fc1d40"
+    }
+   ],
+   "tech_stack": [
+    {
+     "claim_index": 10,
+     "claim": "The team behind PlayStation's application framework builds and maintains a multi-platform framework combining React Native, native platform integration, reusable UI components, SDK tooling, and developer documentation to help internal teams build rich PlayStation user experiences.",
+     "status": "from_posting",
+     "confidence": "high",
+     "note": "Directly matches posting text; duplicate claim at index 19 merged here.",
+     "source_url": null
+    },
+    {
+     "claim_index": 20,
+     "claim": "React Native's official blog highlights ongoing evolution such as React Native 0.82 running entirely on the 'New Architecture' with Experimental Hermes V1 and React 19.1.1, reflecting the broader ecosystem SIE's framework builds upon.",
+     "status": "verified",
+     "confidence": "medium",
+     "note": "Generally accurate React Native ecosystem info, but cited URL is the blog homepage rather than the specific post confirming these version details, and it's about React Native generally, not SIE specifically. Original citation (https://reactnative.dev/blog) doesn't support this claim.",
+     "source_url": null
+    },
+    {
+     "claim_index": 21,
+     "claim": "Industry engineering blogs (e.g., Callstack) discuss React Native 'Super App' architectures using a Host Shell, federated mini apps, and Shared SDKs with tools like Re.Pack and Module Federation, relevant context for PlayStation's own multi-platform framework approach.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "Generic blog homepage cited rather than a specific article; also not about SIE directly, just tangential industry context. Original citation (https://www.callstack.com/blog) doesn't support this claim.",
+     "source_url": null
+    }
+   ],
+   "role_context": [
+    {
+     "claim_index": 11,
+     "claim": "Sony PlayStation has other open engineering roles emphasizing React Native, including a Staff Software Engineer, React Native position and a Software Engineer II role based in San Mateo, CA.",
+     "status": "unverified",
+     "confidence": "low",
+     "note": "Job posting itself does not mention other open roles; this was mislabeled as from_posting. Overlaps with separately-cited claims 17/18 which do have real sources.",
+     "source_url": null
+    },
+    {
+     "claim_index": 17,
+     "claim": "A related open role at SIE is a PlayStation Staff Software Engineer in San Mateo focused on defining architectural vision for iOS app experiences and building iOS frameworks/SDKs with Swift and C++ native modules using React Native.",
+     "status": "unverified",
+     "confidence": "medium",
+     "note": "Plausible and well-cited to a specific job listing, but not independently re-verified.",
+     "source_url": "https://www.showbizjobs.com/jobs/playstation-staff-software-engineer-in-san-mateo/jid-02y0xm"
+    },
+    {
+     "claim_index": 18,
+     "claim": "A companion listing, 'Software Engineer I SDK' at Sony Interactive Entertainment, is based in San Mateo, CA and focuses on developing, maintaining, and improving the application framework.",
+     "status": "unverified",
+     "confidence": "medium",
+     "note": "Plausible and well-cited to a specific job listing, but not independently re-verified.",
+     "source_url": "https://www.linkedin.com/jobs/view/software-engineer-i-sdk-at-sony-interactive-entertainment-4451610670"
+    },
+    {
+     "claim_index": 23,
+     "claim": "The role's estimated base pay range is $137,300–$205,900 USD, with eligibility for a top-tier benefits package including medical, dental, vision, matching 401(k), and employee discounts on Sony products.",
+     "status": "from_posting",
+     "confidence": "high",
+     "note": "Directly matches posting text.",
+     "source_url": null
+    }
+   ]
+  },
+  "final_report": "",
+  "iteration_count": 3,
+  "editor_feedback": null,
+  "status": "Researcher pass 3: 5 searches, 12 new findings (36 total), thin: none",
+  "trace": [
+   {
+    "node": "researcher",
+    "iteration": 1,
+    "queries": [
+     {
+      "category": "news",
+      "query": "Sony Interactive Entertainment 2025 news PlayStation announcement"
+     },
+     {
+      "category": "funding",
+      "query": "Sony Interactive Entertainment revenue investment PlayStation business segment 2025"
+     },
+     {
+      "category": "tech_stack",
+      "query": "Sony PlayStation React Native application framework SDK engineering blog"
+     },
+     {
+      "category": "culture",
+      "query": "Sony Interactive Entertainment engineering culture employee reviews Glassdoor"
+     },
+     {
+      "category": "role_context",
+      "query": "PlayStation application framework team React Native native modules cross-platform SDK job"
+     }
+    ],
+    "new_findings": 12,
+    "total_findings": 12,
+    "thin_categories": [
+     "funding",
+     "tech_stack",
+     "culture",
+     "role_context"
+    ],
+    "status": "Researcher pass 1: 5 searches, 12 new findings (12 total), thin: ['funding', 'tech_stack', 'culture', 'role_context']"
+   },
+   {
+    "node": "researcher",
+    "iteration": 2,
+    "queries": [
+     {
+      "category": "funding",
+      "query": "Sony Interactive Entertainment PlayStation investment capital expenditure 2025 fiscal year report"
+     },
+     {
+      "category": "tech_stack",
+      "query": "PlayStation React Native application framework engineering blog SDK architecture"
+     },
+     {
+      "category": "culture",
+      "query": "Sony Interactive Entertainment engineering culture employee reviews Glassdoor 2025"
+     },
+     {
+      "category": "role_context",
+      "query": "PlayStation application framework team C++ SDK job engineer San Mateo Sony"
+     }
+    ],
+    "new_findings": 12,
+    "total_findings": 24,
+    "thin_categories": [],
+    "status": "Researcher pass 2: 4 searches, 12 new findings (24 total), thin: none"
+   },
+   {
+    "node": "editor",
+    "iteration": 2,
+    "checks": [
+     {
+      "claim_index": 0,
+      "question": "When did Sony Interactive Entertainment announce 'Ghost of Yōtei' for PlayStation 5?",
+      "answer": "Sony Interactive Entertainment announced Ghost of Yōtei for PlayStation 5 on September 24, 2024, during a special presentation.",
+      "source_url": "https://en.wikipedia.org/wiki/Ghost_of_Y%C5%8Dtei",
+      "results": [
+       {
+        "url": "https://en.wikipedia.org/wiki/Ghost_of_Y%C5%8Dtei",
+        "content": "Ghost of Yōtei was released for the PlayStation 5 on October 2, 2025. It received generally positive reviews and sold over 3.3 million copies by November 2025. The game won \"Adventure Game of the Year\" at the 29th Annual D.I.C.E. Awards. A multiplayer mode titled Ghost of Yōtei: Legends was released in March 2026, and the game's Complete Edition, featuring new DLC, in the form of both Legends, a single-player narrative-expansion titled Echoes of Sekigahara, and a survival mode titled \"Most [...] ## Development\n\n[edit]\n\n\") presentation on September 24, 2024, and it was nominated for Most Antici"
+       },
+       {
+        "url": "https://sonyinteractive.com/en/press-releases/2025/journey-across-the-northern-edge-of-17th-century-japan-in-ghost-of-yotei-out-now-on-playstation-5",
+        "content": "San Mateo, Calif. — October 2, 2025 — Sony Interactive Entertainment today announced the worldwide launch of Ghost of Yōtei™, the new highly-anticipated video game from Sucker Punch Productions. Available now on PlayStation®5, Ghost of Yōtei delivers a deeply immersive adventure set in 17thcentury Japan.\n\n## Ghost of Yōtei is Available Now\n\nGhost of Yōtei is available today on PlayStation 5. The game is offered in Standard, Digital Deluxe, and Collector’s Editions. [...] Skip to Content\n\n# Journey Across the Northern Edge of 17th Century Japan in Ghost of Yōtei, Out Now on PlayStation 5\n\n## Ex"
+       },
+       {
+        "url": "https://www.gamingbible.com/news/platform/playstation/ghost-of-yotei-play-early-playstation-announces-498673-20250827",
+        "content": "The end of the year is set to be a race to the finish when it comes to games which could snag Game of the Year and despite it not being released until October, Ghost of Yōtei may just be a late contender.\n\nSet to launch on PlayStation 5 on 2 October, Ghost of Yōtei is an upcoming action-adventure game and a sequel to 2020’s Ghost of Tsushima. [...] Running from 25 to 28 September, the Tokyo Game Show will allow you to play Ghost of Yōtei just a week ahead of its full launch and so it will give you a pretty good idea of if the sequel will live up to Ghost of Tsushima.\n\nAdditionally, those atten"
+       }
+      ]
+     },
+     {
+      "claim_index": 1,
+      "question": "Who did Sony Interactive Entertainment appoint as Senior Vice President, Finance, Corporate Development and Strategy, and when?",
+      "answer": "Sony Interactive Entertainment appointed Lynn Azar as Senior Vice President, Finance, Corporate Development and Strategy. The announcement was made in 2025, according to SIE's press release.",
+      "source_url": "https://sonyinteractive.com/en/press-releases/2025/sony-interactive-entertainment-announces-lynn-azar-appointed-senior-vice-president-finance-corporate-development-and-strategy",
+      "results": [
+       {
+        "url": "https://digitalmedianet.com/sony-interactive-entertainment-announces-lynn-azar-appointed-senior-vice-president-finance-corporate-development-and-strategy/amp",
+        "content": "ATLANTA, SEPTEMBER 22, 2026 – Westminster Schools, a K through 12 school in Atlanta, Georgia…\n\n4 hours ago\n\n Audio\n Microphones\n Music\n News\n\n## Lorde’s Touring Team Delivers Sonic Excellence Worldwide With DPA and Wisycom\n\nAUCKLAND, NEW ZEALAND, SEPTEMBER 16, 2026 ― As Lorde continues her latest global touring and…\n\n4 hours ago\n\n Audio\n Music\n News\n Studio Monitor\n\n## KRK V Series Monitors Help Industry Veteran Santiago Uribe Shape Music for Film and Television [...] BOGOTA, COLOMBIA, SEPTEMBER 23, 2026 ― Music Supervisor, Composer, and Mixing Engineer Santiago Uribe has…\n\n4 hours ago\n\n News\n"
+       },
+       {
+        "url": "https://sonyinteractive.com/en/press-releases/2025/sony-interactive-entertainment-announces-lynn-azar-appointed-senior-vice-president-finance-corporate-development-and-strategy",
+        "content": "corporate development. [...] “I am thrilled to welcome Lynn to the SIE leadership team,” said Hideaki Nishino, CEO Platform Business Group, Sony Interactive Entertainment. “Her extensive experience, leadership, and vision will be critical as we continue to innovate, expand our business, and deliver world-class experiences to gamers worldwide.”"
+       },
+       {
+        "url": "https://sonyinteractive-com.translate.goog/en/press-releases/2025/sony-interactive-entertainment-announces-lynn-azar-appointed-senior-vice-president-finance-corporate-development-and-strategy?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=auto",
+        "content": "corporate development. [...] “I am thrilled to welcome Lynn to the SIE leadership team,” said Hideaki Nishino, CEO Platform Business Group, Sony Interactive Entertainment. “Her extensive experience, leadership, and vision will be critical as we continue to innovate, expand our business, and deliver world-class experiences to gamers worldwide.”"
+       }
+      ]
+     },
+     {
+      "claim_index": 3,
+      "question": "What are the specifications and release details of SIE's PlayStation 27-inch Gaming Monitor with DualSense Charging Hook?",
+      "answer": "SIE (Sony Interactive Entertainment) has unveiled the PlayStation 27-inch Gaming Monitor with DualSense Charging Hook, designed for desktop PS5 gaming.\n\nKey specifications:\n- Screen type: IPS\n- Screen size: 27\"\n- Resolution: 2560 x 1440 (QHD)\n- Aspect Ratio: 16:9\n- Refresh Rate: Up to 240Hz\n- HDR: Yes\n- Brightness: 350 cd/m²\n- Contrast ratio: 1000:1\n- VRR: HDMI VRR, AMD FreeSync Premium\n- Color gamut: DCI-P3 95%\n- External Dimensions with stand (highest position): approx. 614 x 534 x 214 mm (24.2 x 21.0 x 8.4 in) (W x H x D)\n- External Dimensions without stand: approx. 614 x 364 x 69 mm (24.2 x 14.3 x 2.7 in)\n- Mass with stand: approx. 6.2 kg (13.7 lb)\n\nA standout feature is the built-in charging hook, which lets users conveniently charge a DualSense or DualSense Edge wireless controller directly on the monitor.\n\nRelease details: The monitor is set to launch in 2026 in the United States and Japan. As of the announcement (via the PlayStation Blog and PlayStation's Instagram), exact launch dates and pricing have not yet been announced — PlayStation said more information on availability would be shared in the coming months. It's also noted that HDMI/DisplayPort cables are not included, and some features require compatible devices and supported games (sold separately).",
+      "source_url": "https://blog.playstation.com/2025/11/11/first-look-at-playstations-27-gaming-monitor",
+      "results": [
+       {
+        "url": "https://www.playstation.com/en-us/accessories/27-inch-gaming-monitor",
+        "content": "|  |  |\n --- |\n| Screen type | IPS |\n| Screen size | 27\" |\n| Resolution | 2560 x 1440 (QHD) |\n| Aspect Ratio | 16:9 |\n| Refresh Rate | Up to 240Hz |\n| HDR | Yes |\n| Brightness | 350cd/m2 |\n| Contrast ratio | 1000:1 |\n| VRR | HDMI VRR, AMD FreeSync™ Premium |\n| Color gamut | DCI-P3 95% | [...] | External Dimensions with stand  (highest position height) | Approx. 614 x 534 x 214 mm ( 24.2 x 21.0 x 8.4 in ) (width x height x depth) |\n| External Dimensions without stand | Approx. 614 x 364 x 69 mm ( 24.2 x 14.3 x 2.7 in )  (width x height x depth) |\n| Mass with stand | Approx. 6.2 kg ( 13.7 lb ) |"
+       },
+       {
+        "url": "https://www.instagram.com/reel/DQ8MibtEqfX?hl=en",
+        "content": "playstation\n\nIntroducing the 27” Gaming Monitor with DualSense Charging Hook. Bring the PlayStation experience to your desktop gaming space with:  \n  \n🔵 QHD screen with HDR visuals  \n🔵 Up to 240 Hz refresh rate with VRR support  \n🔵 Convenient charging hook for a DualSense or DualSense Edge controller  \n  \nFull details at PlayStation Blog on this US and Japan release coming 2026.\n\nlobovonobo's profile picture\n\nlobovonobo\n\nAvailable in Canada?\n\nReply\n\nfloodyboyaesthetics's profile picture [...] Reply\n\ngaviriasebastianramirez's profile picture\n\ngaviriasebastianramirez\n\n@juanndl\\_\\_\\_\n\nReply\n\n843z"
+       },
+       {
+        "url": "https://blog.playstation.com/2025/11/11/first-look-at-playstations-27-gaming-monitor",
+        "content": "PlayStation’s 27” Gaming Monitor with DualSense Charging Hook will launch in 2026 in the U.S. and in Japan. Stay tuned for more information on launch date and availability in the coming months!\n\n\\Features available with compatible devices and supported games, sold separately.\n\n\\\\HDMI / DisplayPort cable not included.\n\nDid you like this?\n\n## Comments are closed.\n\n29 Comments\n\nLoading More Comments\n\n## Trending Stories\n\nHelldivers 2 Ironclad Democracy Warbond launches Sept 22 [...] Built for desktop gaming with a PS5, the upcoming monitor combines bold visuals and performance and includes a char"
+       }
+      ]
+     },
+     {
+      "claim_index": 6,
+      "question": "What was the revenue for Sony's Game & Network Services segment in fiscal year 2025?",
+      "answer": "Sony's Game & Network Services (G&NS) segment generated revenue of ¥4,685.7 billion (approximately $29.8 billion) in fiscal year 2025, a 0.3% increase over FY2024. This segment also achieved a record operating profit of ¥463.3 billion, up 11.6% year-on-year.",
+      "source_url": "https://icon-era.com/statistics/sony-interactive-entertainment",
+      "results": [
+       {
+        "url": "https://icon-era.com/statistics/sony-interactive-entertainment",
+        "content": "## Sony Interactive Entertainment Statistics – TL;DR\n\nSony’s Game & Network Services division generated ¥4,685.7 billion (~$29.8 billion) in FY2025 revenue, up 0.3% year-on-year.\n\nFY2025 operating income reached a record ¥463.3 billion (~$2.9 billion), up 11.6% from FY2024.\n\nPS5 lifetime shipments hit 93.7 million units by March 31, 2026, with 16 million units shipped during FY2025. [...] Sony’s Game & Network Services segment brought in ¥4,685.7 billion (roughly $29.8 billion) during FY2025, a marginal 0.3% increase over FY2024’s ¥4.6 trillion. The real story is on the profit side. Operating "
+       },
+       {
+        "url": "https://www.invenglobal.com/articles/21682/sony-posts-record-gaming-operating-profit-though-bungie-impairment-casts-a-shadow",
+        "content": "# Inven Global\n\n## Sony Posts Record Gaming Operating Profit, Though Bungie Impairment Casts a Shadow\n\nSoojin    Soojin \"Eonn\" Kim  eonn@inven.co.kr\n\nKorean (한국어) KO   Add us on\n\nSony Group has announced its financial results for fiscal year 2025. The Game & Network Services (G&NS) segment recorded revenue of ¥4.6857 trillion and an operating profit of ¥463.3 billion. However, the company also reported an impairment loss of approximately ¥120.1 billion (roughly ₩1.13 trillion) related to Bungie. [...] Sony stated that the G&NS segment achieved its highest-ever operating profit. Excluding one-t"
+       },
+       {
+        "url": "https://www.statista.com/statistics/1202169/sony-net-sales-gaming-services-segment-quarter",
+        "content": "Sony game and network services: net sales as of FY Q1 2025, by segment\n\nIn the first quarter of the company's fiscal year 2025, Sony Corporation generated approximately \n540 \nbillion yen through game software sales. Add-on content such as in-game currency, in-game items and expansion packages accounted for the biggest share of gaming software sales for the quarter but did not surpass hardware sales in the measured period.\n\n## Get in touch with us for additional information"
+       }
+      ]
+     },
+     {
+      "claim_index": 7,
+      "question": "What was the operating profit and percentage change for Sony's Game & Network Services segment in fiscal year 2025?",
+      "answer": "For fiscal year 2025 (full year), Sony's Game & Network Services (G&NS) segment operating income increased by 48.4 billion yen, a 12% rise year-on-year, driven partly by a positive foreign exchange impact of 54.3 billion yen.",
+      "source_url": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q4_sonypre.pdf",
+      "results": [
+       {
+        "url": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q4_sonypre.pdf",
+        "content": "Income -83.5 -95 -11.5 Consolidated Sales 12,479.6 12,300 -179.6 Operating income 1,447.5 1,600 +152.5 11 Game & Network Services Segment FY2025 (year-on-year) Sales: Essentially flat (FX Impact: +87.3 bln yen) （＋）Impact of foreign exchange rates （＋）Increase in sales from network services （＋）Increase in sales of non-first-party game software titles （－）Decrease in sales of hardware due to a decrease in unit sales OI: 48.4 bln yen (12%) increase (FX Impact: +54.3 bln yen) （＋）Impact of increase [...] Change FX Impact Game & Network Services (G&NS) Sales 4,670.0 4,685.7 +15.6 +87.3 Operating inc"
+       },
+       {
+        "url": "https://www.sony.com/en/SonyInfo/IR/library/presen/er/pdf/25q2_sonyspeech.pdf",
+        "content": "November August \n\n+150 4,470 4,320 4,670.0 Sales Game & Network Services （G&NS） -30 －500 500 414.8 Operating income +110 1,980 1,870 1,842.6 Sales \n\nMusic －+25 385 360 357.3 Operating income －1,500 1,500 1,505.9 Sales [...] • Game software and network services sales are steadily growing. We expect this trend to continue in the second half due to acontinued shift to higher tiers in our network services business and the contribution of first-party titles. \n\n• As for PlayStation5(PS5) hardware, we plan to expand the installed base during the year-end sales season while continuing to balance that "
+       },
+       {
+        "url": "https://uk.investing.com/news/transcripts/earnings-call-transcript-sony-q3-2025-sees-record-operating-income-stable-outlook-93CH-4489792",
+        "content": "The forecast for each segment is shown here. Now I will turn to an overview of each business. First is the G&NS segment. FY 25 Q3 sales decreased 4% year-on-year, primarily due to lower hardware unit sales. Operating income increased 19% year-on-year, primarily due to the positive impact of foreign exchange rates and the impact of increased sales and network services and first-party software, setting a record for the third quarter in this segment. We upwardly revised our FY 25 sales forecast 4% [...] by the relevant authorities. Next is the ET&S segment. FY 2025 Q3 sales decreased 7% year-on-y"
+       }
+      ]
+     },
+     {
+      "claim_index": 9,
+      "question": "How many employees does Sony Interactive Entertainment have?",
+      "answer": "According to Wikipedia, Sony Interactive Entertainment had approximately 12,100 employees as of 2025.",
+      "source_url": "https://en.wikipedia.org/wiki/Sony_Interactive_Entertainment",
+      "results": [
+       {
+        "url": "https://www.linkedin.com/company/sony-interactive-entertainment-llc",
+        "content": "### Website\n\n### Crunchbase\nN/A\n### LinkedIn\nN/A\n\n### Industry\nEntertainment Providers\n\n### Company Size\n10,001+ employees  \n8292 associated members (LinkedIn members who've listed Sony Interactive Entertainment as their current workplace on their profile)\n\n### Founded\nN/A\n\n### Funding\nLast Round Date: N/A\nLast Round Type: N/A\nTotal Rounds: N/A\nLast Round Raised: N/A\n\n### Investors\nN/A\n\n### Specialties\nN/A\n\n## Locations\n2207 Bridgepointe Pkwy, San Mateo, California 94404, US [...] # Sony Interactive Entertainment\nN/A\nEntertainment Providers • San Mateo, California • 265,224 followers • 10,001+"
+       },
+       {
+        "url": "https://en.wikipedia.org/wiki/Sony_Interactive_Entertainment",
+        "content": "| Key people |  Hideaki Nishino\") [Wikidata] (president \"President (corporate title)\") and CEO) |\n| Products | PlayStation video game consoles |\n| Production output |  Hardware Decrease 16 million  Software Increase 317.9 million  (FY25) |\n| Services |  PlayStation Network  PlayStation Store  PlayStation Plus |\n| Revenue | Decrease US$31.09 billion  (FY25) |\n| Operating income | Increase US$3.07 billion  (FY25) |\n| Number of employees | 12,100 (2025) |\n| Parent | Sony Group Corporation | [...] On November 28, 2023, SIE and Korean publisher NCSoft signed a strategic global partnership.\n\nOn Febr"
+       },
+       {
+        "url": "https://rocketreach.co/sony-interactive-entertainment-hk-profile_b5d52c06f42e39ef",
+        "content": "- [x] \n### How many people are employed at Sony Interactive Entertainment HK?\n\n \n5 people are employed at Sony Interactive Entertainment HK.\n\n## Top Sony Interactive Entertainment HK Employees\n\n   Image 5: Sony Interactive Entertainment HK Employee Minoru Kusakabe's profile photo ### Minoru Kusakabe #### Art Director at Sony Interactive Entertainment HK Japan   View   \n\nView Similar People\n\n#### Related Companies\n\nImage 6: GoldenvoiceGoldenvoice\n\n 643 \n\n $17.1m \n\nImage 7: AtmosphereAtmosphere [...] Website\nRevenue$27.5 billion\nEmployees49  (5 on RocketReach)\nFounded1997\nIndustryEntertainment, "
+       }
+      ]
+     },
+     {
+      "claim_index": 12,
+      "question": "What was the year-on-year change in monthly active users across PlayStation in September 2025?",
+      "answer": "The search results do not provide a figure for PlayStation Network monthly active users specifically for September 2025. They report related data points—129 million MAU in December 2024 (up 5% year-over-year), a peak of about 132 million in December 2025, and 125 million MAU in the quarter ended June 30, 2026 (up 2% year-over-year)—but no September 2025 statistic or year-on-year change for that month is given.",
+      "source_url": null,
+      "results": [
+       {
+        "url": "https://sonyinteractive.com/en/our-company/business-data-sales",
+        "content": "Including physical and download-only titles, PS VR titles as well as software bundled with PS4, PS5, and software for PS VR\n\n## PlayStation Users\n\n| PlayStation Monthly Active Users | 125 million (As of June 30, 2026) |\n\nEstimated figures based on SIE research\n\nCompany\n\n   About Us\n   Contact Us\n   Our Company\n   Company History\n   Business Data & Sales\n   Innovation\n   Careers Opens in a new tab\n\nNews & Media"
+       },
+       {
+        "url": "https://icon-era.com/statistics/playstation",
+        "content": "Sony’s PlayStation division reached 82.53 million PS5 console sales as of November 2025, positioning the current-generation system as the company’s fifth best-selling platform. The gaming division generated $31.7 billion in fiscal year 2024, marking a 9% increase and cementing its status as Sony’s most profitable business segment. PlayStation Network recorded 129 million monthly active users in December 2024, reflecting a 5% year-over-year increase as the platform continues its three-decade [...] PlayStation Network maintains one of the largest active user bases in gaming, with 129 million mon"
+       },
+       {
+        "url": "https://tech-insider.org/playstation-125-million-users-ps5-sales-2026",
+        "content": "Sony’s PlayStation division delivered a headline number that looks great and a growth story that doesn’t hold up under close reading. PlayStation Network hit 125 million monthly active users in the quarter that ended June 30, 2026, up 2% year over year, though that’s a record for a June quarter rather than an all-time high — PSN had already touched roughly 132 million monthly active users at a December 2025 peak, which Game World Observer, citing Sony’s own report, called the platform’s [...] PlayStation Network reached 125 million monthly active users in June 2026, a record for that month and"
+       }
+      ]
+     },
+     {
+      "claim_index": 14,
+      "question": "What were Sony's strategic investment and capital expenditure budgets for the fiscal year ended March 31, 2025?",
+      "answer": "For the fiscal year ended March 31, 2025, Sony's strategic investment budget was 1.8 trillion yen and its capital expenditure budget was 1.7 trillion yen (these figures remained unchanged from the original plan, as noted in Sony's FY2024 20-F filing).",
+      "source_url": "https://www.sony.com/en/SonyInfo/IR/library/FY2024_20F_PDF.pdf",
+      "results": [
+       {
+        "url": "https://www.sony.com/en/SonyInfo/IR/library/FY2025_20F_PDF.pdf",
+        "content": "mainly for greater shareholder returns. Although the strategic investment budget of 1.8 trillion yen remains unchanged from the original plan, Sony has revised the capital expenditure budget from the previous forecast of 1.7 trillion yen to 1.8 trillion yen. A total of approximately 1.0 trillion yen of strategic investments have been executed or determined already as of May 8, 2026. Regarding shareholder returns, Sony completed a total of 500.0 billion yen in repurchases of its own shares [...] In the fiscal years ended March 31, 2025 and 2026, Sony’s capital expenditures, consisting of additi"
+       },
+       {
+        "url": "https://www.sec.gov/Archives/edgar/data/313838/000110465926057451/tm2613222d1_6k.htm",
+        "content": "| Fiscal year ended March 31, 2025\\1 |  |    |  |  | 50.00 |  |  |    |  |  | 10.00 |  |  |    |  |  | 120,597 |  |  |  | 11.3 |  |  |  | 1.5 |  |\n| Fiscal year ended March 31, 2026 |  |    |  |  | 12.50 |  |  |    |  |  | 12.50 |  |  |  | 25.00 |  |  |  | 148,560 |  |  |  | 14.5 |  |  |  | 1.8 |  |\n| Fiscal year ending March 31, 2027 (Forecast) |  |    |  |  | 17.50 |  |  |    |  |  | 17.50 |  |  |  | 35.00 |  |  |  |  |  |  |    |  |  |  |  | [...] |  |  |  |  |  |  |  |  |  |  |  |  |  |\n ---  ---  ---  ---  ---  --- \n|  |  | Yen in millions | | | | | | | | | |  |\n|  |  | Fiscal year ended "
+       },
+       {
+        "url": "https://www.sony.com/en/SonyInfo/IR/library/FY2024_20F_PDF.pdf",
+        "content": "source of capital, from the initial plan of 4.5 trillion yen to 4.8 trillion yen, taking into account the results of the fiscal year ended March 31, 2025. Since Sony has made strengthening shareholder returns a priority for the fifth mid-range plan, Sony intends to use such increase as a source of capital for greater shareholder returns. The strategic investment budget of 1.8 trillion yen and capital expenditure budget of 1.7 trillion yen remain unchanged from the original plan. A total of"
+       }
+      ]
+     }
+    ],
+    "quality_score": 5,
+    "counts": {
+     "verified": 6,
+     "unverified": 12,
+     "contradicted": 2,
+     "from_posting": 2
+    },
+    "decision": "send_back",
+    "feedback": "Fix two clear errors before finalizing: (1) the Ghost of Yōtei claim conflates the Sept 24, 2024 announcement with the Oct 2, 2025 release date — correct the date/framing; (2) the employee count of ~8,300 (claims 9/16) is contradicted by Wikipedia's ~12,100 figure — reconcile with a more authoritative source (10-K/20-F headcount disclosure) rather than LeadIQ. Several 'news' claims (SN Systems integration, Family App post, Store Experience post) are cited only to generic blog/press-release index pages rather than the specific articles — replace with direct links to the actual posts so citation_ok can be true. The MAU claim (119M, +3% YoY, Sept 2025) doesn't match any figure found in independent searches (which show 125-132M in nearby periods) — re-verify against the actual Sony IR presentation/transcript for that specific quarter. Claims 20/21 about React Native ecosystem trends are tangential (not really about SIE) and cited to blog homepages rather than specific posts — either tie them more concretely to SIE's stack or drop them. Role-context coverage is decent (claims 8, 17, 18) but claim 11 duplicates 17/18 without its own citation and was incorrectly tagged as from_posting — remove that mislabeling. Strengthen the briefing by keeping the well-verified funding claims (6, 7, 14) and the from_posting tech-stack/role details (10, 23), which are solid anchors.",
+    "status": "Editor checked 8 claims independently: {'verified': 6, 'unverified': 12, 'contradicted': 2, 'from_posting': 2}, quality 5/10 - sending back to Researcher"
+   },
+   {
+    "node": "researcher",
+    "iteration": 3,
+    "queries": [
+     {
+      "category": "news",
+      "query": "site:blog.playstation.com \"Evolving the PlayStation Store Experience\" OR \"Family Play\" OR \"SN Systems\" 2025"
+     },
+     {
+      "category": "funding",
+      "query": "Sony Interactive Entertainment employee headcount 10-K 20-F fiscal 2025 annual report"
+     },
+     {
+      "category": "tech_stack",
+      "query": "Sony Q2 FY2025 earnings presentation PlayStation monthly active users September 2025 transcript"
+     },
+     {
+      "category": "culture",
+      "query": "Sony Group Corporation 20-F 2025 number of employees Game and Network Services segment"
+     },
+     {
+      "category": "role_context",
+      "query": "Sony PlayStation \"Software Engineer\" application framework React Native SDK job posting San Mateo"
+     }
+    ],
+    "new_findings": 12,
+    "total_findings": 36,
+    "thin_categories": [],
+    "status": "Researcher pass 3: 5 searches, 12 new findings (36 total), thin: none"
+   }
+  ]
+ }
+}

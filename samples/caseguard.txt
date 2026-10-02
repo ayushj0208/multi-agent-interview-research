@@ -1,0 +1,78 @@
+https://job-boards.greenhouse.io/caseguard/jobs/5387488008
+
+# Software Engineer - Backend
+Location: Arlington, VA
+
+Software Engineer - Backend
+
+Job Description:
+
+We are seeking a highly independent and proactive Software Engineer to join our backend team and play a critical role in building REST API microservices from scratch using ASP.NET Core (C#) and building cloud infrastructure using Infrastructure as Code (IaC) in AWS. In this role, you will contribute to collaborative file redacting tool with exciting features like live editing, image processing and more
+
+What you will do:
+
+- Model business domains into relational/NoSQL data structures
+
+- Design and build scalable REST APIs for our microservices using ASP.NET Core (C#).
+
+- Build heavy file-processing workers optimized for CPU/memory/throughput
+
+- Design AWS infrastructure with IaC
+
+- Participate in architectural discussions and contribute to decisions for system design and service structure.
+
+Qualifications (Required):
+
+- Bachelor’s degree in Computer Science, Software Engineering, or equivalent experiences
+
+- 2+ years backend experience with REST APIs
+
+- Strong OOP fundamentals and critical thinking under ambiguity
+
+- Experience with relational databases and SQL, including schema design, indexes, and transactions. 
+
+- Experience with Redis or distributed caching. 
+
+- A track record of modeling business logic into databases
+
+- Comfort working independently on complex, underspecified problems
+
+Qualifications (It’s a plus):
+
+- Strong understanding of distributed systems, scalability, and fault-tolerance patterns.
+
+- Familiarity with API design patterns such as Clean Architecture.
+
+- Experience processing PDFs, images, videos, or other large binary files. 
+
+- Hands-on experience with AWS services (e.g., EC2, EKS, S3, Lambda, RDS, DynamoDB).
+
+- Practical knowledge of IaC tools (e.g., AWS CDK, Terraform, CloudFormation).
+
+- Experience with containerization tools (e.g., Docker) and orchestration platforms (e.g., Kubernetes).
+
+- Familiarity with event-driven architectures and message queues (e.g., SNS, SQS, EventBridge).
+
+- Knowledge of asynchronous programming and multi-threading in C#.
+
+- Relevant AWS certifications (e.g., AWS Certified Solutions Architect, AWS Certified Developer)
+
+Benefits:
+
+- Competitive Salary
+
+- Stock Option
+
+- Medical, Dental, and Vision Insurance
+
+- 401K
+
+- Paid Vacation
+
+- Ten paid holidays per year
+
+- Friendly and Learning environment
+
+About CaseGuard
+
+CaseGuard is a software company that helps law enforcement agencies, federal agencies, hospitals, schools, airports, and others manage all their media redaction needs in one easy-to-use redaction software. CaseGuard Studio is one of a kind. Our team is driven by a passion for great software design, creating great products, and creative processes; CaseGuard implements innovative ideas across multiple services and agencies. We invest in people. We nurture skills consistent with our values and our future strategy. Our passionate pursuit of excellence, the application of our creativity to solve our clients’ challenges, our technical expertise, and our collaborative spirit are measures of our success.

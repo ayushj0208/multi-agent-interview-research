@@ -1,0 +1,2 @@
+# The pre-commit hook must keep LF endings: a CRLF "#!/usr/bin/env python" line fails to find "python\r".
+.githooks/* text eol=lf
