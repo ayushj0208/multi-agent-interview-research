@@ -28,7 +28,7 @@ pool = None
 if os.getenv("DATABASE_URL"):
     from psycopg_pool import ConnectionPool
 
-    pool = ConnectionPool(os.environ["DATABASE_URL"], kwargs={"autocommit": True, "prepare_threshold": 0})
+    pool = ConnectionPool(os.environ["DATABASE_URL"], kwargs={"autocommit": True, "prepare_threshold": 0}, open=True)
 
 
 def make_checkpointer():

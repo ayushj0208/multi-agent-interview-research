@@ -2,6 +2,9 @@ import os
 
 os.environ.setdefault("ANTHROPIC_API_KEY", "dummy")
 os.environ.setdefault("TAVILY_API_KEY", "tvly-dummy")
+# Tests never use a real database, even when a local .env names one (graph.py loads .env, but never over a value
+# that is already set). The Postgres tests opt in with TEST_DATABASE_URL instead.
+os.environ["DATABASE_URL"] = ""
 
 import contextlib
 import threading

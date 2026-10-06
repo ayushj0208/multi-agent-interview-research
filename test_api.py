@@ -301,7 +301,7 @@ def test_daily_counts_in_postgres_enforce_the_limit():
     if not (url := os.getenv("TEST_DATABASE_URL")):
         pytest.skip("set TEST_DATABASE_URL to run against Postgres")
     from psycopg_pool import ConnectionPool
-    saved, api.pool = api.pool, ConnectionPool(url, kwargs={"autocommit": True, "prepare_threshold": 0})
+    saved, api.pool = api.pool, ConnectionPool(url, kwargs={"autocommit": True, "prepare_threshold": 0}, open=True)
     key = f"test:{uuid_.uuid4().hex}"
     try:
         with api.pool.connection() as conn:

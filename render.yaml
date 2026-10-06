@@ -6,6 +6,7 @@ services:
     name: interview-briefing-api
     runtime: python
     plan: free
+    region: ohio  # same AWS region as the Neon database (us-east-2)
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT  # no --reload in production
     envVars:
@@ -37,6 +38,7 @@ services:
     name: interview-briefing-ui
     runtime: python
     plan: free
+    region: ohio  # same AWS region as the Neon database (us-east-2)
     buildCommand: pip install -r requirements.txt
     startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
     envVars:
