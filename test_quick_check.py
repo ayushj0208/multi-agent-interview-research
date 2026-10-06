@@ -72,8 +72,8 @@ def test_visa_search_is_limited_to_visa_data_sites():
 def test_the_quick_check_is_h1b_only():
     out, prompts, calls = run(answer())
     assert set(qc.QuickCheck.model_fields) == {"h1b"}
-    assert "e_verify" not in out and len(calls) == 1, "one search: visa data only"
-    assert "e-verify" not in prompts[0].lower() and not any("e-verify" in q.lower() for q, _ in calls)
+    assert set(out) == {"company_name", "provider", "visa_data_sites", "h1b"}, "the H-1B answer and nothing else"
+    assert len(calls) == 1 and len(prompts) == 1, "one search on visa data sites, one model call"
 
 
 if __name__ == "__main__":

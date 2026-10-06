@@ -51,7 +51,7 @@ def toggle_theme():
         st.query_params.pop("theme", None)
 
 
-# Apple-inspired styling and motion (DESIGN.md); colors, font and radii live in .streamlit/config.toml. The dark
+# Apple-inspired styling and motion; colors, font and radii live in .streamlit/config.toml. The dark
 # layer comes after the light one in the same <style>, so it wins wherever it overrides a rule.
 here = Path(__file__).parent
 css = (here / "style.css").read_text(encoding="utf-8")

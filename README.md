@@ -14,7 +14,7 @@ Built for my own job search, and as a portfolio piece demonstrating
 multi-agent orchestration, independent fact-checking, and honest
 self-evaluation — not just an LLM wrapped in a prompt.
 
-**[Live demo](#)** · **[Architecture diagram](#)** *(links added at deploy)*
+**[Live demo](https://interview-briefing-ui.onrender.com/)** (can take up to a minute to wake if it has been idle) · **[Project page](https://ayushj0208.github.io/multi-agent-interview-research/)**
 
 ---
 
@@ -59,8 +59,10 @@ Every LLM call goes through one shared helper:
   Claude Sonnet 5 (primary) → NVIDIA NIM (fallback on rate-limit / credit errors)
 ```
 
-A full architecture diagram (including the API layer and the Streamlit UI's
-four screens) is published [here](#) *(artifact link added at deploy)*.
+The system as deployed, from the visitor to the pipeline, its services and the offline evals
+([full-size SVG](docs/assets/architecture.svg)):
+
+![Architecture: the Streamlit UI and FastAPI on Render, the LangGraph pipeline with Claude and Tavily, Neon Postgres, and the offline eval harness](docs/assets/architecture.png)
 
 ## Tech stack
 

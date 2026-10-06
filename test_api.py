@@ -165,7 +165,7 @@ def test_quick_check_endpoint():
     body = client.post("/quick-check", json={"company_name": f"  {COMPANY} "}).json()
     assert body["company_name"] == COMPANY and body["provider"] == "claude"
     assert body["h1b"]["verdict"] == "yes_with_evidence" and body["h1b"]["evidence"][0]["url"] == test_routing.LCA_URL
-    assert set(body) == {"company_name", "provider", "visa_data_sites", "h1b"}, "H-1B only: no E-Verify part"
+    assert set(body) == {"company_name", "provider", "visa_data_sites", "h1b"}, "H-1B only"
     assert g.QueryPlan not in prompts, "the quick check must not start the paid pipeline"
     assert client.post("/quick-check", json={"company_name": ""}).status_code == 422
 

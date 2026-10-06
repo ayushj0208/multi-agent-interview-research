@@ -501,7 +501,7 @@ def test_bad_citation_without_confirmation_is_dropped_not_filtered():
     assert claims[1]["status"] == "off_target" and claims[1]["source_url"].endswith("Sony-Music-Entertainment/reviews")
 
 
-SONY_POSTING = open("samples/sony.txt", encoding="utf-8").read()
+SONY_POSTING = open("evals/postings/sony_play_station.txt", encoding="utf-8").read()
 MIRROR = "https://www.wearedevelopers.com/jobs/ext/3027576-software-engineer"
 NEWS = "https://www.gamesindustry.biz/sony-hiring-policy"
 

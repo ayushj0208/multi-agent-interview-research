@@ -1,4 +1,4 @@
-/* Styling beyond the Streamlit theme (.streamlit/config.toml). Palette, type and spacing follow DESIGN.md (Apple);
+/* Styling beyond the Streamlit theme (.streamlit/config.toml). Palette, type and spacing are Apple-inspired;
    the 3D background, shadows, glass and gradient text deliberately go past its no-shadow, no-gradient rules. */
 
 :root {

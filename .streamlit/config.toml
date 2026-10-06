@@ -3,7 +3,7 @@
 # and leave a mismatched page. Also hides developer options (rerun, clear cache) from public visitors.
 toolbarMode = "minimal"
 
-# Apple-inspired theme from DESIGN.md. Inter stands in for SF Pro, as DESIGN.md recommends off-Apple.
+# Apple-inspired theme. Inter stands in for SF Pro.
 [theme]
 base = "light"
 primaryColor = "#0066cc"             # Action Blue: the single interactive color

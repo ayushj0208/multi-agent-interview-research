@@ -1,6 +1,6 @@
 /* Dark mode: appended after style.css when the visitor turns on the toggle (?theme=dark). Streamlit's own theme stays
    light underneath (it has no per-visitor theme API), so this overrides both our styling and Streamlit's
-   light-themed components. Colors follow DESIGN.md's dark tiles and Sky Link Blue for links on dark. */
+   light-themed components. Colors follow Apple's dark tiles and Sky Link Blue for links on dark. */
 
 :root {
   color-scheme: dark;  /* native controls, scrollbars and form carets go dark too */

@@ -59,7 +59,7 @@ def quick_checked(company="Sony Interactive Entertainment"):
 def test_full_flow_through_the_ui():
     prompts = test_api.setup_fakes()
     at = quick_checked()  # the cheap first step, with sources
-    assert "Yes, with evidence" in texts(at) and "E-Verify" not in texts(at)
+    assert "Yes, with evidence" in texts(at)
     assert "whether it has sponsored H-1B work visas before" in texts(at)  # orientation line
     assert test_api.test_routing.LCA_URL in texts(at) and "not that it will sponsor this role" in texts(at)
     assert g.QueryPlan not in prompts, "the quick check must not start the paid pipeline"

@@ -40,7 +40,7 @@ def make_checkpointer():
         with pool.connection() as conn:
             conn.execute("CREATE TABLE IF NOT EXISTS api_usage (day date, key text, n int NOT NULL, PRIMARY KEY (day, key))")
         return saver
-    # Local dev only (BUILD_SPEC: SQLite's write lock makes it unsuitable once deployed).
+    # Local dev only: SQLite's write lock makes it unsuitable once deployed.
     from langgraph.checkpoint.sqlite import SqliteSaver
 
     return SqliteSaver(sqlite3.connect("checkpoints.db", check_same_thread=False))

@@ -7,12 +7,15 @@
 <meta name="description" content="Multi-agent company research that checks its own facts. Three AI agents research a company, fact-check what they find, and wait for your approval before writing an interview briefing.">
 <meta property="og:title" content="Interview briefing">
 <meta property="og:description" content="Multi-agent company research that checks its own facts.">
-<meta property="og:image" content="https://ayushj0208.github.io/multi-agent-interview-research/poster.jpg">
+<meta property="og:image" content="https://ayushj0208.github.io/multi-agent-interview-research/assets/architecture.png">
 <meta name="color-scheme" content="dark light">
 <!-- The page runs no JavaScript, so scripts, frames and form posts are blocked outright. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; script-src 'none'; frame-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='96' y1='96' x2='416' y2='416' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%232997ff'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='%2307080c'/%3E%3Cg transform='translate(6 6)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg stroke='url(%23a)' stroke-width='36'%3E%3Cpath d='M352 224A128 128 0 0 1 224 352'/%3E%3Cpath d='M160 334.85A128 128 0 0 1 113.15 160'/%3E%3Cpath d='M160 113.15A128 128 0 0 1 334.85 160'/%3E%3Cpath d='M330 330L398 398' stroke-width='44'/%3E%3C/g%3E%3Cpath d='M168 228L208 268L284 188' stroke='%23f5f5f7' stroke-width='32'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -192,7 +195,7 @@
   header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; padding-bottom: 20px; }
   .brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; letter-spacing: -0.01em; }
   .brand:hover { text-decoration: none; }
-  .brand svg { width: 32px; height: 32px; flex: none; }
+  .brand img { width: 32px; height: 32px; flex: none; }
   header nav { display: flex; gap: 22px; font-size: 15px; }
   header nav a { color: var(--text-2); }
 
@@ -231,11 +234,12 @@
   .btn-primary:hover { box-shadow: 0 10px 28px rgba(0, 102, 204, 0.45); }
   .btn-secondary { background: var(--btn-2); color: var(--text); box-shadow: inset 0 0 0 1px var(--card-edge); }
   .btn svg { width: 18px; height: 18px; }
+  .wake { margin: 14px auto 0; font-size: 14px; color: var(--text-3); }
 
   /* Demo video: the launch video, served from this folder with the browser's own player, poster and captions. */
   .video {
     position: relative; aspect-ratio: 16 / 9; margin-top: 28px; border-radius: 18px; overflow: hidden;
-    background: #07080c url("poster.jpg") center / cover no-repeat;
+    background: #07080c;
     box-shadow: var(--shadow), 0 0 0 1px var(--card-edge), 0 30px 80px rgba(41, 151, 255, 0.12);
   }
   .video video { display: block; width: 100%; height: 100%; object-fit: cover; background: #07080c; }
@@ -286,6 +290,10 @@
     .l-contradicted { color: #c0271d; }
   }
   .more { margin-top: 22px; font-weight: 600; }
+  .diagram { margin: 36px 0 0; }
+  .diagram img { display: block; width: 100%; height: auto; border-radius: 18px;
+                 box-shadow: var(--shadow), 0 0 0 1px var(--card-edge); }
+  .diagram figcaption { margin-top: 12px; font-size: 14px; color: var(--text-3); }
 
   /* Results table: scrolls inside its own box on narrow screens, so the page itself never scrolls sideways. */
   .table-box { margin-top: 28px; overflow-x: auto; border-radius: 18px; box-shadow: var(--shadow), inset 0 0 0 1px var(--card-edge); background: var(--card); }
@@ -436,7 +444,7 @@
 
 <header>
   <div class="wrap rise">
-    <a class="brand" href="#top" aria-label="Interview briefing, top of page"><svg aria-hidden="true"><use href="#mark"/></svg>Interview briefing</a>
+    <a class="brand" href="#top" aria-label="Interview briefing, top of page"><img src="assets/logo.svg" alt="" width="32" height="32">Interview briefing</a>
     <nav aria-label="Sections">
       <a href="#how">How it works</a>
       <a href="#results">Results</a>
@@ -448,35 +456,23 @@
 <main id="top">
   <section class="hero">
     <div class="wrap">
-      <svg class="mark rise" role="img" aria-label="Interview briefing logo"><use href="#mark"/></svg>
+      <img class="mark rise" src="assets/logo.svg" alt="Interview briefing logo" width="72" height="72">
       <h1 class="rise d1">Interview briefing</h1>
       <p class="pitch rise d2">Multi-agent company research that checks its own facts.</p>
       <p class="sub rise d3">Give it a company name and a job posting. Three AI agents research the company, fact-check what they find, and wait for your approval before writing your interview briefing.</p>
       <div class="actions rise d4">
-        <!-- PLACEHOLDER: replace DEMO_URL with the live demo's address after deployment. -->
-        <a class="btn btn-primary" href="DEMO_URL">Try the demo</a>
+        <a class="btn btn-primary" href="https://interview-briefing-ui.onrender.com/" target="_blank" rel="noopener">Try the demo</a>
         <a class="btn btn-secondary" href="https://github.com/ayushj0208/multi-agent-interview-research">
           <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
           View on GitHub
         </a>
       </div>
+      <p class="wake rise d4">The demo may take up to a minute to wake up if it has been idle.</p>
     </div>
   </section>
 
-  <section id="demo" aria-labelledby="demo-title">
-    <div class="wrap">
-      <div class="eyebrow reveal">Demo</div>
-      <h2 class="reveal" id="demo-title">See one real run</h2>
-      <p class="lede reveal">A short walkthrough on Stripe: the quick visa check, the agents at work, the review step, and the finished briefing.</p>
-      <div class="video reveal">
-        <video controls preload="metadata" playsinline poster="poster.jpg" aria-label="Interview briefing demo video, 29 seconds">
-          <source src="demo.mp4" type="video/mp4">
-          <track kind="captions" src="demo.vtt" srclang="en" label="English">
-          <a href="demo.mp4">Download the demo video (MP4)</a>
-        </video>
-      </div>
-    </div>
-  </section>
+  <!-- The demo video goes here (a <video> from assets/), once the new recording exists. -->
+
 
   <section id="how" aria-labelledby="how-title">
     <div class="wrap">
@@ -529,7 +525,13 @@
           <p>Verified means a real source states it, not that it is true. A third-party estimate can be verified against the site it came from, so numbers that could be stale still deserve a second look.</p>
         </div>
       </div>
-      <p class="more"><a href="https://claude.ai/artifact/C36A7hyyhKufyhi5nRkKXe">See the architecture diagram &rarr;</a></p>
+      <figure class="diagram reveal">
+        <a href="assets/architecture.svg" target="_blank" rel="noopener">
+          <img src="assets/architecture.png" width="2400" height="1200" loading="lazy"
+               alt="Architecture: a visitor uses the Streamlit UI on Render, which calls the FastAPI service on Render with a shared token. The API runs the LangGraph pipeline (Researcher, Editor, your review, Writer) and the quick check, using Claude and Tavily, with checkpoints and daily usage counts in Neon Postgres. An offline eval harness replays the pipeline with an independent judge.">
+        </a>
+        <figcaption>The system as deployed. Select the diagram to open it full size.</figcaption>
+      </figure>
     </div>
   </section>
 

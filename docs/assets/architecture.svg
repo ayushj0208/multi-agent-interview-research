@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1200" width="2400" height="1200" role="img"
+  aria-labelledby="t d">
+<title id="t">Interview briefing: architecture</title>
+<desc id="d">A visitor uses the Streamlit UI on Render, which calls the FastAPI service on Render with a shared token.
+The API runs the LangGraph pipeline (Researcher, Editor, human review pause, Writer) and the quick check, using Claude
+and Tavily, with run checkpoints and daily usage counts in Neon Postgres. An offline eval harness replays the pipeline
+with an independent judge.</desc>
+<defs>
+  <linearGradient id="ink" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2997ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+  <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2997ff" stop-opacity="0.75"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0.75"/></linearGradient>
+  <linearGradient id="accent" x1="96" y1="96" x2="416" y2="416" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2997ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+  <radialGradient id="glowA" cx="0.08" cy="0.0" r="0.55"><stop offset="0" stop-color="#2997ff" stop-opacity="0.22"/><stop offset="1" stop-color="#2997ff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glowB" cx="0.95" cy="0.55" r="0.5"><stop offset="0" stop-color="#7c5cff" stop-opacity="0.16"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/></radialGradient>
+  <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="rgba(41,151,255,0.07)" stroke-width="1"/></pattern>
+  <radialGradient id="fade" cx="0.5" cy="0.4" r="0.75"><stop offset="0.25" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <mask id="gridmask"><rect width="2400" height="1200" fill="url(#fade)"/></mask>
+  <marker id="head" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6fa8ff"/></marker>
+  <marker id="head-start" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6fa8ff"/></marker>
+  <symbol id="mark" viewBox="0 0 512 512">
+    <rect width="512" height="512" rx="112" fill="#07080c"/>
+    <rect x="1" y="1" width="510" height="510" rx="111" fill="none" stroke="#fff" stroke-opacity="0.12" stroke-width="3"/>
+    <g transform="translate(6 6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke="url(#accent)" stroke-width="36">
+        <path d="M352 224 A128 128 0 0 1 224 352"/><path d="M160 334.85 A128 128 0 0 1 113.15 160"/>
+        <path d="M160 113.15 A128 128 0 0 1 334.85 160"/><path d="M330 330 L398 398" stroke-width="44"/>
+      </g>
+      <path d="M168 228 L208 268 L284 188" stroke="#f5f5f7" stroke-width="32"/>
+    </g>
+  </symbol>
+</defs>
+<rect width="2400" height="1200" fill="#07080c"/>
+<rect width="2400" height="1200" fill="url(#glowA)"/>
+<rect width="2400" height="1200" fill="url(#glowB)"/>
+<rect width="2400" height="1200" fill="url(#grid)" mask="url(#gridmask)"/>
+<use href="#mark" x="60" y="56" width="84" height="84"/>
+<text x="166" y="108" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="url(#ink)" text-anchor="start" letter-spacing="-1.2">Interview briefing</text>
+<text x="168" y="142" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="500" fill="rgba(235,235,245,0.6)" text-anchor="start" >Architecture as deployed: two free Render services in Ohio, a Neon Postgres database, and an offline eval harness</text>
+<rect x="60" y="420" width="160" height="170" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+<circle cx="140" cy="470" r="20" fill="none" stroke="url(#ink)" stroke-width="3"/><path d="M104 528 Q140 488 176 528" fill="none" stroke="url(#ink)" stroke-width="3" stroke-linecap="round"/>
+<text x="140" y="562" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#f5f5f7" text-anchor="middle" >Visitor</text>
+<text x="140" y="582" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="rgba(235,235,245,0.55)" text-anchor="middle" >any browser</text>
+<rect x="290" y="250" width="360" height="430" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+<text x="316" y="296" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >Streamlit UI</text>
+<text x="316" y="324" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >Render web service · free · Ohio</text>
+<text x="316" y="372" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Screens: quick check, job posting,</text>
+<text x="316" y="396" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >live progress, review, briefing</text>
+<text x="316" y="420" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="316" y="444" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Shows each agent&#x27;s progress live,</text>
+<text x="316" y="468" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >streamed from the API</text>
+<text x="316" y="492" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="316" y="516" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Every API call carries the shared</text>
+<text x="316" y="540" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >X-API-Token and the visitor&#x27;s address</text>
+<text x="316" y="564" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="316" y="588" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Visitors never see tracebacks</text>
+<path d="M220 505 H284" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<text x="252" y="494" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="rgba(235,235,245,0.62)" text-anchor="middle" >HTTPS</text>
+<rect x="720" y="230" width="400" height="480" rx="22" fill="rgba(20,21,28,0.86)" stroke="url(#edge)" stroke-width="2"/>
+<text x="746" y="276" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >FastAPI</text>
+<text x="746" y="304" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >Render web service · free · Ohio</text>
+<rect x="946.0" y="254" width="152.0" height="30" rx="15" fill="rgba(124,92,255,0.18)" stroke="rgba(167,139,250,0.55)"/>
+<text x="1022.0" y="274" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="14" font-weight="600" fill="#c4b5fd" text-anchor="middle" >LOW_COST_MODE=1</text>
+<text x="746" y="352" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="14" font-weight="400" fill="rgba(235,235,245,0.8)" text-anchor="start" >POST /quick-check</text>
+<text x="746" y="375" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="14" font-weight="400" fill="rgba(235,235,245,0.8)" text-anchor="start" >POST /briefings, /briefings/{id}/resume</text>
+<text x="746" y="398" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="14" font-weight="400" fill="rgba(235,235,245,0.8)" text-anchor="start" >GET /briefings/{id}, /pipeline</text>
+<text x="746" y="446" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="700" fill="#64a8ff" text-anchor="start" letter-spacing="2">GUARDS</text>
+<text x="746" y="478" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Shared API_TOKEN, compared in constant</text>
+<text x="746" y="502" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >time; won&#x27;t start on Render without it</text>
+<text x="746" y="526" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Daily caps: 10 briefings, 60 quick checks</text>
+<text x="746" y="550" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Per visitor: 3 briefings, 15 quick checks</text>
+<text x="746" y="574" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >At once: 2 runs, 3 quick checks</text>
+<text x="746" y="598" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Input limits 200 / 20,000 / 2,000 chars,</text>
+<text x="746" y="622" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >control characters removed</text>
+<text x="746" y="646" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >No public API docs once deployed</text>
+<path d="M650 505 H714" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<text x="685" y="494" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="rgba(235,235,245,0.62)" text-anchor="middle" >token</text>
+<rect x="1190" y="230" width="900" height="560" rx="26" fill="rgba(41,151,255,0.045)" stroke="url(#edge)" stroke-width="2"/>
+<text x="1216" y="278" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >LangGraph pipeline</text>
+<text x="1216" y="304" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >Shared typed state, checkpointed after every step</text>
+<text x="2066" y="278" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="rgba(235,235,245,0.5)" text-anchor="end" >Claim labels</text>
+<text x="2066" y="302" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="rgba(235,235,245,0.62)" text-anchor="end" >verified · unverified · contradicted · from posting · off-target</text>
+<path d="M1120 400 H1184" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<text x="1155" y="388" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="rgba(235,235,245,0.62)" text-anchor="middle" >runs</text>
+<rect x="1210" y="330" width="185" height="320" rx="18" fill="rgba(20,21,28,0.9)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+<circle cx="1240" cy="364" r="15" fill="url(#ink)"/>
+<text x="1240" y="369.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle" >1</text>
+<text x="1226" y="412" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#f5f5f7" text-anchor="start" >Researcher</text>
+<text x="1226" y="444.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Plans searches for the</text>
+<text x="1226" y="465.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >categories still thin</text>
+<text x="1226" y="487.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="1226" y="508.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Concurrent Tavily</text>
+<text x="1226" y="530.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >searches</text>
+<text x="1226" y="551.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="1226" y="573.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Keeps up to 12 claims</text>
+<text x="1226" y="594.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >a pass; 2 passes in</text>
+<text x="1226" y="616.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >low-cost mode</text>
+<path d="M1395 490 H1429" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<rect x="1435" y="330" width="185" height="320" rx="18" fill="rgba(20,21,28,0.9)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+<circle cx="1465" cy="364" r="15" fill="url(#ink)"/>
+<text x="1465" y="369.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle" >2</text>
+<text x="1451" y="412" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#f5f5f7" text-anchor="start" >Editor</text>
+<text x="1451" y="444.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >5 verification</text>
+<text x="1451" y="465.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >questions (8 at full</text>
+<text x="1451" y="487.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >depth), answered</text>
+<text x="1451" y="508.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >concurrently by</text>
+<text x="1451" y="530.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >independent searches</text>
+<text x="1451" y="551.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="1451" y="573.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Verified only if its</text>
+<text x="1451" y="594.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >own check confirmed</text>
+<text x="1451" y="616.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >every detail: in code</text>
+<path d="M1620 490 H1654" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<rect x="1660" y="330" width="185" height="320" rx="18" fill="rgba(41,151,255,0.06)" stroke="#2997ff" stroke-width="2" stroke-dasharray="9 7"/>
+<circle cx="1690" cy="364" r="15" fill="none" stroke="#2997ff" stroke-width="2"/>
+<text x="1690" y="369.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#2997ff" text-anchor="middle" >3</text>
+<rect x="1714" y="351" width="66" height="26" rx="13" fill="rgba(41,151,255,0.16)"/>
+<text x="1747" y="369" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#64a8ff" text-anchor="middle" >human</text>
+<text x="1676" y="412" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#f5f5f7" text-anchor="start" >Your review</text>
+<text x="1676" y="444.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >The run pauses</text>
+<text x="1676" y="465.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >(LangGraph interrupt)</text>
+<text x="1676" y="487.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="1676" y="508.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >You see every</text>
+<text x="1676" y="530.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >labeled claim</text>
+<text x="1676" y="551.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="1676" y="573.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Approve, or send it</text>
+<text x="1676" y="594.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >back with a note</text>
+<path d="M1845 490 H1879" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<rect x="1885" y="330" width="185" height="320" rx="18" fill="rgba(20,21,28,0.9)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+<circle cx="1915" cy="364" r="15" fill="url(#ink)"/>
+<text x="1915" y="369.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle" >4</text>
+<text x="1901" y="412" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="21" font-weight="700" fill="#f5f5f7" text-anchor="start" >Writer</text>
+<text x="1901" y="444.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Writes the briefing</text>
+<text x="1901" y="465.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >from the reviewed</text>
+<text x="1901" y="487.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >claims</text>
+<text x="1901" y="508.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="1901" y="530.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Cites its sources</text>
+<text x="1901" y="551.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" ></text>
+<text x="1901" y="573.0" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Hedges anything</text>
+<text x="1901" y="594.5" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >not confirmed</text>
+<path d="M1527 650 V690 H1317 V656" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<text x="1422" y="712" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="rgba(235,235,245,0.62)" text-anchor="middle" >score below 7, passes left: back to research</text>
+<path d="M1752 650 V748 H1270 V656" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<text x="1511" y="772" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="rgba(235,235,245,0.62)" text-anchor="middle" >you send it back with a note (1 in low-cost mode)</text>
+<rect x="2150" y="230" width="200" height="210" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+<text x="2176" y="276" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >Claude</text>
+<text x="2176" y="304" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >Anthropic API</text>
+<text x="2176" y="336" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >claude-sonnet-5</text>
+<text x="2176" y="359" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >structured outputs</text>
+<text x="2176" y="382" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >every agent step</text>
+<rect x="2150" y="480" width="200" height="190" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+<text x="2176" y="526" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >Tavily</text>
+<text x="2176" y="554" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >web search</text>
+<text x="2176" y="586" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Researcher, Editor</text>
+<text x="2176" y="609" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >and quick check</text>
+<path d="M2090 335 H2144" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<path d="M2090 575 H2144" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<rect x="60" y="850" width="590" height="230" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+<text x="86" y="896" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >Landing page</text>
+<text x="86" y="924" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >GitHub Pages · docs/</text>
+<text x="86" y="958" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Static page, no JavaScript, strict content security policy</text>
+<text x="86" y="984" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Demo video, how it works, and the measured eval results</text>
+<text x="86" y="1010" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >&quot;Try the demo&quot; opens the Streamlit UI</text>
+<rect x="720" y="850" width="400" height="230" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+<text x="746" y="896" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >Neon Postgres</text>
+<text x="746" y="924" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >Ohio (AWS us-east-2) · Postgres 18</text>
+<text x="746" y="958" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Run checkpoints: a run paused for</text>
+<text x="746" y="982" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >review survives an API restart</text>
+<text x="746" y="1006" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Today&#x27;s usage counts, so a restart</text>
+<text x="746" y="1030" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >can&#x27;t reset the daily caps</text>
+<path d="M920 716 V844" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)" marker-start="url(#head-start)"/>
+<text x="906" y="786" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="rgba(235,235,245,0.62)" text-anchor="end" >checkpoints, usage counts</text>
+<rect x="1190" y="850" width="420" height="230" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5"/>
+<text x="1216" y="896" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >Quick check</text>
+<text x="1216" y="924" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >POST /quick-check · company name only</text>
+<text x="1216" y="958" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >One Tavily search on visa data sites,</text>
+<text x="1216" y="982" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >one Claude call on H-1B history</text>
+<text x="1216" y="1006" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >A &quot;yes&quot; must quote a result word for word,</text>
+<text x="1216" y="1030" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >or it becomes &quot;couldn&#x27;t determine&quot;: in code</text>
+<path d="M1100 710 V814 H1400 V844" fill="none" stroke="#6fa8ff" stroke-width="2.5" marker-end="url(#head)"/>
+<rect x="1670" y="850" width="680" height="230" rx="22" fill="rgba(20,21,28,0.86)" stroke="rgba(255,255,255,0.10)" stroke-width="1.5" stroke-dasharray="10 8"/>
+<text x="1696" y="896" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="25" font-weight="700" fill="#f5f5f7" text-anchor="start" >Offline eval harness</text>
+<text x="1696" y="924" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#64a8ff" text-anchor="start" >evals/ · not deployed</text>
+<text x="1696" y="958" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Replays the pipeline on fixed companies and job postings</text>
+<text x="1696" y="982" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Independent judge: claude-opus-5 with its own fresh searches</text>
+<text x="1696" y="1006" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >DeepEval faithfulness and report consistency</text>
+<text x="1696" y="1030" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(235,235,245,0.72)" text-anchor="start" >Results published as measured, with their limits</text>
+<path d="M1960 850 V796" fill="none" stroke="#6fa8ff" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#head)"/>
+<text x="1972" y="828" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="500" fill="rgba(235,235,245,0.62)" text-anchor="start" >replays</text>
+<path d="M64 1140 H124" stroke="#6fa8ff" stroke-width="2.5"/>
+<text x="136" y="1145" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.6)" text-anchor="start" >deployed</text>
+<path d="M250 1140 H310" stroke="#6fa8ff" stroke-width="2.5" stroke-dasharray="8 7"/>
+<text x="322" y="1145" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.6)" text-anchor="start" >offline, not deployed</text>
+<text x="2340" y="1145" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="400" fill="rgba(235,235,245,0.45)" text-anchor="end" >Limits and caps as set in api.py, graph.py and render.yaml</text>
+</svg>
