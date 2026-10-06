@@ -8,9 +8,9 @@ from pathlib import Path
 import requests
 import streamlit as st
 
-API = os.getenv("API_URL", "http://localhost:8000")
+API = os.getenv("API_URL", "http://localhost:8000").strip().rstrip("/")
 # The API's shared secret (see api.py require_token), sent on every call; unset in local dev.
-AUTH = {"X-API-Token": os.getenv("API_TOKEN", "")}
+AUTH = {"X-API-Token": os.getenv("API_TOKEN", "").strip()}
 
 
 def api_headers():
@@ -125,7 +125,10 @@ def pipeline_settings():
             return None  # not cached: the next screen asks again
         if response.status_code != 200:
             return None
-        st.session_state.pipeline = response.json()
+        try:
+            st.session_state.pipeline = response.json()
+        except ValueError:  # an HTML page from the proxy while the API wakes: not cached, so the next screen asks again
+            return None
     return st.session_state.pipeline
 
 
@@ -154,6 +157,31 @@ def server_unreachable():
     st.stop()
 
 
+def api_message(response):
+    """What to tell the visitor about a refused request. The API's own refusals (busy, today's limit reached, budget
+    used up) carry a plain-English "detail", shown as is. Anything else returns None and the caller shows the
+    can't-reach message: an HTML error page from Render's proxy while the free API wakes or restarts, or a token
+    mismatch."""
+    if response.status_code in (401, 403):
+        return None
+    try:
+        detail = response.json().get("detail")
+    except (ValueError, AttributeError):  # not JSON at all, or JSON that isn't an object
+        return None
+    if response.status_code == 422:  # the input itself was refused (e.g. a name of only invisible characters)
+        return "That wasn't accepted. Check what you entered and try again."
+    return detail if isinstance(detail, str) else None
+
+
+def api_json(response):
+    """The body of a successful API response. One that isn't valid JSON came from something in front of the API, not
+    the API itself: the can't-reach message, never a crash."""
+    try:
+        return response.json()
+    except ValueError:
+        server_unreachable()
+
+
 def fetch_run(run_id):
     try:
         response = requests.get(f"{API}/briefings/{run_id}", headers=api_headers(), timeout=10)
@@ -164,7 +192,7 @@ def fetch_run(run_id):
         return None
     if response.status_code != 200:  # e.g. a token mismatch: same way out as an unreachable server
         server_unreachable()
-    return response.json()
+    return api_json(response)
 
 
 def restore(run_id):
@@ -218,9 +246,11 @@ def check_screen():
         except requests.RequestException:
             server_unreachable()
         if response.status_code != 200:
-            st.error(md(response.json().get("detail", response.text)))
-            return
-        st.session_state.update(company=company.strip(), check=response.json())
+            if message := api_message(response):
+                st.error(md(message))
+                return
+            server_unreachable()
+        st.session_state.update(company=company.strip(), check=api_json(response))
     if check := st.session_state.get("check"):
         render_check(check)
         left, right = st.columns(2)
@@ -301,10 +331,13 @@ def progress_screen():
     try:
         with requests.post(f"{API}{path}", json=body, headers=api_headers(), stream=True, timeout=(10, 30)) as response:
             if response.status_code != 200:
-                st.error(md(response.json().get("detail", response.text)))
+                if not (message := api_message(response)):
+                    server_unreachable()
+                st.error(md(message))
                 st.button("Start over", on_click=start_over)
                 return
-            run_id = response.headers["X-Run-Id"]
+            if not (run_id := response.headers.get("X-Run-Id")):  # a 200 that isn't the API's stream
+                server_unreachable()
             st.session_state.run_id = run_id
             st.query_params["run"] = run_id
             final = None
@@ -330,7 +363,7 @@ def progress_screen():
                         reviewing = None
                 elif event in ("awaiting_approval", "completed", "error"):
                     final = (event, d)
-    except requests.RequestException as e:
+    except (requests.RequestException, ValueError) as e:
         if "run_id" not in st.session_state:  # the request never reached the server, so no run exists to watch
             server_unreachable()
         st.warning(f"Lost the live connection ({e.__class__.__name__}). The run keeps going on the server.")

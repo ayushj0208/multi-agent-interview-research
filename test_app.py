@@ -165,6 +165,75 @@ def test_every_entry_point_fails_the_same_way_when_the_server_is_down():
         os.environ["API_URL"] = f"http://127.0.0.1:{PORT}"
 
 
+@contextlib.contextmanager
+def stand_in_api(status, body, content_type):
+    """A server answering every request with one fixed response, like Render's proxy while the free API wakes."""
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+    class Reply(BaseHTTPRequestHandler):
+        def reply(self):
+            data = body.encode()
+            self.send_response(status)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+        do_GET = do_POST = reply
+
+        def log_message(self, *args):
+            pass
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Reply)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    os.environ["API_URL"] = f"http://127.0.0.1:{server.server_port}"
+    try:
+        yield
+    finally:
+        server.shutdown()
+        os.environ["API_URL"] = f"http://127.0.0.1:{PORT}"
+
+
+def quick_check_and_briefing(company="Stripe"):
+    """Both entry points that call the API on a click: the home screen's Quick Check and the posting screen."""
+    at = open_app()
+    at.text_input[0].input(company)
+    button(at, "Quick Check").click().run()
+    first = at
+    at = AppTest.from_file("app.py", default_timeout=30)
+    at.session_state["screen"], at.session_state["company"] = "input", company
+    at.run()
+    at.text_area[0].input(test_api.test_routing.POSTING)
+    button(at, "Generate Briefing").click().run()
+    return first, at
+
+
+def test_anything_but_the_apis_own_reply_shows_the_friendly_message_never_a_crash():
+    cases = {"Render's error page while the API wakes": (503, "<html><body>Service Unavailable</body></html>", "text/html"),
+             "a token mismatch": (401, '{"detail": "unauthorized"}', "application/json"),
+             "a 200 that isn't the API": (200, "<html><body>Not the API</body></html>", "text/html")}
+    for case, response in cases.items():
+        with stand_in_api(*response):
+            for at in quick_check_and_briefing():
+                assert not at.exception, f"{case}: crashed"
+                assert "Can't reach the briefing server" in texts(at), case
+                assert any(b.label == "Start over" for b in at.button), case
+
+    # The API's own refusals are already plain English: shown as they are.
+    with stand_in_api(429, '{"detail": "%s"}' % api.BUSY_MESSAGE, "application/json"):
+        for at in quick_check_and_briefing():
+            assert not at.exception and api.BUSY_MESSAGE in texts(at)
+
+
+def test_api_url_pasted_with_a_trailing_slash_still_works():
+    test_api.setup_fakes()
+    os.environ["API_URL"] = f"http://127.0.0.1:{PORT}/ "
+    try:
+        at = quick_checked()
+        assert not at.exception and "Yes, with evidence" in texts(at)
+    finally:
+        os.environ["API_URL"] = f"http://127.0.0.1:{PORT}"
+
+
 def test_refreshed_mid_run_visitor_can_leave_and_the_run_finishes():
     gate = threading.Event()
     test_api.setup_fakes(gate)
@@ -362,6 +431,8 @@ if __name__ == "__main__":
     test_splash_plays_once_per_visit_and_never_on_a_resumed_run()
     test_start_over_from_approval_discards_without_writing()
     test_every_entry_point_fails_the_same_way_when_the_server_is_down()
+    test_anything_but_the_apis_own_reply_shows_the_friendly_message_never_a_crash()
+    test_api_url_pasted_with_a_trailing_slash_still_works()
     test_refreshed_mid_run_visitor_can_leave_and_the_run_finishes()
     test_not_interested_starts_over_without_running_the_pipeline()
     test_dark_mode_toggle_survives_screens_refresh_and_start_over()
