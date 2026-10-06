@@ -1,32 +1,44 @@
 import datetime
+import hashlib
 import hmac
 import json
 import logging
 import os
 import queue
+import re
 import sqlite3
 import threading
 import time
 import uuid
-from typing import Literal
+from typing import Annotated, Literal
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import StreamingResponse
 from langgraph.types import Command
-from pydantic import BaseModel, Field, model_validator
+from pydantic import AfterValidator, BaseModel, Field, model_validator
 
 import graph as g
 from graph import builder, initial_state
 from quick_check import quick_check
 
 
-def make_checkpointer():
-    if url := os.getenv("DATABASE_URL"):
-        from langgraph.checkpoint.postgres import PostgresSaver
-        from psycopg_pool import ConnectionPool
+# Postgres when deployed (DATABASE_URL set): run checkpoints, plus today's usage counts (see take) so that the free
+# tier's sleep-and-restart can't reset the daily caps.
+pool = None
+if os.getenv("DATABASE_URL"):
+    from psycopg_pool import ConnectionPool
 
-        saver = PostgresSaver(ConnectionPool(url, kwargs={"autocommit": True, "prepare_threshold": 0}))
+    pool = ConnectionPool(os.environ["DATABASE_URL"], kwargs={"autocommit": True, "prepare_threshold": 0})
+
+
+def make_checkpointer():
+    if pool:
+        from langgraph.checkpoint.postgres import PostgresSaver
+
+        saver = PostgresSaver(pool)
         saver.setup()
+        with pool.connection() as conn:
+            conn.execute("CREATE TABLE IF NOT EXISTS api_usage (day date, key text, n int NOT NULL, PRIMARY KEY (day, key))")
         return saver
     # Local dev only (BUILD_SPEC: SQLite's write lock makes it unsuitable once deployed).
     from langgraph.checkpoint.sqlite import SqliteSaver
@@ -39,6 +51,8 @@ log = logging.getLogger("uvicorn.error")  # shows up in uvicorn's (and Render's)
 # Shared secret between the Streamlit UI and this API, so only the UI can start paid work. Set the same random
 # value on both deployed services; unset (local dev) means no check.
 API_TOKEN = os.getenv("API_TOKEN")
+if os.getenv("RENDER") and not API_TOKEN:  # Render sets RENDER on every service: never serve paid endpoints unguarded
+    raise RuntimeError("API_TOKEN must be set on the deployed API, with the same value as on the UI service")
 if g.LOW_COST_MODE and not API_TOKEN:
     log.warning("LOW_COST_MODE is on (public demo) but API_TOKEN is unset: anyone can call the paid endpoints")
 
@@ -53,34 +67,77 @@ MAX_CONCURRENT_RUNS = 2  # pipeline runs in flight at once, resumes included
 MAX_CONCURRENT_QUICK_CHECKS = 3
 DAILY_LIMITS = {"briefings": int(os.getenv("DAILY_BRIEFING_LIMIT", "20")),
                 "quick_checks": int(os.getenv("DAILY_QUICK_CHECK_LIMIT", "100"))}
+# Per visitor, so one person can't use up the whole demo for everyone else. The visitor is the client address the UI
+# forwards (X-Visitor); it's trusted only because the request already carried the UI's token.
+# ponytail: an address can be changed (VPN, mobile network), so this is fairness, not a hard bound; the daily caps
+# above and the Anthropic spend limit are the hard bounds.
+VISITOR_LIMITS = {"briefings": int(os.getenv("VISITOR_BRIEFING_LIMIT", "3")),
+                  "quick_checks": int(os.getenv("VISITOR_QUICK_CHECK_LIMIT", "15"))}
 BUSY_MESSAGE = "The demo is busy right now. Please try again in a few minutes."
 DAILY_MESSAGE = "The demo has reached its limit for today. Please try again tomorrow."
+VISITOR_MESSAGE = "You've reached today's limit for this demo. Please try again tomorrow."
 GENERIC_ERROR = "Something went wrong on our side. Please start over and try again."
 
-app = FastAPI(title="Company & Role Research Assistant", dependencies=[Depends(require_token)])
+# Once deployed (token set), no public /docs, /redoc or /openapi.json: they'd hand anyone a map of the API.
+NO_DOCS = {"docs_url": None, "redoc_url": None, "openapi_url": None} if API_TOKEN else {}
+app = FastAPI(title="Company & Role Research Assistant", dependencies=[Depends(require_token)], **NO_DOCS)
 graph = builder.compile(checkpointer=make_checkpointer())
 runs: dict[str, threading.Thread] = {}  # in-flight runs, so GET can tell "running" from "stopped"
 runs_lock = threading.Lock()
-usage = {"day": None, "briefings": 0, "quick_checks": 0}  # today's counts (UTC) toward DAILY_LIMITS
+usage = {"day": None, "briefings": 0, "quick_checks": 0}  # today's counts (UTC) when there's no database
 quick_checks_running = 0
 usage_lock = threading.Lock()
 HEARTBEAT_S = 5
 
 
-def take_daily(kind):
-    """Count one use toward today's cap, or refuse with 429 once it's reached."""
+def take(key, limit):
+    """Counts one use of `key` toward today's `limit` (UTC); False, counting nothing, once it's reached."""
+    today = datetime.datetime.now(datetime.timezone.utc).date()
+    if limit <= 0:
+        return False
+    if pool:  # one atomic statement: concurrent requests can't both slip past the limit
+        with pool.connection() as conn:
+            return conn.execute(
+                "INSERT INTO api_usage (day, key, n) VALUES (%s, %s, 1) ON CONFLICT (day, key) "
+                "DO UPDATE SET n = api_usage.n + 1 WHERE api_usage.n < %s RETURNING n", (today, key, limit)).fetchone() is not None
     with usage_lock:
-        today = datetime.datetime.now(datetime.timezone.utc).date()
         if usage["day"] != today:
+            usage.clear()
             usage.update(day=today, briefings=0, quick_checks=0)
-        if usage[kind] >= DAILY_LIMITS[kind]:
-            raise HTTPException(429, DAILY_MESSAGE)
-        usage[kind] += 1
+        if usage.get(key, 0) >= limit:
+            return False
+        usage[key] = usage.get(key, 0) + 1
+        return True
 
 
-def give_back_daily(kind):  # the request was refused for another reason after counting: don't charge it
+def give_back(key):
+    if pool:
+        with pool.connection() as conn:
+            conn.execute("UPDATE api_usage SET n = n - 1 WHERE day = %s AND key = %s AND n > 0",
+                         (datetime.datetime.now(datetime.timezone.utc).date(), key))
+        return
     with usage_lock:
-        usage[kind] -= 1
+        usage[key] = usage.get(key, 0) - 1
+
+
+def visitor_key(x_visitor):
+    """A short hash of the visitor's address: enough to count by, without storing addresses."""
+    return hashlib.sha256(x_visitor.encode()).hexdigest()[:16] if x_visitor else None
+
+
+def take_daily(kind, visitor=None):
+    """Count one use toward today's caps (the demo's, then the visitor's), or refuse with 429."""
+    if not take(kind, DAILY_LIMITS[kind]):
+        raise HTTPException(429, DAILY_MESSAGE)
+    if visitor and not take(f"{kind}:{visitor}", VISITOR_LIMITS[kind]):
+        give_back(kind)
+        raise HTTPException(429, VISITOR_MESSAGE)
+
+
+def give_back_daily(kind, visitor=None):  # the request was refused for another reason after counting: don't charge it
+    give_back(kind)
+    if visitor:
+        give_back(f"{kind}:{visitor}")
 
 SUMMARY_FIELDS = {"researcher": ("new_findings", "total_findings", "thin_categories"),
                   "editor": ("quality_score", "counts", "decision", "feedback"),
@@ -93,18 +150,37 @@ SUMMARY_FIELDS = {"researcher": ("new_findings", "total_findings", "thin_categor
 MAX_COMPANY_CHARS, MAX_POSTING_CHARS, MAX_FEEDBACK_CHARS = 200, 20_000, 2_000
 
 
+CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")  # keeps tabs and newlines; a NUL would also break Postgres
+
+
+def clean_text(text):
+    return CONTROL_CHARS.sub("", text)
+
+
+def one_line(name):
+    """A company name is one line: it's quoted into search queries and prompts, where line breaks could pose as
+    instructions."""
+    name = " ".join(clean_text(name).split())
+    if not name:
+        raise ValueError("company name can't be blank")
+    return name
+
+
+CompanyName = Annotated[str, Field(min_length=1, max_length=MAX_COMPANY_CHARS), AfterValidator(one_line)]
+
+
 class BriefingRequest(BaseModel):
-    company_name: str = Field(min_length=1, max_length=MAX_COMPANY_CHARS)
-    job_posting: str = Field(min_length=1, max_length=MAX_POSTING_CHARS)
+    company_name: CompanyName
+    job_posting: Annotated[str, Field(min_length=1, max_length=MAX_POSTING_CHARS), AfterValidator(clean_text)]
 
 
 class QuickCheckRequest(BaseModel):
-    company_name: str = Field(min_length=1, max_length=MAX_COMPANY_CHARS)
+    company_name: CompanyName
 
 
 class ResumeRequest(BaseModel):
     action: Literal["approve", "send_back"]
-    feedback: str = Field(default="", max_length=MAX_FEEDBACK_CHARS)
+    feedback: Annotated[str, Field(max_length=MAX_FEEDBACK_CHARS), AfterValidator(clean_text)] = ""
 
     @model_validator(mode="after")
     def send_back_needs_feedback(self):
@@ -206,15 +282,15 @@ def pipeline_settings():
 
 
 @app.post("/quick-check")
-def run_quick_check(req: QuickCheckRequest):
-    """The cheap first step (about $0.02): visa sponsorship history and E-Verify, from the company name alone."""
+def run_quick_check(req: QuickCheckRequest, x_visitor: str = Header(default="", max_length=200)):
+    """The cheap first step (about $0.02): visa sponsorship history, from the company name alone."""
     global quick_checks_running
     with usage_lock:
         if quick_checks_running >= MAX_CONCURRENT_QUICK_CHECKS:
             raise HTTPException(429, BUSY_MESSAGE)
         quick_checks_running += 1
     try:
-        take_daily("quick_checks")
+        take_daily("quick_checks", visitor_key(x_visitor))
         return quick_check(req.company_name.strip())
     except g.BudgetExhausted:
         raise HTTPException(503, g.BUDGET_MESSAGE)
@@ -229,13 +305,14 @@ def run_quick_check(req: QuickCheckRequest):
 
 
 @app.post("/briefings")
-def create_briefing(req: BriefingRequest):
+def create_briefing(req: BriefingRequest, x_visitor: str = Header(default="", max_length=200)):
     run_id = uuid.uuid4().hex
-    take_daily("briefings")
+    visitor = visitor_key(x_visitor)
+    take_daily("briefings", visitor)
     try:
         events, _ = start_run(run_id, initial_state(req.company_name, req.job_posting))
     except HTTPException:  # busy: refused before any work, so it doesn't count toward today's cap
-        give_back_daily("briefings")
+        give_back_daily("briefings", visitor)
         raise
     return stream_response(run_id, events)
 

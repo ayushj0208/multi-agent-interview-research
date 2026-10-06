@@ -101,3 +101,16 @@ html, body { background: #07080c; }
   border-color: var(--link);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
+
+.stApp .site-footer { color: rgba(235, 235, 245, 0.45); }
+
+/* The intro splash on the dark canvas. */
+.splash {
+  background:
+    linear-gradient(rgba(41, 151, 255, 0.07) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(90deg, rgba(41, 151, 255, 0.07) 1px, transparent 1px) 0 0 / 64px 64px,
+    radial-gradient(1100px 700px at 12% 8%, rgba(41, 151, 255, 0.2), transparent 60%),
+    radial-gradient(900px 700px at 92% 70%, rgba(124, 92, 255, 0.18), transparent 60%),
+    #07080c;
+}
+.splash-tile { stroke: rgba(255, 255, 255, 0.1); stroke-width: 4px; }

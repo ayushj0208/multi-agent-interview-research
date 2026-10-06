@@ -1,5 +1,4 @@
 anthropic==1.8.0
-deepeval==4.2.6
 fastapi==0.141.1
 langchain-openai==1.6.5
 langgraph==1.2.12
@@ -8,7 +7,6 @@ langgraph-checkpoint-sqlite==3.1.1
 psycopg[binary]==3.3.6
 psycopg-pool==3.3.3
 pydantic==2.13.5
-ragas==0.4.3
 python-dotenv==1.2.3
 requests==2.34.2
 streamlit==1.64.0

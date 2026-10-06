@@ -15,3 +15,6 @@ brag-output*/
 .claude/settings.local.json
 # Saved run state (checkpoints) from local runs
 checkpoints.db*
+# Locally installed Claude Code skills (brag-slim, vibe-security) and their lock file: tools, not part of the project
+.claude/skills/
+skills-lock.json

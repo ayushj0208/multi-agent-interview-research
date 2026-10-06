@@ -1,0 +1,53 @@
+# Render Blueprint: the API and the UI as two free web services (New > Blueprint, pick this repo).
+# Secrets are "sync: false": Render asks for them in the dashboard, so they never live in this file or in git.
+# API_TOKEN is generated once on the API and copied to the UI, so only the UI can start paid work.
+services:
+  - type: web
+    name: interview-briefing-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT  # no --reload in production
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: LOW_COST_MODE  # the public demo's shallower, cheaper runs
+        value: "1"
+      - key: API_TOKEN
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: DATABASE_URL  # Neon's connection string (with sslmode=require): run checkpoints and the daily counts
+        sync: false
+      # Daily caps for the whole demo and per visitor (UTC days). Lower them to spend less.
+      - key: DAILY_BRIEFING_LIMIT
+        value: "10"
+      - key: DAILY_QUICK_CHECK_LIMIT
+        value: "60"
+      - key: VISITOR_BRIEFING_LIMIT
+        value: "3"
+      - key: VISITOR_QUICK_CHECK_LIMIT
+        value: "15"
+      # NVIDIA_API_KEY is deliberately absent: when the Anthropic budget runs out, the demo stops cleanly instead
+      # of quietly switching providers.
+
+  - type: web
+    name: interview-briefing-ui
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: API_URL  # the API service's public address, e.g. https://interview-briefing-api.onrender.com
+        sync: false
+      - key: API_TOKEN
+        fromService:
+          type: web
+          name: interview-briefing-api
+          envVarKey: API_TOKEN
+      - key: STREAMLIT_CLIENT_SHOW_ERROR_DETAILS  # visitors never see Python tracebacks
+        value: none

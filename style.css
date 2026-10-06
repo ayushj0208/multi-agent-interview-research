@@ -157,8 +157,18 @@ html, body { background: #f5f5f7; }
   animation: ink-shift 9s ease-in-out infinite alternate;
 }
 .st-key-hero [data-testid="stCaptionContainer"] p { font-size: 21px; line-height: 1.35; }
+/* The logo mark above the home headline; the hero's top padding shrinks by about its height, so the page below
+   doesn't move down. */
+.st-key-hero:has(.hero-mark) { padding-top: 0; }
+
+/* Copyright line (app.py): rendered near the top of every run, shown last on the page. */
+[data-testid="stElementContainer"]:has(.site-footer) { order: 999; margin-top: 32px; }
+.stApp .site-footer { margin: 0; text-align: center; font-size: 13px; color: rgba(29, 29, 31, 0.5); }
+.hero-mark { display: block; width: 56px; height: 56px; margin: 0 auto -8px; border-radius: 12px;
+             box-shadow: 0 6px 20px rgba(41, 151, 255, 0.18); }
 @media (max-width: 640px) {
   .st-key-hero h1 { font-size: 38px; }
+  .hero-mark { width: 48px; height: 48px; }
   .st-key-hero [data-testid="stCaptionContainer"] p { font-size: 17px; }
 }
 @keyframes ink-shift { from { background-position: 100% 0; } to { background-position: 0 0; } }
@@ -353,10 +363,104 @@ html, body { background: #f5f5f7; }
   .typewriter > span > span { display: inline; white-space: normal; width: auto; border: 0; animation: none; }
 }
 
+/* ---- Intro splash (app.py SPLASH): about 3s, once per visit ----------------------------------------------------
+   The three arcs sweep in one by one (Researcher, Editor, Writer), the check pops in with a glow, the name fades up,
+   then the overlay fades out. It never takes clicks, so a slow device can't trap one behind it. */
+[data-testid="stElementContainer"]:has(.splash) {
+  position: fixed;
+  inset: 0;
+  z-index: 1000001;  /* above Streamlit's header and the pinned theme toggle */
+  pointer-events: none;
+  animation: none !important;
+}
+[data-testid="stElementContainer"]:has(.splash-gone) { display: none; }
+.splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(0, 102, 204, 0.07) 1px, transparent 1px) 0 0 / 64px 64px,
+    linear-gradient(90deg, rgba(0, 102, 204, 0.07) 1px, transparent 1px) 0 0 / 64px 64px,
+    radial-gradient(1100px 700px at 12% 8%, rgba(41, 151, 255, 0.18), transparent 60%),
+    radial-gradient(900px 700px at 92% 70%, rgba(124, 92, 255, 0.14), transparent 60%),
+    #f5f5f7;
+  animation: splash-out 0.45s ease-in 2.6s forwards;
+}
+/* Every moving part is its own layer animated only by opacity and transform, which the GPU compositor runs: the
+   app's first heavy paint underneath can stall the main thread for a few hundred ms right as the splash starts, and
+   main-thread animations (stroke drawing, filters) would freeze and then jump. will-change rasterizes the layers
+   up front. The mark and name leave a beat before the canvas, so they never cross-fade over the app's headline. */
+.splash-mark {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  animation: splash-tile-in 0.5s var(--ease-out) both, splash-content-out 0.3s ease-in 2.45s forwards;
+  will-change: transform, opacity;
+}
+.splash-mark > * { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.splash-tile rect { fill: #07080c; }
+.splash-arc, .splash-check, .splash-glow { will-change: transform, opacity; }
+.splash-arc path { fill: none; stroke: url(#splash-accent); stroke-width: 36px; stroke-linecap: round; }
+.splash-arc .handle { stroke-width: 44px; }
+/* Each arc sweeps into place around the lens centre (230/512 of the tile). */
+.splash-arc { transform-origin: 44.9% 44.9%; animation: splash-arc-in 0.7s var(--ease-out) both; }
+.splash .arc-1 { animation-delay: 0.3s; }
+.splash .arc-2 { animation-delay: 0.75s; }
+.splash .arc-3 { animation-delay: 1.2s; }
+.splash-glow {
+  inset: auto;
+  left: 15%;
+  top: 15%;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.6), rgba(41, 151, 255, 0.22) 45%, transparent 70%);
+  animation: splash-glow 1s ease-out 1.7s both;
+}
+.splash-check path { fill: none; stroke: #f5f5f7; stroke-width: 32px; stroke-linecap: round; stroke-linejoin: round; }
+.splash-check {
+  transform-origin: 44% 44%;
+  filter: drop-shadow(0 0 6px rgba(41, 151, 255, 0.6));  /* static: only transform and opacity animate */
+  animation: splash-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.7s both;
+}
+.splash-title {
+  font-size: clamp(26px, 8vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  background: linear-gradient(100deg, var(--sky) 10%, #a78bfa 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: splash-rise 0.6s var(--ease-out) 1.8s both, splash-content-out 0.3s ease-in 2.45s forwards;
+  will-change: transform, opacity;
+}
+@media (max-width: 640px) {
+  .splash { gap: 20px; }
+  .splash-mark { width: 88px; height: 88px; }
+}
+@keyframes splash-out { to { opacity: 0; visibility: hidden; } }
+@keyframes splash-tile-in { from { opacity: 0; transform: scale(0.92); } }
+@keyframes splash-arc-in { from { opacity: 0; transform: rotate(-75deg) scale(0.85); } }
+@keyframes splash-pop { from { opacity: 0; transform: scale(0.4); } }
+@keyframes splash-glow {
+  from { opacity: 0; transform: scale(0.5); }
+  40% { opacity: 1; transform: scale(1.15); }
+  to { opacity: 0.35; transform: scale(1); }
+}
+@keyframes splash-rise { from { opacity: 0; transform: translateY(10px); } }
+@keyframes splash-content-out { to { opacity: 0; transform: scale(0.97); } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
   .typewriter > span > span { width: auto; border: 0; }  /* would otherwise stay at zero width, invisible */
+  .splash { display: none; }  /* its fade-out is an animation too: without one it would never leave */
 }

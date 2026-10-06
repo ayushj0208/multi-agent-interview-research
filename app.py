@@ -1,3 +1,4 @@
+import base64
 import json
 import os
 import re
@@ -10,6 +11,14 @@ import streamlit as st
 API = os.getenv("API_URL", "http://localhost:8000")
 # The API's shared secret (see api.py require_token), sent on every call; unset in local dev.
 AUTH = {"X-API-Token": os.getenv("API_TOKEN", "")}
+
+
+def api_headers():
+    """The UI's token, plus the visitor's address for the API's per-visitor daily limit (X-Forwarded-For when behind
+    Render's proxy, where the first address is the visitor's)."""
+    ip = st.context.ip_address  # None when unknown; only ever forward a plain string
+    visitor = st.context.headers.get("X-Forwarded-For", "").split(",")[0].strip() or (ip if isinstance(ip, str) else "")
+    return {**AUTH, "X-Visitor": visitor[:200]}
 # Mirrors api.py's request limits, so visitors see a character counter instead of a rejected request.
 MAX_COMPANY_CHARS, MAX_POSTING_CHARS, MAX_FEEDBACK_CHARS = 200, 20_000, 2_000
 TYPICAL_REVIEW_S = 60  # the Editor's single review call; measured 55-61s on live runs
@@ -25,7 +34,8 @@ DEMO_MODE_LINES = ("Running on a limited free API budget, so this demo uses fewe
 CHECK_VERDICTS = {"yes_with_evidence": ("green", "Yes, with evidence"), "no_history_found": ("gray", "No history found"),
                   "couldnt_determine": ("orange", "Couldn't determine")}
 
-st.set_page_config(page_title="Interview Briefing", layout="centered")
+st.set_page_config(page_title="Interview Briefing", page_icon=str(Path(__file__).parent / "assets" / "logo.png"),
+                   layout="centered")
 
 
 def dark_mode():
@@ -48,6 +58,33 @@ css = (here / "style.css").read_text(encoding="utf-8")
 if dark_mode():
     css += (here / "dark.css").read_text(encoding="utf-8")
 st.html(f"<style>{css}</style>")
+
+
+def splash_due():
+    """The intro plays once per browser session (a refresh or new visit starts a new one), never on reruns, and never
+    when the URL resumes a run, so refreshing mid-briefing goes straight back to it."""
+    if "splashed" in st.session_state:
+        return False
+    st.session_state.splashed = True
+    return not st.query_params.get("run")
+
+
+# Pure CSS (style.css .splash), placed right after the stylesheet so nothing unstyled shows first. It never takes
+# clicks and the app renders underneath it. Later runs put an empty element in the same slot, so the elements after
+# it keep their positions and nothing remounts.
+SPLASH = """<div class="splash" aria-hidden="true"><div class="splash-mark">
+<svg class="splash-tile" viewBox="0 0 512 512"><defs><linearGradient id="splash-accent" x1="96" y1="96" x2="416"
+y2="416" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2997ff"/><stop offset="1" stop-color="#a78bfa"/>
+</linearGradient></defs><rect width="512" height="512" rx="112"/></svg>
+<svg class="splash-arc arc-1" viewBox="-6 -6 512 512"><path d="M160 113.15 A128 128 0 0 1 334.85 160"/></svg>
+<svg class="splash-arc arc-2" viewBox="-6 -6 512 512"><path d="M352 224 A128 128 0 0 1 224 352"/>
+<path class="handle" d="M330 330 L398 398"/></svg>
+<svg class="splash-arc arc-3" viewBox="-6 -6 512 512"><path d="M160 334.85 A128 128 0 0 1 113.15 160"/></svg>
+<div class="splash-glow"></div>
+<svg class="splash-check" viewBox="-6 -6 512 512"><path d="M168 228 L208 268 L284 188"/></svg>
+</div><div class="splash-title">Interview briefing</div></div>"""
+# st.markdown, not st.html: st.html's sanitizer strips inline SVG.
+st.markdown(SPLASH if splash_due() else '<div class="splash-gone"></div>', unsafe_allow_html=True)
 # The animated 3D background: plain markup that style.css positions behind the page and animates. A separate call,
 # since the HTML sanitizer can drop a leading <style> that shares a call with other markup.
 st.html('<div class="bg3d" aria-hidden="true"><div class="orb orb-a"></div><div class="orb orb-b"></div>'
@@ -55,6 +92,9 @@ st.html('<div class="bg3d" aria-hidden="true"><div class="orb orb-a"></div><div 
         '<div class="ring ring-b"></div><div class="ring ring-c"></div></div>')
 with st.container(key="theme-toggle"):  # style.css pins it to the top-right corner on every screen
     st.toggle("Dark mode", value=dark_mode(), key="dark_toggle", on_change=toggle_theme)
+# Rendered here so it's on every screen and every rerun (screens that stream or rerun never reach the end of the
+# script); style.css moves it to the bottom of the page.
+st.markdown('<p class="site-footer">&copy; 2026 Ayush Jaiswal. All rights reserved.</p>', unsafe_allow_html=True)
 
 
 def md(text):
@@ -71,6 +111,7 @@ def start_over():  # used as a button callback, where Streamlit reruns on its ow
     theme = st.query_params.get("theme")
     st.query_params.clear()
     st.session_state.clear()
+    st.session_state.splashed = True  # same visit: starting over doesn't replay the intro
     if theme:  # starting over forgets the run, not the visitor's light/dark choice
         st.query_params["theme"] = theme
 
@@ -79,7 +120,7 @@ def pipeline_settings():
     """The server's pipeline mode (GET /pipeline), fetched once per session; None if the server can't say."""
     if "pipeline" not in st.session_state:
         try:
-            response = requests.get(f"{API}/pipeline", headers=AUTH, timeout=10)
+            response = requests.get(f"{API}/pipeline", headers=api_headers(), timeout=10)
         except requests.RequestException:
             return None  # not cached: the next screen asks again
         if response.status_code != 200:
@@ -115,7 +156,7 @@ def server_unreachable():
 
 def fetch_run(run_id):
     try:
-        response = requests.get(f"{API}/briefings/{run_id}", headers=AUTH, timeout=10)
+        response = requests.get(f"{API}/briefings/{run_id}", headers=api_headers(), timeout=10)
     except requests.RequestException:
         # Every refresh and poll lands here; without a way out, the run ID in the URL would reproduce the crash.
         server_unreachable()
@@ -145,12 +186,14 @@ def restore(run_id):
 # --- Screens -------------------------------------------------------------------
 
 def check_screen():
-    """The cheap first step: visa sponsorship and E-Verify from the company name, before any paid pipeline run."""
+    """The cheap first step: visa sponsorship history from the company name, before any paid pipeline run."""
     with st.container(key="hero"):
+        # The mark as an inline SVG data URI: sharp at any pixel density, no static file serving needed.
+        logo = base64.b64encode((here / "assets" / "logo.svg").read_bytes()).decode()
+        st.markdown(f'<img class="hero-mark" src="data:image/svg+xml;base64,{logo}" alt="">', unsafe_allow_html=True)
         st.title("Interview briefing")
-        st.caption("Enter a company to see whether it has sponsored H-1B work visas before, and whether it says it "
-                   "uses E-Verify, based on public records. It takes about 15 seconds; the full interview briefing "
-                   "comes after, only if you want it.")
+        st.caption("Enter a company to see whether it has sponsored H-1B work visas before, based on public records. "
+                   "It takes about 15 seconds; the full interview briefing comes after, only if you want it.")
         if (pipeline_settings() or {}).get("low_cost_mode"):  # the public demo only; local full-depth dev skips it
             # Typed once by CSS (style.css .typewriter), one line after another. No JS: st.markdown strips scripts.
             # Each line gets its length (--n), the characters typed before it (--prev) and its position (--i).
@@ -168,8 +211,9 @@ def check_screen():
             st.error("Enter a company name.")
             return
         try:
-            with st.spinner("Checking visa sponsorship and E-Verify records..."):
-                response = requests.post(f"{API}/quick-check", json={"company_name": company.strip()}, headers=AUTH,
+            with st.spinner("Checking visa sponsorship records..."):
+                response = requests.post(f"{API}/quick-check", json={"company_name": company.strip()},
+                                         headers=api_headers(),
                                          timeout=120)
         except requests.RequestException:
             server_unreachable()
@@ -187,23 +231,17 @@ def check_screen():
 
 def render_check(check):
     st.subheader(f"Quick check: {md(check['company_name'])}")
-    for key, title, note in (
-            ("h1b", "H-1B / work-visa sponsorship",
-             "Past filings show the company has sponsored before, not that it will sponsor this role."),
-            ("e_verify", "E-Verify employer",
-             "E-Verify participation isn't reliably public, so \"couldn't determine\" is the usual answer and "
-             "doesn't mean no.")):
-        answer = check[key]
-        color, label = CHECK_VERDICTS[answer["verdict"]]
-        with st.container(key=f"check-{key}"):  # styled as a glass card
-            st.markdown(f"**{title}** :{color}-badge[{label}]")
-            st.markdown(md(answer["summary"]))
-            for e in answer["evidence"]:
-                st.markdown(f"- [{md(e['url'])}]({e['url']}): “{md(e['quote'])}”")
-            if key == "h1b" and answer["verdict"] == "no_history_found":
-                st.caption(f"Searched: {', '.join(check['visa_data_sites'])}. No filings found there doesn't prove "
-                           f"the company has never sponsored.")
-            st.caption(note)
+    answer = check["h1b"]
+    color, label = CHECK_VERDICTS[answer["verdict"]]
+    with st.container(key="check-h1b"):  # styled as a glass card
+        st.markdown(f"**H-1B / work-visa sponsorship** :{color}-badge[{label}]")
+        st.markdown(md(answer["summary"]))
+        for e in answer["evidence"]:
+            st.markdown(f"- [{md(e['url'])}]({e['url']}): “{md(e['quote'])}”")
+        if answer["verdict"] == "no_history_found":
+            st.caption(f"Searched: {', '.join(check['visa_data_sites'])}. No filings found there doesn't prove "
+                       f"the company has never sponsored.")
+        st.caption("Past filings show the company has sponsored before, not that it will sponsor this role.")
     st.caption("From public search results; not legal advice. Confirm sponsorship with the employer.")
 
 
@@ -261,7 +299,7 @@ def progress_screen():
         return boxes[node]
 
     try:
-        with requests.post(f"{API}{path}", json=body, headers=AUTH, stream=True, timeout=(10, 30)) as response:
+        with requests.post(f"{API}{path}", json=body, headers=api_headers(), stream=True, timeout=(10, 30)) as response:
             if response.status_code != 200:
                 st.error(md(response.json().get("detail", response.text)))
                 st.button("Start over", on_click=start_over)

@@ -59,9 +59,9 @@ def quick_checked(company="Sony Interactive Entertainment"):
 def test_full_flow_through_the_ui():
     prompts = test_api.setup_fakes()
     at = quick_checked()  # the cheap first step, with sources
-    assert "Yes, with evidence" in texts(at) and "Couldn't determine" in texts(at)
+    assert "Yes, with evidence" in texts(at) and "E-Verify" not in texts(at)
     assert "whether it has sponsored H-1B work visas before" in texts(at)  # orientation line
-    assert test_api.test_routing.LCA_URL in texts(at) and "doesn't mean no" in texts(at)
+    assert test_api.test_routing.LCA_URL in texts(at) and "not that it will sponsor this role" in texts(at)
     assert g.QueryPlan not in prompts, "the quick check must not start the paid pipeline"
 
     button(at, "Generate full briefing").click().run()
@@ -97,6 +97,28 @@ def test_full_flow_through_the_ui():
     assert [b.label for b in at.button].count("New briefing") == 2  # at the top as well as below a long report
     button(at, "New briefing").click().run()  # the top one
     assert any(b.label == "Quick Check" for b in at.button) and "run" not in at.query_params
+
+
+def splash_shown(at):
+    return any('class="splash"' in str(e.value) for e in at.markdown)
+
+
+def test_splash_plays_once_per_visit_and_never_on_a_resumed_run():
+    test_api.setup_fakes()
+    at = open_app()
+    assert splash_shown(at), "a new visit plays the intro"
+    assert "All rights reserved" in texts(at), "the copyright line is on every screen"
+    at.text_input[0].input("Sony Interactive Entertainment")
+    button(at, "Quick Check").click().run()
+    assert not splash_shown(at) and "Yes, with evidence" in texts(at), "a click's rerun must not replay it"
+    button(at, "Not interested").click().run()  # start_over clears the session state
+    assert not splash_shown(at), "starting over is the same visit"
+    assert splash_shown(open_app()), "a refresh is a new session, so it plays again"
+
+    run_id, _ = test_api.start(test_api.TestClient(api.app))
+    at = open_app(run_id)  # refreshed mid-briefing: straight back to the run
+    assert not splash_shown(at) and "Review the findings" in texts(at)
+    assert "All rights reserved" in texts(at)
 
 
 def test_back_from_posting_keeps_the_quick_check():
@@ -337,6 +359,7 @@ if __name__ == "__main__":
     serve()
     test_full_flow_through_the_ui()
     test_back_from_posting_keeps_the_quick_check()
+    test_splash_plays_once_per_visit_and_never_on_a_resumed_run()
     test_start_over_from_approval_discards_without_writing()
     test_every_entry_point_fails_the_same_way_when_the_server_is_down()
     test_refreshed_mid_run_visitor_can_leave_and_the_run_finishes()

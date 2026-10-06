@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo-wordmark.png" alt="Interview briefing" width="800">
+</p>
+
 # Multi-Agent Company & Role Research Assistant
 
 Give it a company name and a job posting. Three collaborating AI agents — a
@@ -94,9 +98,24 @@ Or run the pipeline standalone from the command line, no UI:
 python main.py "Company Name" path/to/posting.txt
 ```
 
+## Deploying it (free)
+
+[`render.yaml`](render.yaml) sets up the API and the UI as two free Render web services (New > Blueprint), with
+a free [Neon](https://neon.tech) Postgres for run checkpoints and the daily usage counts. Render asks for the
+secrets in its dashboard: `ANTHROPIC_API_KEY`, `TAVILY_API_KEY`, `DATABASE_URL`, and the API's public address as
+the UI's `API_URL`; it generates `API_TOKEN` and copies it to the UI. Set a monthly spend limit in the Anthropic
+console too: it's the one hard stop on cost. Free services sleep after 15 idle minutes, so the first visit after a
+quiet spell takes about a minute.
+
+What protects the public demo: the API refuses to start on Render without `API_TOKEN` and accepts only the UI's
+token; daily caps for the whole demo and per visitor are kept in Postgres, so a restart can't reset them; inputs are
+size-capped, cleaned of control characters, and fenced off as data inside the prompts; visitors never see
+tracebacks or API docs.
+
 ## Evaluation
 
-Full methodology, per-claim data, and scoring code are in [`evals/`](evals/).
+Full methodology, per-claim data, and scoring code are in [`evals/`](evals/). The scoring libraries are
+eval-only, so they have their own install: `pip install -r evals/requirements.txt`.
 **Coverage is small — 2 of 6 planned companies, one live run each**, scored
 by an independent Claude Opus 5 judge doing its own fresh web searches. Cut
 short by API budget; treat these as signals about how the system fails, not
@@ -195,10 +214,8 @@ republish Department of Labor LCA filings; the Department's own bulk data
 isn't searchable, and the republishing sites lag by months. A "yes" must
 quote a search result word for word or it's downgraded to "couldn't
 determine", but a same-name company can still slip past the name check, and
-"no history found" doesn't prove a company has never sponsored. E-Verify
-participation isn't reliably public, so "couldn't determine" is the usual
-and honest answer; the check has no "no" option. It was tested offline only,
-not against live searches.
+"no history found" doesn't prove a company has never sponsored. It was tested
+offline only, not against live searches.
 
 **Eval implementation notes.**
 - DeepEval 4.x's hallucination metric means the opposite of what its name
@@ -215,3 +232,7 @@ not against live searches.
   the UI, not just the trace.
 - Typst-based PDF export (currently markdown download only).
 - Merge reworded duplicate claims before they reach the Editor.
+
+---
+
+© 2026 Ayush Jaiswal. All rights reserved.

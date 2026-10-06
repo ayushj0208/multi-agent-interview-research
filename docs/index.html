@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interview briefing</title>
+<meta name="description" content="Multi-agent company research that checks its own facts. Three AI agents research a company, fact-check what they find, and wait for your approval before writing an interview briefing.">
+<meta property="og:title" content="Interview briefing">
+<meta property="og:description" content="Multi-agent company research that checks its own facts.">
+<meta property="og:image" content="https://ayushj0208.github.io/multi-agent-interview-research/poster.jpg">
+<meta name="color-scheme" content="dark light">
+<!-- The page runs no JavaScript, so scripts, frames and form posts are blocked outright. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; script-src 'none'; frame-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='96' y1='96' x2='416' y2='416' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%232997ff'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='%2307080c'/%3E%3Cg transform='translate(6 6)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg stroke='url(%23a)' stroke-width='36'%3E%3Cpath d='M352 224A128 128 0 0 1 224 352'/%3E%3Cpath d='M160 334.85A128 128 0 0 1 113.15 160'/%3E%3Cpath d='M160 113.15A128 128 0 0 1 334.85 160'/%3E%3Cpath d='M330 330L398 398' stroke-width='44'/%3E%3C/g%3E%3Cpath d='M168 228L208 268L284 188' stroke='%23f5f5f7' stroke-width='32'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Same palette as the app (style.css / dark.css): dark canvas by default, light when the system asks for it. */
+  :root {
+    --bg: #07080c;
+    --text: #f5f5f7;
+    --text-2: rgba(235, 235, 245, 0.68);
+    --text-3: rgba(235, 235, 245, 0.5);
+    --card: rgba(30, 30, 34, 0.62);
+    --card-edge: rgba(255, 255, 255, 0.09);
+    --hairline: rgba(255, 255, 255, 0.1);
+    --grid: rgba(41, 151, 255, 0.07);
+    --glow-a: rgba(41, 151, 255, 0.2);
+    --glow-b: rgba(124, 92, 255, 0.16);
+    --sky: #2997ff;
+    --violet: #a78bfa;
+    --link: #2997ff;
+    --btn-2: rgba(255, 255, 255, 0.08);
+    --header-glass: rgba(7, 8, 12, 0.72);
+    --shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --orb: 0.5;
+    --floor-line: rgba(41, 151, 255, 0.2);
+    --ring-a: rgba(41, 151, 255, 0.35);
+    --ring-b: rgba(167, 139, 250, 0.35);
+    --ring-c: rgba(90, 200, 250, 0.4);
+    --intro: 2.55s;  /* the page animates in as the preloader fades out */
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f5f5f7;
+      --text: #1d1d1f;
+      --text-2: rgba(29, 29, 31, 0.72);
+      --text-3: rgba(29, 29, 31, 0.55);
+      --card: rgba(255, 255, 255, 0.78);
+      --card-edge: rgba(0, 0, 0, 0.07);
+      --hairline: rgba(0, 0, 0, 0.09);
+      --grid: rgba(0, 102, 204, 0.07);
+      --glow-a: rgba(41, 151, 255, 0.18);
+      --glow-b: rgba(124, 92, 255, 0.12);
+      --sky: #0066cc;
+      --violet: #7c5cff;
+      --link: #0066cc;
+      --btn-2: rgba(0, 0, 0, 0.05);
+      --header-glass: rgba(245, 245, 247, 0.78);
+      --shadow: 0 1px 1px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 40, 100, 0.08);
+      --orb: 0.42;
+      --floor-line: rgba(0, 102, 204, 0.16);
+      --ring-a: rgba(0, 102, 204, 0.22);
+      --ring-b: rgba(124, 92, 255, 0.24);
+      --ring-c: rgba(90, 200, 250, 0.32);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.55 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  html { scroll-behavior: smooth; }
+  /* ---- Animated background: the app's 3D scene. Every motion is a transform, which the GPU runs without
+     repainting; the soft orbs are radial gradients, not blur filters, so the scene stays cheap to draw. ---- */
+  .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; perspective: 1000px; pointer-events: none; }
+  .bg::after {  /* a faint grid behind the content, fading out toward the edges */
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 75%);
+  }
+  .orb { position: absolute; border-radius: 50%; opacity: var(--orb); will-change: transform; }
+  .orb-a { width: 60vmax; height: 60vmax; left: -22vmax; top: -26vmax; background: radial-gradient(circle, rgba(41, 151, 255, 0.55), transparent 62%); animation: drift-a 26s ease-in-out infinite alternate; }
+  .orb-b { width: 52vmax; height: 52vmax; right: -20vmax; top: 10vh; background: radial-gradient(circle, rgba(124, 92, 255, 0.5), transparent 62%); animation: drift-b 32s ease-in-out infinite alternate; }
+  .orb-c { width: 44vmax; height: 44vmax; left: 24vw; bottom: -24vmax; background: radial-gradient(circle, rgba(90, 200, 250, 0.4), transparent 62%); animation: drift-c 29s ease-in-out infinite alternate; }
+  .floor {
+    position: absolute; left: -50%; right: -50%; bottom: -30vh; height: 90vh;
+    background-image: linear-gradient(var(--floor-line) 1px, transparent 1px), linear-gradient(90deg, var(--floor-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    transform-origin: 50% 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+    animation: glide 5s linear infinite;
+    will-change: transform;
+  }
+  .ring { position: absolute; border-radius: 50%; border: 1.5px solid var(--ring-a); will-change: transform;
+          box-shadow: inset 0 0 40px rgba(41, 151, 255, 0.14), 0 0 36px rgba(124, 92, 255, 0.1); }
+  .ring-a { width: 34vmin; height: 34vmin; right: 7vw; top: 14vh; animation: turn-a 22s linear infinite; }
+  .ring-b { width: 22vmin; height: 22vmin; left: 6vw; top: 52vh; border-color: var(--ring-b); animation: turn-b 28s linear infinite; }
+  .ring-c { width: 14vmin; height: 14vmin; right: 22vw; bottom: 14vh; border-color: var(--ring-c); animation: turn-c 18s linear infinite; }
+  @keyframes drift-a { to { transform: translate3d(14vw, 10vh, 0) scale(1.15); } }
+  @keyframes drift-b { to { transform: translate3d(-16vw, 14vh, 0) scale(0.9); } }
+  @keyframes drift-c { to { transform: translate3d(-10vw, -12vh, 0) scale(1.2); } }
+  @keyframes glide {
+    from { transform: perspective(600px) rotateX(74deg) translateY(0); }
+    to { transform: perspective(600px) rotateX(74deg) translateY(64px); }
+  }
+  @keyframes turn-a { from { transform: rotateX(68deg) rotateY(0deg) rotateZ(0deg); } to { transform: rotateX(68deg) rotateY(360deg) rotateZ(360deg); } }
+  @keyframes turn-b { from { transform: rotateY(60deg) rotateX(0deg); } to { transform: rotateY(60deg) rotateX(360deg); } }
+  @keyframes turn-c {
+    from { transform: rotateX(20deg) rotateY(0deg) translateZ(0); }
+    50% { transform: rotateX(200deg) rotateY(180deg) translateZ(60px); }
+    to { transform: rotateX(380deg) rotateY(360deg) translateZ(0); }
+  }
+
+  /* ---- Preloader: the app's intro, about 3s. The arcs sweep in one by one (Researcher, Editor, Writer), the check
+     pops in with a glow, the name rises, then it fades and the page animates in. Pure CSS, so it always ends, and
+     it never takes clicks. Only opacity and transform animate, so it stays smooth while the page loads. ---- */
+  .splash {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 64px 64px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 64px 64px,
+      radial-gradient(1000px 640px at 10% -5%, var(--glow-a), transparent 60%),
+      radial-gradient(900px 640px at 95% 35%, var(--glow-b), transparent 60%),
+      var(--bg);
+    animation: splash-out 0.45s ease-in 2.6s forwards;
+  }
+  .splash-mark { position: relative; width: 112px; height: 112px; will-change: transform, opacity;
+                 animation: splash-tile-in 0.5s var(--ease) both, splash-content-out 0.3s ease-in 2.45s forwards; }
+  .splash-mark > * { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .splash-tile { fill: #07080c; stroke: rgba(255, 255, 255, 0.1); stroke-width: 4px; }
+  .splash-arc, .splash-check, .splash-glow { will-change: transform, opacity; }
+  .splash-arc path { fill: none; stroke: url(#accent); stroke-width: 36px; stroke-linecap: round; }
+  .splash-arc .handle { stroke-width: 44px; }
+  .splash-arc { transform-origin: 44.9% 44.9%; animation: splash-arc-in 0.7s var(--ease) both; }  /* around the lens centre */
+  .arc-1 { animation-delay: 0.3s; } .arc-2 { animation-delay: 0.75s; } .arc-3 { animation-delay: 1.2s; }
+  .splash-glow {
+    inset: auto; left: 15%; top: 15%; width: 60%; height: 60%; border-radius: 50%;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.6), rgba(41, 151, 255, 0.22) 45%, transparent 70%);
+    animation: splash-glow 1s ease-out 1.7s both;
+  }
+  .splash-check path { fill: none; stroke: #f5f5f7; stroke-width: 32px; stroke-linecap: round; stroke-linejoin: round; }
+  .splash-check { transform-origin: 44% 44%; filter: drop-shadow(0 0 6px rgba(41, 151, 255, 0.6));
+                  animation: splash-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.7s both; }
+  .splash-title {
+    font-size: clamp(26px, 8vw, 44px); font-weight: 700; letter-spacing: -0.035em; white-space: nowrap;
+    background: linear-gradient(100deg, var(--sky) 10%, var(--violet) 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent; will-change: transform, opacity;
+    animation: splash-rise 0.6s var(--ease) 1.8s both, splash-content-out 0.3s ease-in 2.45s forwards;
+  }
+  @keyframes splash-out { to { opacity: 0; visibility: hidden; } }
+  @keyframes splash-tile-in { from { opacity: 0; transform: scale(0.92); } }
+  @keyframes splash-arc-in { from { opacity: 0; transform: rotate(-75deg) scale(0.85); } }
+  @keyframes splash-pop { from { opacity: 0; transform: scale(0.4); } }
+  @keyframes splash-glow { from { opacity: 0; transform: scale(0.5); } 40% { opacity: 1; transform: scale(1.15); } to { opacity: 0.35; transform: scale(1); } }
+  @keyframes splash-rise { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes splash-content-out { to { opacity: 0; transform: scale(0.97); } }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 56px 0; scroll-margin-top: 64px; }
+  h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+  h2 { font-size: clamp(28px, 4.2vw, 40px); font-weight: 700; }
+  .lede { color: var(--text-2); max-width: 680px; margin: 14px 0 0; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky); margin-bottom: 12px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--header-glass); box-shadow: 0 1px 0 var(--hairline);
+    -webkit-backdrop-filter: saturate(160%) blur(16px); backdrop-filter: saturate(160%) blur(16px);
+  }
+  .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 50; pointer-events: none;
+              transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, #2997ff, #a78bfa); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; padding-bottom: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; letter-spacing: -0.01em; }
+  .brand:hover { text-decoration: none; }
+  .brand svg { width: 32px; height: 32px; flex: none; }
+  header nav { display: flex; gap: 22px; font-size: 15px; }
+  header nav a { color: var(--text-2); }
+
+  /* Hero */
+  .hero { text-align: center; padding: 64px 0 40px; }
+  .hero .mark { width: 72px; height: 72px; margin: 0 auto 22px; display: block; filter: drop-shadow(0 8px 24px rgba(41, 151, 255, 0.25)); }
+  .hero h1 {
+    font-size: clamp(44px, 9vw, 84px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    padding-bottom: 0.06em;  /* keeps the descender of the g inside the clipped gradient */
+    background: linear-gradient(100deg, var(--sky) 10%, var(--violet) 55%, var(--sky) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: ink 10s ease-in-out infinite alternate;
+  }
+  .hero .pitch { font-size: clamp(20px, 2.6vw, 26px); font-weight: 600; letter-spacing: -0.015em; margin: 18px auto 0; max-width: 720px; }
+  .hero .sub { color: var(--text-2); max-width: 620px; margin: 14px auto 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; padding: 0 24px; border-radius: 999px;
+    font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
+  .btn-primary { position: relative; overflow: hidden; background: linear-gradient(180deg, #2b8cff, #0066cc); color: #fff; box-shadow: 0 6px 20px rgba(0, 102, 204, 0.35); }
+  .btn-primary::after {  /* a light sweep across the button on hover */
+    content: ""; position: absolute; inset: 0; transform: translateX(-120%);
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  }
+  .btn-primary:hover::after { transform: translateX(120%); transition: transform 0.7s var(--ease); }
+  .btn-primary:hover { box-shadow: 0 10px 28px rgba(0, 102, 204, 0.45); }
+  .btn-secondary { background: var(--btn-2); color: var(--text); box-shadow: inset 0 0 0 1px var(--card-edge); }
+  .btn svg { width: 18px; height: 18px; }
+
+  /* Demo video: the launch video, served from this folder with the browser's own player, poster and captions. */
+  .video {
+    position: relative; aspect-ratio: 16 / 9; margin-top: 28px; border-radius: 18px; overflow: hidden;
+    background: #07080c url("poster.jpg") center / cover no-repeat;
+    box-shadow: var(--shadow), 0 0 0 1px var(--card-edge), 0 30px 80px rgba(41, 151, 255, 0.12);
+  }
+  .video video { display: block; width: 100%; height: 100%; object-fit: cover; background: #07080c; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: var(--shadow), inset 0 0 0 1px var(--card-edge);
+    -webkit-backdrop-filter: saturate(160%) blur(16px);
+    backdrop-filter: saturate(160%) blur(16px);
+  }
+  .card { transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow), inset 0 0 0 1px var(--card-edge), 0 18px 40px rgba(41, 151, 255, 0.14); }
+  .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .card p { margin: 0; color: var(--text-2); font-size: 16px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin: 32px 0 0; padding: 0; list-style: none; counter-reset: step; }
+  .steps li { position: relative; counter-increment: step; }
+  .steps li::before {
+    content: counter(step);
+    display: inline-grid; place-items: center; width: 28px; height: 28px; margin-bottom: 14px;
+    border-radius: 50%; font-size: 14px; font-weight: 700; color: #fff;
+    background: linear-gradient(135deg, #2997ff, #a78bfa);
+  }
+  /* Your step breathes a soft blue glow: the one place the run waits for a person. */
+  .steps .human::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+                         box-shadow: 0 0 0 1.5px var(--sky), 0 0 28px rgba(41, 151, 255, 0.35); opacity: 0;
+                         animation: breathe 3.2s ease-in-out infinite; }
+  @keyframes breathe { 50% { opacity: 1; } }
+  .steps .human { background: transparent; box-shadow: inset 0 0 0 1.5px var(--sky); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .steps .human::before { background: transparent; color: var(--sky); box-shadow: inset 0 0 0 1.5px var(--sky); }
+  .tag { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--sky); background: var(--btn-2); vertical-align: 3px; }
+  .note { color: var(--text-3); font-size: 15px; margin: 18px 0 0; }
+
+  .points { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
+  .labels { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .label { font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+  .l-verified { color: #30d158; background: rgba(48, 209, 88, 0.14); }
+  .l-posting { color: #64a8ff; background: rgba(41, 151, 255, 0.14); }
+  .l-unverified { color: #ff9f0a; background: rgba(255, 159, 10, 0.14); }
+  .l-contradicted { color: #ff6961; background: rgba(255, 69, 58, 0.14); }
+  .l-off { color: var(--text-3); background: var(--btn-2); }
+  @media (prefers-color-scheme: light) {
+    .l-verified { color: #1a7f37; }
+    .l-posting { color: #0058b0; }
+    .l-unverified { color: #a35200; }
+    .l-contradicted { color: #c0271d; }
+  }
+  .more { margin-top: 22px; font-weight: 600; }
+
+  /* Results table: scrolls inside its own box on narrow screens, so the page itself never scrolls sideways. */
+  .table-box { margin-top: 28px; overflow-x: auto; border-radius: 18px; box-shadow: var(--shadow), inset 0 0 0 1px var(--card-edge); background: var(--card); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 480px; }
+  th, td { padding: 13px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--hairline); }
+  tr:last-child td { border-bottom: 0; }
+  thead th { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-3); }
+  tbody th { font-weight: 600; }
+  tbody th small { display: block; font-weight: 400; color: var(--text-3); font-size: 13px; margin-top: 2px; }
+  td { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .fine { color: var(--text-3); font-size: 14px; margin: 14px 0 0; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; padding: 0; list-style: none; }
+  .chips li { transition: transform 0.25s var(--ease); }
+  .chips li:hover { transform: translateY(-2px); }
+  .chips li { padding: 9px 16px; border-radius: 999px; font-size: 15px; font-weight: 600; background: var(--card); box-shadow: inset 0 0 0 1px var(--card-edge); }
+
+  footer { border-top: 1px solid var(--hairline); margin-top: 24px; padding: 28px 0 44px; color: var(--text-3); font-size: 15px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; }
+  footer p { margin: 0; }
+
+  /* Entrance: the header and hero ease up as the preloader fades out. */
+  .rise { animation: rise 0.9s var(--ease) calc(var(--intro) + var(--d, 0s)) both; }
+  .d1 { --d: 0.08s; } .d2 { --d: 0.16s; } .d3 { --d: 0.24s; } .d4 { --d: 0.32s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+  /* Further down, blocks rise in as they scroll into view. Browsers without scroll-driven animations just show
+     them; nothing is ever hidden waiting for a script. */
+  @supports (animation-timeline: view()) {
+    /* Reading progress: a thin gradient bar across the top that fills as you scroll. */
+    .progress { animation: progress linear both; animation-timeline: scroll(root); }
+    @keyframes progress { to { transform: scaleX(1); } }
+    /* The pinned header is clear over the hero and frosts over as soon as the page moves. */
+    header { animation: header-glass linear both; animation-timeline: scroll(root); animation-range: 0 120px; }
+    @keyframes header-glass {
+      from { background: transparent; box-shadow: 0 1px 0 transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+    /* The hero drifts up and fades as you scroll past it. */
+    .hero .wrap { animation: hero-out linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+    @keyframes hero-out { to { opacity: 0; transform: translateY(-80px) scale(0.95); } }
+
+    /* Blocks rise into place as they enter the screen. */
+    .reveal { animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(56px) scale(0.97); } }
+    /* Section titles slide in from the left. */
+    h2.reveal, .eyebrow.reveal { animation-name: slide-in; }
+    @keyframes slide-in { from { opacity: 0; transform: translateX(-48px); } }
+    /* The video zooms up to full size. */
+    .video.reveal { animation-name: zoom-in; animation-range: entry 0% cover 45%; }
+    @keyframes zoom-in { from { opacity: 0.2; transform: perspective(1200px) rotateX(14deg) scale(0.86); } }
+    /* The four steps tilt up one after another, in the order the pipeline runs them. */
+    .steps .reveal { animation-name: tilt-in; }
+    @keyframes tilt-in { from { opacity: 0; transform: perspective(900px) translateY(70px) rotateX(24deg); } }
+    .steps .reveal:nth-child(2), .points .reveal:nth-child(2) { animation-range: entry 8% cover 38%; }
+    .steps .reveal:nth-child(3), .points .reveal:nth-child(3) { animation-range: entry 16% cover 46%; }
+    .steps .reveal:nth-child(4) { animation-range: entry 24% cover 54%; }
+    /* The three "different" cards grow in from slightly smaller. */
+    .points .reveal { animation-name: grow-in; }
+    @keyframes grow-in { from { opacity: 0; transform: translateY(40px) scale(0.88); } }
+    /* Result rows slide in from the right, each as it reaches the screen. */
+    .table-box tbody tr { animation: row-in linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
+    @keyframes row-in { from { opacity: 0; transform: translateX(40px); } }
+    /* The stack chips pop in one by one. */
+    .chips li { animation: chip-in linear both; animation-timeline: view(); }
+    .chips li:nth-child(1) { animation-range: entry 0% entry 50%; }
+    .chips li:nth-child(2) { animation-range: entry 10% entry 60%; }
+    .chips li:nth-child(3) { animation-range: entry 20% entry 70%; }
+    .chips li:nth-child(4) { animation-range: entry 30% entry 80%; }
+    .chips li:nth-child(5) { animation-range: entry 40% entry 90%; }
+    .chips li:nth-child(6) { animation-range: entry 50% entry 100%; }
+    /* The last section sits at the foot of the page, which can't scroll further: finish once it's fully in view. */
+    #stack .reveal { animation-range: entry 0% entry 100%; }
+    @keyframes chip-in { from { opacity: 0; transform: translateY(24px) scale(0.7); } }
+  }
+  @keyframes ink { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    section { padding: 40px 0; }
+    header nav { display: none; }
+    .hero { padding: 40px 0 24px; }
+    .hero .mark { width: 60px; height: 60px; }
+    .actions .btn { flex: 1 1 100%; }
+    .card { padding: 20px; }
+    th, td { padding: 11px 14px; }
+    /* The results table stacks: each measure on its own line, the two companies' values side by side under it. */
+    table { min-width: 0; }
+    thead { display: none; }
+    tbody tr { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--hairline); padding: 6px 0 10px; }
+    tbody tr:last-child { border-bottom: 0; }
+    tbody th { grid-column: 1 / -1; border: 0; padding-bottom: 6px; }
+    tbody td { border: 0; padding-top: 0; padding-bottom: 0; white-space: normal; }
+    tbody td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+                       text-transform: uppercase; color: var(--text-3); margin-bottom: 2px; }
+  }
+  @media (max-width: 640px) {
+    .splash { gap: 20px; }
+    .splash-mark { width: 88px; height: 88px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .splash { display: none; }  /* its exit is an animation too: without one it would never leave */
+  }
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div>
+  <div class="floor"></div>
+  <div class="ring ring-a"></div><div class="ring ring-b"></div><div class="ring ring-c"></div>
+</div>
+<div class="progress" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="accent" x1="96" y1="96" x2="416" y2="416" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2997ff"/><stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <symbol id="mark" viewBox="0 0 512 512">
+      <rect width="512" height="512" rx="112" fill="#07080c"/>
+      <rect x="1" y="1" width="510" height="510" rx="111" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/>
+      <g transform="translate(6 6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke="url(#accent)" stroke-width="36">
+          <path d="M352 224 A128 128 0 0 1 224 352"/>
+          <path d="M160 334.85 A128 128 0 0 1 113.15 160"/>
+          <path d="M160 113.15 A128 128 0 0 1 334.85 160"/>
+          <path d="M330 330 L398 398" stroke-width="44"/>
+        </g>
+        <path d="M168 228 L208 268 L284 188" stroke="#f5f5f7" stroke-width="32"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="splash" aria-hidden="true">
+  <div class="splash-mark">
+    <svg class="splash-tile" viewBox="0 0 512 512"><rect width="512" height="512" rx="112"/></svg>
+    <svg class="splash-arc arc-1" viewBox="-6 -6 512 512"><path d="M160 113.15 A128 128 0 0 1 334.85 160"/></svg>
+    <svg class="splash-arc arc-2" viewBox="-6 -6 512 512"><path d="M352 224 A128 128 0 0 1 224 352"/><path class="handle" d="M330 330 L398 398"/></svg>
+    <svg class="splash-arc arc-3" viewBox="-6 -6 512 512"><path d="M160 334.85 A128 128 0 0 1 113.15 160"/></svg>
+    <div class="splash-glow"></div>
+    <svg class="splash-check" viewBox="-6 -6 512 512"><path d="M168 228 L208 268 L284 188"/></svg>
+  </div>
+  <div class="splash-title">Interview briefing</div>
+</div>
+
+<header>
+  <div class="wrap rise">
+    <a class="brand" href="#top" aria-label="Interview briefing, top of page"><svg aria-hidden="true"><use href="#mark"/></svg>Interview briefing</a>
+    <nav aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#results">Results</a>
+      <a href="https://github.com/ayushj0208/multi-agent-interview-research">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <svg class="mark rise" role="img" aria-label="Interview briefing logo"><use href="#mark"/></svg>
+      <h1 class="rise d1">Interview briefing</h1>
+      <p class="pitch rise d2">Multi-agent company research that checks its own facts.</p>
+      <p class="sub rise d3">Give it a company name and a job posting. Three AI agents research the company, fact-check what they find, and wait for your approval before writing your interview briefing.</p>
+      <div class="actions rise d4">
+        <!-- PLACEHOLDER: replace DEMO_URL with the live demo's address after deployment. -->
+        <a class="btn btn-primary" href="DEMO_URL">Try the demo</a>
+        <a class="btn btn-secondary" href="https://github.com/ayushj0208/multi-agent-interview-research">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" aria-labelledby="demo-title">
+    <div class="wrap">
+      <div class="eyebrow reveal">Demo</div>
+      <h2 class="reveal" id="demo-title">See one real run</h2>
+      <p class="lede reveal">A short walkthrough on Stripe: the quick visa check, the agents at work, the review step, and the finished briefing.</p>
+      <div class="video reveal">
+        <video controls preload="metadata" playsinline poster="poster.jpg" aria-label="Interview briefing demo video, 29 seconds">
+          <source src="demo.mp4" type="video/mp4">
+          <track kind="captions" src="demo.vtt" srclang="en" label="English">
+          <a href="demo.mp4">Download the demo video (MP4)</a>
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="eyebrow reveal">How it works</div>
+      <h2 class="reveal" id="how-title">Three agents, and you in the middle</h2>
+      <ol class="steps">
+        <li class="card reveal">
+          <h3>Researcher</h3>
+          <p>Searches the web for news, funding, tech stack, culture and the role itself, and runs another pass on any category that comes back thin.</p>
+        </li>
+        <li class="card reveal">
+          <h3>Editor</h3>
+          <p>Checks the key claims with fresh, independent searches and labels every claim. Weak research goes back to the Researcher.</p>
+        </li>
+        <li class="card human reveal">
+          <h3>Your review <span class="tag">human</span></h3>
+          <p>The run pauses. You see every labeled claim and either approve it or send it back with a note.</p>
+        </li>
+        <li class="card reveal">
+          <h3>Writer</h3>
+          <p>Turns the approved findings into a briefing with sources, and hedges anything that wasn't confirmed.</p>
+        </li>
+      </ol>
+      <p class="note reveal">Before any of this, an optional quick check looks up the company's H-1B sponsorship history in public records. A "yes" has to quote its source word for word.</p>
+    </div>
+  </section>
+
+  <section id="different" aria-labelledby="different-title">
+    <div class="wrap">
+      <div class="eyebrow reveal">What makes it different</div>
+      <h2 class="reveal" id="different-title">It would rather say "unverified" than guess</h2>
+      <div class="points">
+        <div class="card reveal">
+          <h3>"Verified" has a strict meaning</h3>
+          <p>A claim is marked verified only if its own independent check confirmed every detail it states, not just the gist. That rule is enforced in code, not only asked for in a prompt.</p>
+          <div class="labels" aria-label="The labels a claim can get">
+            <span class="label l-verified">Verified</span>
+            <span class="label l-posting">From posting</span>
+            <span class="label l-unverified">Unverified</span>
+            <span class="label l-contradicted">Contradicted</span>
+            <span class="label l-off">Off-target</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>Unconfirmed stays unconfirmed</h3>
+          <p>When a check can't confirm something, the claim is labeled unverified and the briefing hedges it instead of stating it as fact. You can see exactly what to double-check before the interview.</p>
+        </div>
+        <div class="card reveal">
+          <h3>Honest about its limits</h3>
+          <p>Verified means a real source states it, not that it is true. A third-party estimate can be verified against the site it came from, so numbers that could be stale still deserve a second look.</p>
+        </div>
+      </div>
+      <p class="more"><a href="https://claude.ai/artifact/C36A7hyyhKufyhi5nRkKXe">See the architecture diagram &rarr;</a></p>
+    </div>
+  </section>
+
+  <section id="results" aria-labelledby="results-title">
+    <div class="wrap">
+      <div class="eyebrow reveal">Measured, not claimed</div>
+      <h2 class="reveal" id="results-title">How it did on real companies</h2>
+      <p class="lede reveal">Scored by an independent judge (Claude Opus 5) doing its own web searches. The sample is small: 2 companies, one live run each, out of 6 planned before the API budget ran out. Treat these as signals, not rates.</p>
+      <div class="table-box reveal" role="region" aria-label="Evaluation results" tabindex="0">
+        <table>
+          <thead>
+            <tr><th scope="col">Measure</th><th scope="col">Sony Play Station</th><th scope="col">CaseGuard</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Claims<small>verified / unverified / contradicted / from posting / off-target</small></th><td data-label="Sony Play Station">2 / 27 / 0 / 4 / 3</td><td data-label="CaseGuard">5 / 24 / 1 / 0 / 0</td></tr>
+            <tr><th scope="row">Verified precision<small>verified claims the judge agreed with</small></th><td data-label="Sony Play Station">2/2</td><td data-label="CaseGuard">5/5</td></tr>
+            <tr><th scope="row">From-posting precision<small>"from posting" labels the judge agreed with</small></th><td data-label="Sony Play Station">3/4</td><td data-label="CaseGuard">n/a</td></tr>
+            <tr><th scope="row">Contradicted agreement<small>"contradicted" labels the judge agreed with</small></th><td data-label="Sony Play Station">n/a</td><td data-label="CaseGuard">0/1</td></tr>
+            <tr><th scope="row">Budget misses<small>never-checked claims the judge could confirm, of 5 sampled</small></th><td data-label="Sony Play Station">1/5</td><td data-label="CaseGuard">5/5</td></tr>
+            <tr><th scope="row">Truly unconfirmable<small>checked but inconclusive claims the judge also couldn't confirm</small></th><td data-label="Sony Play Station">4/6</td><td data-label="CaseGuard">1/2</td></tr>
+            <tr><th scope="row">Report faithfulness</th><td data-label="Sony Play Station">0.97</td><td data-label="CaseGuard">1.00</td></tr>
+            <tr><th scope="row">Report consistency<small>1 = no contradictions</small></th><td data-label="Sony Play Station">0.97</td><td data-label="CaseGuard">1.00</td></tr>
+            <tr><th scope="row">Unverified stated as fact<small>unverified or contradicted claims the briefing states as fact</small></th><td data-label="Sony Play Station">1</td><td data-label="CaseGuard">2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fine">Pipeline model: Claude Sonnet 5. The Sony row reuses that company's pipeline output from an earlier run of the same eval. Source: <a href="https://github.com/ayushj0208/multi-agent-interview-research/blob/main/evals/results/2026-09-25_1341/summary.md">evals/results/2026-09-25_1341/summary.md</a>.</p>
+      <p class="more"><a href="https://github.com/ayushj0208/multi-agent-interview-research#known-limitations">Read the known limitations &rarr;</a></p>
+    </div>
+  </section>
+
+  <section id="stack" aria-labelledby="stack-title">
+    <div class="wrap">
+      <div class="eyebrow reveal">Built with</div>
+      <h2 class="reveal" id="stack-title">The stack</h2>
+      <ul class="chips reveal">
+        <li>LangGraph</li>
+        <li>FastAPI</li>
+        <li>Streamlit</li>
+        <li>Claude</li>
+        <li>Tavily</li>
+        <li>Postgres</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; 2026 Ayush Jaiswal. All rights reserved. · <a href="https://github.com/ayushj0208/multi-agent-interview-research">GitHub</a></p>
+    <p>The public demo runs a lighter, lower-cost mode, with fewer research passes and fact checks per run.</p>
+  </div>
+</footer>
+
+</body>
+</html>

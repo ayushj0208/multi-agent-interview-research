@@ -184,8 +184,7 @@ QUICK_CHECK_RESULTS = [{"url": LCA_URL, "title": "Sony Interactive Entertainment
                         "content": "SONY INTERACTIVE ENTERTAINMENT LLC filed 212 LCAs in 2024, mostly software engineers."}]
 QUICK_CHECK = qc.QuickCheck(
     h1b=qc.VisaAnswer(verdict="yes_with_evidence", summary="Sony Interactive Entertainment LLC filed 212 LCAs in 2024.",
-                      evidence=[qc.Evidence(url=LCA_URL, quote="filed 212 LCAs in 2024")]),
-    e_verify=qc.EVerifyAnswer(verdict="couldnt_determine", summary="No result states whether it uses E-Verify."))
+                      evidence=[qc.Evidence(url=LCA_URL, quote="filed 212 LCAs in 2024")]))
 
 
 def fake_ask(prompts, quality_score=8):

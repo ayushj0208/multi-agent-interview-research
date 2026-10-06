@@ -1,0 +1,4 @@
+# The evals need the app's packages plus the scoring libraries, which the deployed app doesn't install.
+-r ../requirements.txt
+deepeval==4.2.6
+ragas==0.4.3
