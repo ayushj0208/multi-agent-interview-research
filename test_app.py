@@ -15,6 +15,8 @@ import graph as g
 
 PORT = 8765
 os.environ["API_URL"] = f"http://127.0.0.1:{PORT}"
+# A proxy page that never turns into the API gives up after this long, not the live site's two minutes.
+os.environ["API_WAKE_SECONDS"], os.environ["API_WAKE_POLL_SECONDS"] = "0.5", "0.05"
 
 
 def serve():
@@ -222,6 +224,91 @@ def test_anything_but_the_apis_own_reply_shows_the_friendly_message_never_a_cras
     with stand_in_api(429, '{"detail": "%s"}' % api.BUSY_MESSAGE, "application/json"):
         for at in quick_check_and_briefing():
             assert not at.exception and api.BUSY_MESSAGE in texts(at)
+
+
+RENDER_LOADING_PAGE = "<html><head><title>Render - Application loading</title></head><body>SERVICE WAKING UP</body></html>"
+
+
+@contextlib.contextmanager
+def sleeping_api(polls_to_wake=2):
+    """Render's proxy in front of the real API, which starts asleep. Until a click arrives (a POST), every request gets
+    the proxy's HTML loading page; that POST also gets it and starts the wake, which then takes `polls_to_wake` more
+    requests. From then on requests pass through to the API. `proxy.sleep()` puts it back to sleep, as 15 idle
+    minutes would. `proxy.log` records (method, path, who answered) for every request."""
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+    import requests
+
+    proxy = type("Proxy", (), {})()
+    proxy.log, proxy.state, proxy.polls_left = [], "asleep", 0
+    lock = threading.Lock()
+
+    def sleep():
+        with lock:
+            proxy.state = "asleep"
+    proxy.sleep = sleep
+
+    class Reply(BaseHTTPRequestHandler):
+        def send(self, status, data, headers):
+            self.send_response(status)
+            for name, value in headers.items():
+                self.send_header(name, value)
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+
+        def handle_any(self):
+            body = self.rfile.read(int(self.headers.get("Content-Length") or 0))
+            with lock:
+                if proxy.state == "asleep" and self.command == "POST":
+                    proxy.state, proxy.polls_left = "waking", polls_to_wake
+                    up = False
+                elif proxy.state == "waking" and proxy.polls_left > 0:
+                    proxy.polls_left -= 1
+                    up = False
+                else:
+                    up = proxy.state != "asleep"
+                    proxy.state = "awake" if up else proxy.state
+            proxy.log.append((self.command, self.path, "api" if up else "proxy"))
+            if not up:
+                return self.send(200, RENDER_LOADING_PAGE.encode(), {"Content-Type": "text/html; charset=utf-8"})
+            forwarded = {k: v for k, v in self.headers.items() if k.lower() in ("content-type", "x-api-token", "x-visitor")}
+            r = requests.request(self.command, f"http://127.0.0.1:{PORT}{self.path}", data=body, headers=forwarded,
+                                 timeout=60)
+            kept = {k: v for k, v in r.headers.items() if k.lower() in ("content-type", "x-run-id", "cache-control")}
+            self.send(r.status_code, r.content, kept)
+
+        do_GET = do_POST = handle_any
+
+        def log_message(self, *args):
+            pass
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Reply)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    os.environ["API_URL"] = f"http://127.0.0.1:{server.server_port}"
+    try:
+        yield proxy
+    finally:
+        server.shutdown()
+        os.environ["API_URL"] = f"http://127.0.0.1:{PORT}"
+
+
+def test_a_click_while_the_free_api_sleeps_waits_for_it_and_goes_through():
+    test_api.setup_fakes()
+    with sleeping_api() as proxy:
+        at = quick_checked()  # the first visitor in a while: the page loads and the click lands while the API sleeps
+        assert not at.exception and "Can't reach the briefing server" not in texts(at)
+        assert "Yes, with evidence" in texts(at)
+        checks = [who for method, path, who in proxy.log if path == "/quick-check"]
+        assert checks == ["proxy", "api"], "sent once more after waking, and the paid check ran exactly once"
+        assert proxy.log.count(("GET", "/pipeline", "proxy")) >= 2, "kept asking while the API woke"
+
+        proxy.sleep()  # idle long enough to fall asleep again before the posting screen's click
+        button(at, "Generate full briefing").click().run()
+        at.text_area[0].input(test_api.test_routing.POSTING)
+        button(at, "Generate Briefing").click().run()
+        assert not at.exception and "Can't reach the briefing server" not in texts(at)
+        assert "Review the findings on Sony Interactive Entertainment" in texts(at)
+        assert [who for method, path, who in proxy.log if path == "/briefings"] == ["proxy", "api"]
 
 
 def test_api_url_pasted_with_a_trailing_slash_still_works():
@@ -432,6 +519,7 @@ if __name__ == "__main__":
     test_start_over_from_approval_discards_without_writing()
     test_every_entry_point_fails_the_same_way_when_the_server_is_down()
     test_anything_but_the_apis_own_reply_shows_the_friendly_message_never_a_crash()
+    test_a_click_while_the_free_api_sleeps_waits_for_it_and_goes_through()
     test_api_url_pasted_with_a_trailing_slash_still_works()
     test_refreshed_mid_run_visitor_can_leave_and_the_run_finishes()
     test_not_interested_starts_over_without_running_the_pipeline()

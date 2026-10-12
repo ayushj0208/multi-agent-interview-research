@@ -11,6 +11,12 @@ import streamlit as st
 API = os.getenv("API_URL", "http://localhost:8000").strip().rstrip("/")
 # The API's shared secret (see api.py require_token), sent on every call; unset in local dev.
 AUTH = {"X-API-Token": os.getenv("API_TOKEN", "").strip()}
+# Render's free API sleeps after 15 idle minutes and takes about a minute to wake; meanwhile its proxy answers in the
+# API's place with an HTML loading page. How long to wait for it, and how often to ask (tests shorten both).
+WAKE_SECONDS = float(os.getenv("API_WAKE_SECONDS", "120"))
+WAKE_POLL_SECONDS = float(os.getenv("API_WAKE_POLL_SECONDS", "3"))
+WAKING_MESSAGE = ("Waking up the server. This free demo sleeps when nobody has used it for a while, so the first "
+                  "check takes about a minute longer.")
 
 
 def api_headers():
@@ -19,6 +25,42 @@ def api_headers():
     ip = st.context.ip_address  # None when unknown; only ever forward a plain string
     visitor = st.context.headers.get("X-Forwarded-For", "").split(",")[0].strip() or (ip if isinstance(ip, str) else "")
     return {**AUTH, "X-Visitor": visitor[:200]}
+
+
+def from_api(response):
+    """Whether a reply is the API's own: it only ever answers with JSON or its event stream. Anything else (Render's
+    loading or error page) came from the proxy in front of it, so the API never saw the request."""
+    kind = response.headers.get("Content-Type", "").split(";")[0].strip().lower()
+    return kind in ("application/json", "text/event-stream")
+
+
+def wake_api():
+    """Asks the API's free, unmetered endpoint until the API itself answers (any status: even a 401 means it's up).
+    True once it has; False if it's still not up after WAKE_SECONDS."""
+    deadline = time.monotonic() + WAKE_SECONDS
+    with st.spinner(WAKING_MESSAGE):
+        while True:
+            try:
+                with requests.get(f"{API}/pipeline", headers=api_headers(), timeout=10) as response:
+                    if from_api(response):
+                        return True
+            except requests.RequestException:
+                pass  # still starting: keep asking until the deadline
+            if (left := deadline - time.monotonic()) <= 0:
+                return False
+            time.sleep(min(WAKE_POLL_SECONDS, left))
+
+
+def call_api(method, path, **kwargs):
+    """One request to the API. If the proxy answered instead because the API was asleep, waits for it to wake and sends
+    the request once more: safe even for paid work, since a proxy reply means the first attempt never reached the API.
+    Returns the API's reply, or the proxy's if the API didn't wake in time (callers then show the can't-reach message).
+    Connection errors raise as before."""
+    response = requests.request(method, f"{API}{path}", headers=api_headers(), **kwargs)
+    if from_api(response) or not wake_api():
+        return response
+    response.close()
+    return requests.request(method, f"{API}{path}", headers=api_headers(), **kwargs)
 # Mirrors api.py's request limits, so visitors see a character counter instead of a rejected request.
 MAX_COMPANY_CHARS, MAX_POSTING_CHARS, MAX_FEEDBACK_CHARS = 200, 20_000, 2_000
 TYPICAL_REVIEW_S = 60  # the Editor's single review call; measured 55-61s on live runs
@@ -184,7 +226,7 @@ def api_json(response):
 
 def fetch_run(run_id):
     try:
-        response = requests.get(f"{API}/briefings/{run_id}", headers=api_headers(), timeout=10)
+        response = call_api("GET", f"/briefings/{run_id}", timeout=10)
     except requests.RequestException:
         # Every refresh and poll lands here; without a way out, the run ID in the URL would reproduce the crash.
         server_unreachable()
@@ -240,9 +282,7 @@ def check_screen():
             return
         try:
             with st.spinner("Checking visa sponsorship records..."):
-                response = requests.post(f"{API}/quick-check", json={"company_name": company.strip()},
-                                         headers=api_headers(),
-                                         timeout=120)
+                response = call_api("POST", "/quick-check", json={"company_name": company.strip()}, timeout=120)
         except requests.RequestException:
             server_unreachable()
         if response.status_code != 200:
@@ -329,7 +369,7 @@ def progress_screen():
         return boxes[node]
 
     try:
-        with requests.post(f"{API}{path}", json=body, headers=api_headers(), stream=True, timeout=(10, 30)) as response:
+        with call_api("POST", path, json=body, stream=True, timeout=(10, 30)) as response:
             if response.status_code != 200:
                 if not (message := api_message(response)):
                     server_unreachable()
